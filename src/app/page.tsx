@@ -5,13 +5,10 @@ import { Intro } from '@/components/intro'
 import { Projects } from '@/components/projects'
 import { SectionDivider } from '@/components/section-divider'
 import { Skills } from '@/components/skills'
-import React, { ReactNode } from 'react'
+import React from 'react'
+import { NextPage } from 'next'
 
-interface IHomeProps {
-  children?: ReactNode
-}
-
-const Home: React.FC<IHomeProps> = () => {
+const Home: NextPage = () => {
   return (
     <main className='flex flex-col items-center px-4'>
       <Intro />
