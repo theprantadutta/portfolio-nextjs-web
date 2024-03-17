@@ -1,0 +1,49 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Redirect output to stderr.
+exec 1>&2
+
+# Enable user input
+exec </dev/tty
+
+# Get the current branch name
+current_branch=$(git symbolic-ref --short HEAD)
+
+# Run `npm install` after checking out to a new branch only if package.json or package-lock.json has changed
+changed_files=$(git diff-tree --name-only --no-commit-id -r "$current_branch..$1" -- package.json package-lock.json)
+
+if [ -n "$changed_files" ]; then
+  echo "Running Post Checkout Hook Due to Package Changes..."
+
+  # Ask the user if they want to run npm install
+  if [ -t 0 ]; then
+    # Check if stdin (file descriptor 0) is open (i.e., the terminal is available)
+    read -n1 -p "Do you want to run 'npm install'? (y/N)" REPLY </dev/tty
+  else
+    REPLY="N" # Default to "No" if stdin is not available
+  fi
+
+  if [ "$REPLY" = "y" ] || [ "$REPLY" = "Y" ]; then
+    printf "\nRunning Npm install, This might take a while..."
+    # Running Npm Install
+    npm install
+
+    # Check the exit code of npm install
+    NPM_INSTALL_EXIT_CODE=$?
+    if [ $NPM_INSTALL_EXIT_CODE -ne 0 ]; then
+      echo "Error: npm install failed with exit code $NPM_INSTALL_EXIT_CODE. Please resolve the issue and try again."
+      echo "DEBUG INFO:"
+      echo "current_branch: $current_branch"
+      echo "changed_files: $changed_files"
+      echo "REPLY: $REPLY"
+      exit $NPM_INSTALL_EXIT_CODE
+    else
+      echo "npm install ran successfully!"
+    fi
+  else
+    printf "\nSkipping npm install."
+  fi
+else
+  echo "No changes in package.json or package-lock.json. Skipping npm install."
+fi
