@@ -9,19 +9,15 @@ import 'react-vertical-timeline-component/style.min.css'
 import { experiencesData } from '@/lib/data'
 import { useTheme } from '@/context/theme-context'
 import { SectionHeading } from '@/components/section-heading'
-import { useInView } from 'react-intersection-observer'
+import { useSectionInView } from '@/lib/hooks'
 
 interface IExperienceProps {
   children?: ReactNode
 }
 
 export const Experience: React.FC<IExperienceProps> = () => {
-  // const { ref } = useSectionInView('Experience')
+  const { ref, inView } = useSectionInView('Experience', 0.1)
   const { theme } = useTheme()
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.5,
-  })
 
   return (
     <section id='experience' ref={ref} className='mb-28 scroll-mt-28 sm:mb-40'>
@@ -31,6 +27,7 @@ export const Experience: React.FC<IExperienceProps> = () => {
           <React.Fragment key={index}>
             <VerticalTimelineElement
               visible={inView}
+              className='special-border'
               contentStyle={{
                 background:
                   theme === 'light' ? '#f3f4f6' : 'rgba(255, 255, 255, 0.05)',

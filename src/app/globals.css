@@ -2,14 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  --line-color: #e5e7eb;
+@layer base {
+  html {
+    --line-color: #e5e7eb;
+  }
+
+  html.dark {
+    --line-color: rgba(255, 255, 255, 0.2);
+  }
 }
 
-html.dark {
-  --line-color: rgba(255, 255, 255, 0.2);
-}
+@layer components {
+  .borderBlack {
+    @apply border border-black/10;
+  }
 
-.borderBlack {
-  @apply border border-black/10;
+  .special-border {
+    @apply rounded-bl-3xl rounded-br-3xl rounded-tl-3xl rounded-tr-lg;
+  }
+
+  .btn {
+    @apply special-border flex items-center gap-2 px-7 py-3 outline-none transition hover:scale-105 focus:scale-105 active:scale-105;
+  }
 }

@@ -19,7 +19,7 @@ export const Contact: React.FC<IContactProps> = () => {
     <motion.section
       id='contact'
       ref={ref}
-      className='mb-20 w-[min(100%,38rem)] text-center sm:mb-28'
+      className='mb-20 w-[min(100%,38rem)] scroll-mt-28 text-center sm:mb-28'
       initial={{
         opacity: 0,
       }}
@@ -35,10 +35,10 @@ export const Contact: React.FC<IContactProps> = () => {
     >
       <SectionHeading>Contact me</SectionHeading>
 
-      <p className='-mt-6 text-gray-700 dark:text-white/80'>
+      <p className='-mt-4 text-gray-700 dark:text-white/80'>
         Please contact me directly at{' '}
-        <a className='underline' href='mailto:example@gmail.com'>
-          example@gmail.com
+        <a className='underline' href='mailto:prantadutta1997@gmail.com'>
+          prantadutta1997@gmail.com
         </a>{' '}
         or through this form.
       </p>
@@ -57,7 +57,7 @@ export const Contact: React.FC<IContactProps> = () => {
         }}
       >
         <input
-          className='borderBlack h-14 rounded-lg px-4 transition-all dark:bg-white dark:bg-opacity-80 dark:outline-none dark:focus:bg-opacity-100'
+          className='borderBlack special-border h-14 px-4 text-sm font-semibold transition-all dark:bg-gray-800 dark:bg-opacity-80 dark:text-gray-300 dark:outline-none dark:focus:bg-opacity-100'
           name='senderEmail'
           type='email'
           required
@@ -65,7 +65,7 @@ export const Contact: React.FC<IContactProps> = () => {
           placeholder='Your email'
         />
         <textarea
-          className='borderBlack my-3 h-52 rounded-lg p-4 transition-all dark:bg-white dark:bg-opacity-80 dark:outline-none dark:focus:bg-opacity-100'
+          className='borderBlack special-border my-3 h-52 p-4 text-sm font-semibold transition-all dark:bg-gray-800 dark:bg-opacity-80 dark:text-gray-300 dark:outline-none dark:focus:bg-opacity-100'
           name='message'
           placeholder='Your message'
           required

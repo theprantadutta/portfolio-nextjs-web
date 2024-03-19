@@ -37,8 +37,8 @@ export const Skills: React.FC<ISkillProps> = () => {
       <ul className='flex flex-wrap justify-center gap-2 text-lg text-gray-800'>
         {skillsData.map((skill, index) => (
           <motion.li
-            className='borderBlack rounded-xl bg-white px-5 py-3 dark:bg-white/10 dark:text-white/80'
-            key={index}
+            className='borderBlack special-border bg-white px-5 py-3 dark:bg-white/10 dark:text-white/80'
+            key={skill}
             variants={fadeInAnimationVariants}
             initial='initial'
             whileInView='animate'
