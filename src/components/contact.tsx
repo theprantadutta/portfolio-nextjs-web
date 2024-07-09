@@ -57,7 +57,7 @@ export const Contact: React.FC<IContactProps> = () => {
         }}
       >
         <input
-          className='borderBlack special-border h-14 px-4 text-sm font-semibold transition-all dark:bg-gray-800 dark:bg-opacity-80 dark:text-gray-300 dark:outline-none dark:focus:bg-opacity-100'
+          className='borderBlack special-border h-14 px-4 text-sm font-semibold transition-all dark:bg-gray-900 dark:bg-opacity-80 dark:text-gray-300 dark:outline-none dark:focus:bg-opacity-100'
           name='senderEmail'
           type='email'
           required
@@ -65,7 +65,7 @@ export const Contact: React.FC<IContactProps> = () => {
           placeholder='Your email'
         />
         <textarea
-          className='borderBlack special-border my-3 h-52 p-4 text-sm font-semibold transition-all dark:bg-gray-800 dark:bg-opacity-80 dark:text-gray-300 dark:outline-none dark:focus:bg-opacity-100'
+          className='borderBlack special-border my-3 h-52 p-4 text-sm font-semibold transition-all dark:bg-gray-900 dark:bg-opacity-80 dark:text-gray-300 dark:outline-none dark:focus:bg-opacity-100'
           name='message'
           placeholder='Your message'
           required

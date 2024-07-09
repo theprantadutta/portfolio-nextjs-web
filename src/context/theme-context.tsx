@@ -18,7 +18,7 @@ const ThemeContext = createContext<IThemeContextType | null>(null)
 export const ThemeContextProvider: React.FC<IThemeContextProviderProps> = ({
   children,
 }) => {
-  const [theme, setTheme] = useState<Theme>('light')
+  const [theme, setTheme] = useState<Theme>('dark')
 
   const toggleTheme = () => {
     if (theme === 'light') {
