@@ -27,7 +27,7 @@ if [ -n "$changed_files" ]; then
   if [ "$REPLY" = "y" ] || [ "$REPLY" = "Y" ]; then
     printf "\nRunning Npm install, This might take a while..."
     # Running Npm Install
-    npm install
+    bun install
 
     # Check the exit code of npm install
     NPM_INSTALL_EXIT_CODE=$?
