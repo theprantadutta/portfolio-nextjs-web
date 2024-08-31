@@ -1,9 +1,5 @@
 import React, { ReactNode } from 'react'
 
-type SectionHeadingProps = {
-  children: React.ReactNode
-}
-
 interface ISectionHeadingProps {
   children?: ReactNode
 }

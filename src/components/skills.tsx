@@ -1,7 +1,6 @@
 'use client'
 
 import React, { ReactNode } from 'react'
-import { skillsData } from '@/lib/data'
 import { useSectionInView } from '@/lib/hooks'
 import { motion } from 'framer-motion'
 import { SectionHeading } from '@/components/section-heading'

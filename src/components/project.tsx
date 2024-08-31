@@ -3,7 +3,6 @@
 import React, { ReactNode, useRef } from 'react'
 import Image from 'next/image'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { IProjectData } from '@/lib/types'
 import { ProjectDataAttributes } from '@/types/types'
 
 type IProjectProps = {
