@@ -23,30 +23,36 @@ export const About: React.FC<IAboutProps> = () => {
     >
       <SectionHeading>About me</SectionHeading>
       <p className='mb-3'>
-        After graduating with a degree in{' '}
-        <span className='font-medium'>Accounting</span>, I decided to pursue my
-        passion for programming. I enrolled in a coding bootcamp and learned{' '}
-        <span className='font-medium'>full-stack web development</span>.{' '}
-        <span className='italic'>My favorite part of programming</span> is the
-        problem-solving aspect. I <span className='underline'>love</span> the
-        feeling of finally figuring out a solution to a problem. My core stack
-        is{' '}
-        <span className='font-medium'>
-          React, Next.js, Node.js, and MongoDB
-        </span>
-        . I am also familiar with TypeScript and Prisma. I am always looking to
-        learn new technologies. I am currently looking for a{' '}
-        <span className='font-medium'>full-time position</span> as a software
-        developer.
+        I graduated with a <span className='font-medium'>Computer Science</span>{' '}
+        degree, then became a <span className='underline'>self-taught</span>{' '}
+        programmer. I like to do{' '}
+        <span className='underline'>full-stack web and mobile development</span>
+        , but I mostly work with{' '}
+        <span className='font-medium'>React Native & Flutter</span>.
       </p>
 
+      <p className='mb-3'>
+        Programming is not just a profession for me; it&apos;s a{' '}
+        <span className='font-medium underline'>passion</span>. I love diving
+        into <span className='underline'>new technologies</span> and exploring
+        innovative ways to solve problems. The thrill of debugging and the{' '}
+        <span className='underline'>satisfaction</span> of building something
+        from scratch are what drive me. I spend a lot of time{' '}
+        <span className='underline'>perfecting</span> my craft, constantly
+        learning and evolving with the{' '}
+        <span className='underline'>ever-changing tech landscape</span>.
+      </p>
       <p>
-        <span className='italic'>When I&apos;m not coding</span>, I enjoy
-        playing video games, watching movies, and playing with my dog. I also
-        enjoy <span className='font-medium'>learning new things</span>. I am
-        currently learning about{' '}
-        <span className='font-medium'>history and philosophy</span>. I&apos;m
-        also learning how to play the guitar.
+        I also did a good chunk of{' '}
+        <span className='font-semibold'>System Design</span>. I Designed and
+        implemented a robust <span className='underline'>Ubuntu server</span>{' '}
+        infrastructure for company operations, featuring{' '}
+        <span className='font-medium underline'>
+          GitLab, Docker, and GitLab CI/CD,
+        </span>{' '}
+        with comprehensive Health Checks services and a meticulous{' '}
+        <span className='underline'>backup and restore policy</span> for system
+        resilience.
       </p>
     </motion.section>
   )
