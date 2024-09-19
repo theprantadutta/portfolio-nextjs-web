@@ -15,6 +15,11 @@ const nextConfig = {
       },
       {
         protocol: 'http',
+        hostname: 'gmts.kdsgroup.net',
+        port: '30002',
+      },
+      {
+        protocol: 'http',
         hostname: 'localhost',
         port: '1337',
       },

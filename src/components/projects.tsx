@@ -17,14 +17,13 @@ export const Projects: React.FC<IProjectsProps> = ({
   projects,
 }) => {
   const { ref } = useSectionInView('Projects', 0.5)
-
   return (
     <section ref={ref} id='projects' className='mb-28 scroll-mt-28'>
       <SectionHeading>My projects</SectionHeading>
       <div>
         {projects.data.map((project, index) => (
           <React.Fragment key={index}>
-            <Project {...project.attributes} />
+            <Project {...project} />
           </React.Fragment>
         ))}
       </div>

@@ -4,6 +4,7 @@ import React, { ReactNode, useRef } from 'react'
 import Image from 'next/image'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ProjectDataAttributes } from '@/types/types'
+import { STRAPI_URL } from '@/constants/urls'
 
 type IProjectProps = {
   children?: ReactNode
@@ -22,6 +23,8 @@ export const Project: React.FC<IProjectProps> = ({
   })
   const scaleProgress = useTransform(scrollYProgress, [0, 1], [0.8, 1])
   const opacityProgress = useTransform(scrollYProgress, [0, 1], [0.6, 1])
+
+  const imageUrl = `${process.env.NEXT_PUBLIC_STRAPI_PROD_API_URL}${imageUrls[0].formats.large.url}`
 
   return (
     <motion.div
@@ -51,10 +54,10 @@ export const Project: React.FC<IProjectProps> = ({
         </div>
 
         <Image
-          src={`http://localhost:1337${imageUrls.data[0].attributes.formats.large.url}`}
+          src={imageUrl}
           alt='Project I worked on'
-          width={imageUrls.data[0].attributes.formats.large.width}
-          height={imageUrls.data[0].attributes.formats.large.height}
+          width={imageUrls[0].formats.large.width}
+          height={imageUrls[0].formats.large.height}
           quality={95}
           className='absolute -right-40 top-8 hidden w-[28.25rem] rounded-t-lg shadow-2xl transition group-even:-left-40 group-even:right-[initial] group-hover:-translate-x-3 group-hover:translate-y-3 group-hover:-rotate-2 group-hover:scale-[1.04] group-even:group-hover:translate-x-3 group-even:group-hover:translate-y-3 group-even:group-hover:rotate-2 sm:block'
         />

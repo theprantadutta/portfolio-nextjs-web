@@ -1,4 +1,5 @@
 export type ExperienceDataAttributes = {
+  id: number
   title: string
   location: string
   description: string
@@ -7,10 +8,12 @@ export type ExperienceDataAttributes = {
 }
 
 export type SkillDataAttributes = {
+  id: number
   title: string
 }
 
 export type ProjectDataAttributes = {
+  id: number
   title: string
   description: string
   githubLink?: string
@@ -19,24 +22,15 @@ export type ProjectDataAttributes = {
     name: string
   }[]
   imageUrls: {
-    data: {
-      attributes: {
-        formats: {
-          large: {
-            url: string
-            height: number
-            width: number
-          }
-        }
+    formats: {
+      large: {
+        url: string
+        height: number
+        width: number
       }
-    }[]
-  }
+    }
+  }[]
   soryBy: number
-}
-
-type DataItem<T> = {
-  id: number
-  attributes: T
 }
 
 type Pagination = {
@@ -51,6 +45,6 @@ type Meta = {
 }
 
 export interface IStrapiApiResponse<T> {
-  data: DataItem<T>[]
+  data: T[]
   meta: Meta
 }

@@ -26,7 +26,7 @@ export const Experience: React.FC<IExperienceProps> = ({ experiences }) => {
       <SectionHeading>My experience</SectionHeading>
       <VerticalTimeline lineColor='' animate={true}>
         {experiences.data.map((item) => {
-          const experience = item.attributes
+          const experience = item
           return (
             <React.Fragment key={item.id}>
               <VerticalTimelineElement

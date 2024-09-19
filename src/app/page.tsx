@@ -13,23 +13,21 @@ import {
   ExperienceDataAttributes,
   ProjectDataAttributes,
 } from '@/types/types'
+import { STRAPI_API_URL } from '@/constants/urls'
 
 export const getAllExperiences = async () => {
-  const data = await fetch(
-    `${process.env.STRAPI_API_URL}/experiences?sort=soryBy:desc`,
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-    }
-  )
+  const data = await fetch(`${STRAPI_API_URL}/experiences?sort=soryBy:desc`, {
+    headers: {
+      Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+  })
   return (await data.json()) as IStrapiApiResponse<ExperienceDataAttributes>
 }
 
 export const getAllProjects = async () => {
   const data = await fetch(
-    `${process.env.STRAPI_API_URL}/projects?populate=*&filters[isFeatured][$eq]=true&sort=soryBy:desc`,
+    `${STRAPI_API_URL}/projects?populate=*&filters[isFeatured][$eq]=true&sort=soryBy:desc`,
     {
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
@@ -41,7 +39,7 @@ export const getAllProjects = async () => {
 }
 
 export const getAllSkills = async () => {
-  const data = await fetch(`${process.env.STRAPI_API_URL}/skills`, {
+  const data = await fetch(`${STRAPI_API_URL}/skills`, {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
       'Content-Type': 'application/json',

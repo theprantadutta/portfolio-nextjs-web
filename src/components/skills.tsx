@@ -48,7 +48,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
             }}
             custom={index}
           >
-            {skill.attributes.title}
+            {skill.title}
           </motion.li>
         ))}
       </ul>
