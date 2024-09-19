@@ -9,6 +9,7 @@ import { ActiveSectionContextProvider } from '@/context/active-section-context'
 import { Footer } from '@/components/footer'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { ThemeContextProvider } from '@/context/theme-context'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -42,6 +43,7 @@ const RootLayout: React.FC<IRootLayoutProps> = ({ children }) => {
             <ThemeSwitch />
           </ActiveSectionContextProvider>
         </ThemeContextProvider>
+        <SpeedInsights />
       </body>
     </html>
   )
