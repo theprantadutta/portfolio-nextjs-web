@@ -11,17 +11,23 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'unsplash.com',
+        hostname: 'images.unsplash.com',
       },
       {
         protocol: 'http',
         hostname: 'gmts.kdsgroup.net',
         port: '30002',
+        pathname: '/uploads/**/*',
       },
       {
         protocol: 'http',
         hostname: 'localhost',
         port: '1337',
+        pathname: '/uploads/**/*',
+      },
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
       },
     ],
   },

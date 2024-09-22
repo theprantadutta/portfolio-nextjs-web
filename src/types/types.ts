@@ -21,16 +21,23 @@ export type ProjectDataAttributes = {
     id: number
     name: string
   }[]
-  imageUrls: {
-    formats: {
-      large: {
-        url: string
-        height: number
-        width: number
-      }
-    }
-  }[]
+  imageUrls: IStrapiImageData[]
   soryBy: number
+}
+
+export interface IStrapiImageData {
+  formats: {
+    large: IStrapiImageDataFormat
+    small: IStrapiImageDataFormat
+    thumbnail: IStrapiImageDataFormat
+    medium: IStrapiImageDataFormat
+  }
+}
+
+export interface IStrapiImageDataFormat {
+  url: string
+  height: number
+  width: number
 }
 
 type Pagination = {
