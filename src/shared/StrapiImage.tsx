@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { getStrapiMedia } from '@/lib/utils'
+import { ReactEventHandler } from 'react'
 
 interface StrapiImageProps {
   src: string
@@ -7,6 +8,7 @@ interface StrapiImageProps {
   height: number
   width: number
   className?: string
+  onLoad?: ReactEventHandler<HTMLImageElement> | undefined
 }
 
 export function StrapiImage({
@@ -15,6 +17,7 @@ export function StrapiImage({
   height,
   width,
   className,
+  onLoad,
 }: Readonly<StrapiImageProps>) {
   if (!src) return null
   const imageUrl = getStrapiMedia(src)
@@ -28,6 +31,7 @@ export function StrapiImage({
       width={width}
       style={{ objectFit: 'contain', maxHeight: '100%', maxWidth: '100%' }}
       className={className}
+      onLoad={onLoad}
     />
   )
 }
