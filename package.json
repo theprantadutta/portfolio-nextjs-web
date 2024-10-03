@@ -19,6 +19,7 @@
     "@react-email/tailwind": "^0.0.18",
     "@vercel/speed-insights": "^1.0.12",
     "clsx": "^2.1.1",
+    "firebase": "^10.14.0",
     "framer-motion": "^11.2.14",
     "next": "^15.0.0-rc.0",
     "react": "^19.0.0-rc-df783f9ea1-20240708",

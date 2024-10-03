@@ -10,6 +10,7 @@ import { Footer } from '@/components/footer'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { ThemeContextProvider } from '@/context/theme-context'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import TriggerAnalytics from '@/components/TriggerAnalytics'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -44,6 +45,7 @@ const RootLayout: React.FC<IRootLayoutProps> = ({ children }) => {
           </ActiveSectionContextProvider>
         </ThemeContextProvider>
         <SpeedInsights />
+        <TriggerAnalytics />
       </body>
     </html>
   )
