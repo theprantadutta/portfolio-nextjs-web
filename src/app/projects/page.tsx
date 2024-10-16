@@ -5,7 +5,7 @@ import { NextPage } from 'next'
 
 export const getAllProjects = async () => {
   const data = await fetch(
-    `${STRAPI_API_URL}/projects?populate=*&sort=soryBy:desc`,
+    `${STRAPI_API_URL}/projects?populate=*&sort=soryBy:asc`,
     {
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
