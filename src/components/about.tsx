@@ -48,7 +48,7 @@ export const About: React.FC<IAboutProps> = () => {
         implemented a robust <span className='underline'>Ubuntu server</span>{' '}
         infrastructure for company operations, featuring{' '}
         <span className='font-medium underline'>
-          GitLab, Docker, and GitLab CI/CD,
+          GitLab, Docker, GitLab CI/CD, Prometheus and Grafana
         </span>{' '}
         with comprehensive Health Checks services and a meticulous{' '}
         <span className='underline'>backup and restore policy</span> for system

@@ -16,7 +16,7 @@ import {
 import { STRAPI_API_URL } from '@/constants/urls'
 
 export const getAllExperiences = async () => {
-  const data = await fetch(`${STRAPI_API_URL}/experiences?sort=soryBy:desc`, {
+  const data = await fetch(`${STRAPI_API_URL}/experiences?sort=soryBy:asc`, {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
       'Content-Type': 'application/json',
