@@ -10,7 +10,7 @@ import { FaGithubSquare } from 'react-icons/fa'
 import { useSectionInView } from '@/lib/hooks'
 import { useActiveSectionContext } from '@/context/active-section-context'
 import profilePic from '@/../public/profile.png'
-import { CV_PATH } from '@/constants/selectors'
+import { CV_PATH, GITHUB_LINK, LINKED_IN_LINK } from '@/constants/selectors'
 
 interface IIntroProps {
   children?: ReactNode
@@ -109,7 +109,7 @@ export const Intro: React.FC<IIntroProps> = () => {
         <div className='flex'>
           <a
             className='borderBlack special-border mr-2 flex cursor-pointer items-center gap-2 bg-white p-4 text-gray-700 transition hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105 dark:bg-white/10 dark:text-white/60'
-            href='https://linkedin.com'
+            href={LINKED_IN_LINK}
             target='_blank'
           >
             <BsLinkedin />
@@ -117,7 +117,7 @@ export const Intro: React.FC<IIntroProps> = () => {
 
           <a
             className='borderBlack special-border flex cursor-pointer items-center gap-2 bg-white p-4 text-[1.35rem] text-gray-700 transition hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105 dark:bg-white/10 dark:text-white/60'
-            href='https://github.com'
+            href={GITHUB_LINK}
             target='_blank'
           >
             <FaGithubSquare />
