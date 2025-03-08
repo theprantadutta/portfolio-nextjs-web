@@ -1,4 +1,4 @@
-export const CV_PATH = '/PRANTA_CV_DEC_2024.pdf'
+export const CV_PATH = '/PRANTA_CV_MAR_2025.pdf'
 
 export const LINKED_IN_LINK = 'https://www.linkedin.com/in/theprantadutta/'
 
