@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "clean": "rimraf .next",
-    "dev": "npm run clean && next dev --turbopack",
-    "prebuild": "npm run clean",
+    "clean": "npx rimraf .next",
+    "dev": "bun run clean && next dev --turbopack",
+    "prebuild": "bun run clean",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -15,7 +15,7 @@
     "lint-staged": "lint-staged"
   },
   "dependencies": {
-    "@react-email/components": "^0.0.28",
+    "@react-email/components": "^0.0.33",
     "@react-email/tailwind": "^1.0.2",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.0.12",
@@ -53,7 +53,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs}": "eslint --cache --fix",
-    "*": "npm run format:fix"
+    "*": "bun run format:fix"
   },
   "engines": {
     "node": ">=20"
