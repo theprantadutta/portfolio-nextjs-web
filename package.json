@@ -17,6 +17,7 @@
   "dependencies": {
     "@react-email/components": "^0.0.28",
     "@react-email/tailwind": "^1.0.2",
+    "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.0.12",
     "babel-plugin-react-compiler": "^19.0.0-beta-40c6c23-20250301",
     "clsx": "^2.1.1",
