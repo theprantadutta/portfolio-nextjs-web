@@ -21,7 +21,6 @@
     "@vercel/speed-insights": "^1.0.12",
     "babel-plugin-react-compiler": "^19.0.0-beta-40c6c23-20250301",
     "clsx": "^2.1.1",
-    "firebase": "^11.0.2",
     "framer-motion": "^12.4.0",
     "next": "15.2.1",
     "react": "19.0.0",
