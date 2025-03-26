@@ -22,7 +22,7 @@
     "babel-plugin-react-compiler": "^19.0.0-beta-40c6c23-20250301",
     "clsx": "^2.1.1",
     "framer-motion": "^12.4.0",
-    "next": "15.2.1",
+    "next": "15.2.4",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-hot-toast": "^2.4.1",
