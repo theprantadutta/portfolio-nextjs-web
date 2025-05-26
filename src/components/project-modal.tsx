@@ -3,6 +3,7 @@
 import { StrapiImage } from '@/shared/StrapiImage'
 import { IStrapiImageData } from '@/types/types'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 import React, { ReactNode, useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { FaArrowLeft, FaArrowRight, FaTimes } from 'react-icons/fa'
@@ -11,9 +12,13 @@ import { CirclesWithBar } from 'react-loader-spinner'
 interface IProjectModal {
   children?: ReactNode
   imageUrls: IStrapiImageData[]
+  documentId: string
 }
 
-export const ProjectModal: React.FC<IProjectModal> = ({ imageUrls }) => {
+export const ProjectModal: React.FC<IProjectModal> = ({
+  imageUrls,
+  documentId,
+}) => {
   const [showModal, setShowModal] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isLoading, setIsLoading] = useState(false) // Track loading state
@@ -61,13 +66,22 @@ export const ProjectModal: React.FC<IProjectModal> = ({ imageUrls }) => {
 
   return (
     <>
-      <button
-        className='special-border group mt-5 flex h-[2rem] w-[8rem] items-center justify-center gap-2 border border-gray-800 font-semibold text-gray-800 outline-none transition-all hover:scale-110 focus:scale-110 active:scale-105 disabled:scale-100 disabled:bg-opacity-65 dark:border-gray-400 dark:bg-opacity-10 dark:text-white md:h-[2.5rem] md:w-[10rem]'
-        type='button'
-        onClick={() => setShowModal(true)}
-      >
-        Screenshots
-      </button>
+      <div className='mt-5 flex flex-col justify-center gap-2 sm:flex-row'>
+        <Link
+          className='btn group bg-gray-900 px-3 py-1 text-center text-white hover:bg-gray-950'
+          type='button'
+          href={`/projects/${documentId}`}
+        >
+          Show Detail
+        </Link>
+        <button
+          className='borderBlack btn group bg-white px-3 py-1 text-center dark:bg-white/10'
+          type='button'
+          onClick={() => setShowModal(true)}
+        >
+          Screenshots
+        </button>
+      </div>
 
       {showModal &&
         ReactDOM.createPortal(

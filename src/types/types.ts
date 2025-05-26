@@ -14,6 +14,7 @@ export type SkillDataAttributes = {
 
 export type ProjectDataAttributes = {
   id: number
+  documentId: string
   title: string
   description: string
   githubLink?: string
@@ -26,6 +27,7 @@ export type ProjectDataAttributes = {
 }
 
 export interface IStrapiImageData {
+  id: string
   formats: {
     large: IStrapiImageDataFormat
     small: IStrapiImageDataFormat
@@ -53,5 +55,10 @@ type Meta = {
 
 export interface IStrapiApiResponse<T> {
   data: T[]
+  meta: Meta
+}
+
+export interface IStrapiApiSingleResponse<T> {
+  data: T
   meta: Meta
 }

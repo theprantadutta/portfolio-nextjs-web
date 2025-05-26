@@ -6,6 +6,8 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { ProjectDataAttributes } from '@/types/types'
 import { STRAPI_URL } from '@/constants/urls'
 import { ProjectModal } from './project-modal'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 type IProjectProps = {
   children?: ReactNode
@@ -69,6 +71,7 @@ type IProjectProps = {
 // }
 
 export const Project: React.FC<IProjectProps> = ({
+  documentId,
   title,
   description,
   Tags,
@@ -111,7 +114,7 @@ export const Project: React.FC<IProjectProps> = ({
               </li>
             ))}
           </ul>
-          <ProjectModal imageUrls={imageUrls} />
+          <ProjectModal imageUrls={imageUrls} documentId={documentId} />
         </div>
 
         <Image
