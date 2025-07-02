@@ -1,24 +1,15 @@
 'use client'
 
-import { useState } from 'react'
 import Image from 'next/image'
 import { IStrapiImageData, ProjectDataAttributes } from '@/types/types'
+import { BlocksRenderer } from '@strapi/blocks-react-renderer'
+import ProjectCarousel from './project-carousel'
 
 interface ProjectDetailProps {
   project: ProjectDataAttributes
 }
 
 export const ProjectDetail = ({ project }: ProjectDetailProps) => {
-  const getBestImageUrl = (image: IStrapiImageData) => {
-    const formats = image.formats
-    return (
-      formats?.large?.url ||
-      formats?.medium?.url ||
-      formats?.small?.url ||
-      formats?.thumbnail?.url
-    )
-  }
-
   return (
     <div className='mx-auto min-h-screen px-4 transition-colors duration-300 sm:px-6'>
       {/* Header */}
@@ -48,25 +39,10 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
               </div>
             </div>
 
-            <div className='grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4'>
-              {project.imageUrls.map((image, index) => {
-                const imageUrl = `${process.env.NEXT_PUBLIC_STRAPI_PROD_API_URL}${getBestImageUrl(image)}`
-                return (
-                  <div key={image.id} className='group relative'>
-                    <div className='relative aspect-[9/19.5] transform overflow-hidden rounded-lg transition-transform duration-300 group-hover:-translate-y-1 sm:rounded-xl'>
-                      <Image
-                        src={imageUrl}
-                        alt={`${project.title} screenshot ${index + 1}`}
-                        className='h-full w-full object-cover'
-                        fill
-                        sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
-                        quality={90}
-                      />
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
+            <ProjectCarousel
+              imageUrls={project.imageUrls}
+              title={project.title}
+            />
           </div>
         )}
 
@@ -74,14 +50,15 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
         <div className='space-y-8 sm:space-y-12'>
           {/* Description */}
           <div className='relative'>
-            <div className='absolute -left-6 top-0 hidden h-full w-0.5 rounded-full bg-gradient-to-b from-gray-900 to-gray-700 sm:block'></div>
             <div>
               <h2 className='mb-3 text-xl font-bold text-gray-900 dark:text-white sm:mb-4 sm:text-2xl'>
                 About This Project
               </h2>
-              <p className='text-base leading-relaxed text-gray-700 dark:text-gray-300 sm:text-lg'>
-                {project.description}
-              </p>
+              <div className='prose prose-slate dark:prose-invert'>
+                {project.longDescription && (
+                  <BlocksRenderer content={project.longDescription} />
+                )}
+              </div>
             </div>
           </div>
 

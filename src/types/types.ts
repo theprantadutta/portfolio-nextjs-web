@@ -17,6 +17,7 @@ export type ProjectDataAttributes = {
   documentId: string
   title: string
   description: string
+  longDescription?: any
   githubLink?: string
   Tags: {
     id: number

@@ -17,10 +17,9 @@ const nextConfig = {
         hostname: 'images.unsplash.com',
       },
       {
-        protocol: 'http',
-        hostname: 'gmts.kdsgroup.net',
-        port: '30002',
-        pathname: '/uploads/**/*',
+        protocol: 'https',
+        hostname: 'pranta.vps.webdock.cloud',
+        pathname: '/portfolio/uploads/**/*',
       },
       {
         protocol: 'http',
