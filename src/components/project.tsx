@@ -52,7 +52,7 @@ export const Project: React.FC<IProjectProps> = ({
           <ul className='mt-4 flex flex-wrap gap-2 sm:mt-auto'>
             {Tags.slice(0, 2).map((tag, index) => (
               <li
-                className='special-border bg-white/20 px-3 py-1 text-[0.7rem] uppercase tracking-wider text-gray-900 dark:bg-black/20 dark:text-gray-100'
+                className='special-border bg-black/10 px-3 py-1 text-[0.7rem] uppercase tracking-wider text-gray-900 dark:bg-black/20 dark:text-gray-100'
                 key={index}
               >
                 {tag.name}

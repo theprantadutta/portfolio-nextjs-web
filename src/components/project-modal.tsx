@@ -75,7 +75,7 @@ export const ProjectModal: React.FC<IProjectModal> = ({
           Show Detail
         </Link>
         <button
-          className='borderBlack btn group bg-white px-3 py-1 text-center dark:bg-white/10'
+          className='borderBlack btn group bg-gray-200 px-3 py-1 text-center dark:bg-white dark:bg-white/10'
           type='button'
           onClick={() => setShowModal(true)}
         >
