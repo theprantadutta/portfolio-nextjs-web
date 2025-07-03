@@ -18,6 +18,7 @@ export type ProjectDataAttributes = {
   title: string
   description: string
   longDescription?: any
+  googlePlayLink?: string
   githubLink?: string
   Tags: {
     id: number

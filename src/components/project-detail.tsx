@@ -113,6 +113,38 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                   </a>
                 </div>
               )}
+
+              {/* Google Play Link */}
+              {project.googlePlayLink && (
+                <div>
+                  <h3 className='mb-2 text-base font-semibold text-gray-900 dark:text-white sm:mb-3 sm:text-lg'>
+                    Get The App
+                  </h3>
+                  <a
+                    href={project.googlePlayLink}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='data:bg-white/5 inline-flex w-full items-center gap-2 rounded-lg bg-black/5 px-3 py-2 text-xs font-medium transition-colors hover:bg-white/10 dark:hover:bg-black/10 sm:gap-3 sm:px-4 sm:py-3 sm:text-sm'
+                  >
+                    <span className='flex-1 text-left'>
+                      Download on Google Play
+                    </span>
+                    <svg
+                      className='h-3 w-3 sm:h-4 sm:w-4'
+                      fill='none'
+                      stroke='currentColor'
+                      viewBox='0 0 24 24'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth='2'
+                        d='M14 5l7 7m0 0l-7 7m7-7H3'
+                      ></path>
+                    </svg>
+                  </a>
+                </div>
+              )}
             </div>
           </div>
         </div>

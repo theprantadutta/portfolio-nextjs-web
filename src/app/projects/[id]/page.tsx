@@ -38,8 +38,6 @@ async function getProjectData(
     }
   )
 
-  console.log('RES: ', res)
-
   if (!res.ok) {
     throw new Error('Failed to fetch project data')
   }
@@ -62,7 +60,6 @@ export default async function ProjectPage({
     return notFound()
   }
 
-  console.log('projectResponse: ', projectResponse)
   if (!projectResponse.data) {
     return notFound()
   }
