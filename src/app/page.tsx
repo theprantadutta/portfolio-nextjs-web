@@ -27,7 +27,7 @@ export const getAllExperiences = async () => {
 
 export const getAllProjects = async () => {
   const data = await fetch(
-    `${STRAPI_API_URL}/projects?populate=*&filters[isFeatured][$eq]=true&sort=sortBy:desc`,
+    `${STRAPI_API_URL}/projects?populate=*&filters[isFeatured][$eq]=true&sort=sortBy:asc`,
     {
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
