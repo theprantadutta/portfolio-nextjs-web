@@ -4,7 +4,7 @@ export type ExperienceDataAttributes = {
   location: string
   description: string
   date: string
-  soryBy: number
+  sortBy: number
 }
 
 export type SkillDataAttributes = {
@@ -20,12 +20,13 @@ export type ProjectDataAttributes = {
   longDescription?: any
   googlePlayLink?: string
   githubLink?: string
+  cover: IStrapiImageData
   Tags: {
     id: number
     name: string
   }[]
   imageUrls: IStrapiImageData[]
-  soryBy: number
+  sortBy: number
 }
 
 export interface IStrapiImageData {

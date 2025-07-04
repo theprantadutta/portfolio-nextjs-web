@@ -4,10 +4,7 @@ import React, { ReactNode, useRef } from 'react'
 import Image from 'next/image'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ProjectDataAttributes } from '@/types/types'
-import { STRAPI_URL } from '@/constants/urls'
 import { ProjectModal } from './project-modal'
-import { useRouter } from 'next/router'
-import Link from 'next/link'
 
 type IProjectProps = {
   children?: ReactNode
@@ -19,6 +16,7 @@ export const Project: React.FC<IProjectProps> = ({
   description,
   Tags,
   imageUrls,
+  cover,
 }) => {
   const ref = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
@@ -29,7 +27,7 @@ export const Project: React.FC<IProjectProps> = ({
   const scaleProgress = useTransform(scrollYProgress, [0, 1], [0.8, 1])
   const opacityProgress = useTransform(scrollYProgress, [0, 1], [0.6, 1])
 
-  const imageUrl = `${process.env.NEXT_PUBLIC_STRAPI_PROD_API_URL}${imageUrls[0].formats.large.url}`
+  const imageUrl = `${process.env.NEXT_PUBLIC_STRAPI_PROD_API_URL}${cover.formats.large.url}`
 
   return (
     <motion.div
@@ -65,8 +63,8 @@ export const Project: React.FC<IProjectProps> = ({
         <Image
           src={imageUrl}
           alt='Project I worked on'
-          width={imageUrls[0].formats.large.width}
-          height={imageUrls[0].formats.large.height}
+          width={cover.formats.large.width}
+          height={cover.formats.large.height}
           quality={95}
           className='absolute -right-40 top-8 hidden w-[28.25rem] rounded-t-lg shadow-2xl transition group-even:-left-40 group-even:right-[initial] group-hover:-translate-x-3 group-hover:translate-y-3 group-hover:-rotate-2 group-hover:scale-[1.04] group-even:group-hover:translate-x-3 group-even:group-hover:translate-y-3 group-even:group-hover:rotate-2 sm:block'
         />

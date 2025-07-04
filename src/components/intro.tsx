@@ -38,7 +38,7 @@ export const Intro: React.FC<IIntroProps> = () => {
           >
             <Image
               src={profilePic}
-              alt='Pranta portrait'
+              alt='pranta-portrait'
               width='192'
               height='192'
               quality='95'

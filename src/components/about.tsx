@@ -42,17 +42,29 @@ export const About: React.FC<IAboutProps> = () => {
         learning and evolving with the{' '}
         <span className='underline'>ever-changing tech landscape</span>.
       </p>
-      <p>
+
+      <p className='mb-3'>
         I also did a good chunk of{' '}
-        <span className='font-semibold'>System Design</span>. I Designed and
+        <span className='font-semibold'>System Design</span>. I designed and
         implemented a robust <span className='underline'>Ubuntu server</span>{' '}
         infrastructure for company operations, featuring{' '}
         <span className='font-medium underline'>
           GitLab, Docker, GitLab CI/CD, Prometheus and Grafana
         </span>{' '}
-        with comprehensive Health Checks services and a meticulous{' '}
+        with comprehensive health checks and a meticulous{' '}
         <span className='underline'>backup and restore policy</span> for system
         resilience.
+      </p>
+
+      <p>
+        These days, I’ve also got a few{' '}
+        <span className='font-semibold underline'>
+          apps published on the Google Play Store
+        </span>
+        , built with{' '}
+        <span className='font-medium'>Flutter and React Native</span>. Each one
+        reflects my attention to detail, focus on performance, and love for
+        clean UI/UX.
       </p>
     </motion.section>
   )
