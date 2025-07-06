@@ -11,7 +11,7 @@ type IProjectProps = {
 } & ProjectDataAttributes
 
 export const Project: React.FC<IProjectProps> = ({
-  documentId,
+  slug,
   title,
   description,
   Tags,
@@ -27,7 +27,7 @@ export const Project: React.FC<IProjectProps> = ({
   const scaleProgress = useTransform(scrollYProgress, [0, 1], [0.8, 1])
   const opacityProgress = useTransform(scrollYProgress, [0, 1], [0.6, 1])
 
-  const imageUrl = `${process.env.NEXT_PUBLIC_STRAPI_PROD_API_URL}${cover.formats.large.url}`
+  // const imageUrl = `${process.env.NEXT_PUBLIC_STRAPI_PROD_API_URL}${cover.formats.large.url}`
 
   return (
     <motion.div
@@ -57,11 +57,11 @@ export const Project: React.FC<IProjectProps> = ({
               </li>
             ))}
           </ul>
-          <ProjectModal imageUrls={imageUrls} documentId={documentId} />
+          <ProjectModal imageUrls={imageUrls} slug={slug} />
         </div>
 
         <Image
-          src={imageUrl}
+          src={cover.formats.large.url}
           alt='Project I worked on'
           width={cover.formats.large.width}
           height={cover.formats.large.height}

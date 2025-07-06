@@ -27,6 +27,7 @@ export type ProjectDataAttributes = {
   }[]
   imageUrls: IStrapiImageData[]
   sortBy: number
+  slug: string
 }
 
 export interface IStrapiImageData {

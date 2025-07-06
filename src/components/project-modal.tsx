@@ -12,13 +12,10 @@ import { CirclesWithBar } from 'react-loader-spinner'
 interface IProjectModal {
   children?: ReactNode
   imageUrls: IStrapiImageData[]
-  documentId: string
+  slug: string
 }
 
-export const ProjectModal: React.FC<IProjectModal> = ({
-  imageUrls,
-  documentId,
-}) => {
+export const ProjectModal: React.FC<IProjectModal> = ({ imageUrls, slug }) => {
   const [showModal, setShowModal] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isLoading, setIsLoading] = useState(false) // Track loading state
@@ -70,7 +67,7 @@ export const ProjectModal: React.FC<IProjectModal> = ({
         <Link
           className='btn group bg-gray-900 px-3 py-1 text-center text-white hover:bg-gray-950'
           type='button'
-          href={`/projects/${documentId}`}
+          href={`/projects/${slug}`}
         >
           Show Detail
         </Link>

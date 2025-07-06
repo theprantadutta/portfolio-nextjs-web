@@ -65,7 +65,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
       className='h-full w-full'
     >
       {sortedImageUrls.map((image, index) => {
-        const imageUrl = `${process.env.NEXT_PUBLIC_STRAPI_PROD_API_URL}${getBestImageUrl(image)}`
+        const imageUrl = `${getBestImageUrl(image)}`
         return (
           <SwiperSlide key={image.id} style={{ width: '270px' }}>
             <div data-swiper-parallax='-23%'>

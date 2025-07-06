@@ -18,6 +18,11 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/**', // Allows all paths under res.cloudinary.com
+      },
+      {
+        protocol: 'https',
         hostname: 'pranta.vps.webdock.cloud',
         pathname: '/portfolio/uploads/**/*',
       },
