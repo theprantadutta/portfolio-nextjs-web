@@ -10,7 +10,7 @@ export async function generateStaticParams() {
       Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
       'Content-Type': 'application/json',
     },
-    next: { revalidate: 3600 }, // Optional: Revalidate every hour (ISR)
+    // next: { revalidate: 3600 }, // Optional: Revalidate every hour (ISR)
   })
 
   if (!response.ok) {
@@ -33,7 +33,7 @@ async function getProjectData(slug: string) {
         Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
         'Content-Type': 'application/json',
       },
-      next: { revalidate: 3600 }, // Optional: Revalidate every hour (ISR)
+      // next: { revalidate: 3600 }, // Optional: Revalidate every hour (ISR)
     }
   )
 

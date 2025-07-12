@@ -15,6 +15,7 @@
     "lint-staged": "lint-staged"
   },
   "dependencies": {
+    "@next/bundle-analyzer": "^15.3.5",
     "@react-email/components": "^0.0.36",
     "@react-email/tailwind": "^1.0.2",
     "@strapi/blocks-react-renderer": "^1.0.2",
