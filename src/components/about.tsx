@@ -2,7 +2,8 @@
 
 import React, { ReactNode } from 'react'
 import { useSectionInView } from '@/lib/hooks'
-import { motion } from 'motion/react'
+// import { motion } from 'motion/react'
+import * as motion from 'motion/react-m'
 import { SectionHeading } from '@/components/section-heading'
 
 interface IAboutProps {

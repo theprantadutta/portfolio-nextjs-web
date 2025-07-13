@@ -2,7 +2,8 @@
 
 import Image from 'next/image'
 import React, { ReactNode } from 'react'
-import { motion } from 'motion/react'
+// import { motion } from 'motion/react'
+import * as m from 'motion/react-m'
 import Link from 'next/link'
 import { BsArrowRight, BsLinkedin } from 'react-icons/bs'
 import { HiDownload } from 'react-icons/hi'
@@ -28,7 +29,7 @@ export const Intro: React.FC<IIntroProps> = () => {
     >
       <div className='flex items-center justify-center'>
         <div className='group relative'>
-          <motion.div
+          <m.div
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{
@@ -45,9 +46,9 @@ export const Intro: React.FC<IIntroProps> = () => {
               priority={true}
               className='h-24 w-24 rounded-full border-[0.35rem] border-white object-cover shadow-xl active:scale-105 group-hover:scale-105'
             />
-          </motion.div>
+          </m.div>
 
-          <motion.span
+          <m.span
             className='absolute bottom-0 right-0 text-4xl group-hover:scale-105'
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -59,11 +60,11 @@ export const Intro: React.FC<IIntroProps> = () => {
             }}
           >
             👋
-          </motion.span>
+          </m.span>
         </div>
       </div>
 
-      <motion.h1
+      <m.h1
         className='mb-10 mt-4 px-4 text-2xl font-medium !leading-[1.5] sm:text-4xl'
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
@@ -73,9 +74,9 @@ export const Intro: React.FC<IIntroProps> = () => {
         <span className='font-bold'>3 years</span> of experience. My focus is{' '}
         <span className='underline'>Flutter</span> &{' '}
         <span className='underline'>React Native</span>.
-      </motion.h1>
+      </m.h1>
 
-      <motion.div
+      <m.div
         className='flex flex-col items-center justify-center gap-2 px-4 text-lg font-medium sm:flex-row'
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
@@ -123,7 +124,7 @@ export const Intro: React.FC<IIntroProps> = () => {
             <FaGithubSquare />
           </a>
         </div>
-      </motion.div>
+      </m.div>
     </section>
   )
 }

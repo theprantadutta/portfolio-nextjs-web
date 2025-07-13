@@ -11,6 +11,7 @@ import { Footer } from '@/components/footer'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { ThemeContextProvider } from '@/context/theme-context'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import MotionProvider from '@/components/motion-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -35,15 +36,17 @@ const RootLayout: React.FC<IRootLayoutProps> = ({ children }) => {
         <div className='special-border fixed right-[11rem] top-[-6rem] -z-10 h-[31.25rem] w-[31.25rem] bg-[#6ed0ac] blur-[10rem] dark:bg-[#204f57] sm:w-[68.75rem]' />
         <div className='special-border fixed left-[-35rem] top-[-1rem] -z-10 h-[31.25rem] w-[50rem] bg-[#9bd2d3] blur-[10rem] dark:bg-[#3e7055] sm:w-[68.75rem] md:left-[-33rem] lg:left-[-28rem] xl:left-[-15rem] 2xl:left-[-5rem]' />
 
-        <ThemeContextProvider>
-          <ActiveSectionContextProvider>
-            <Header />
-            {children}
-            <Footer />
-            <Toaster position='top-right' />
-            <ThemeSwitch />
-          </ActiveSectionContextProvider>
-        </ThemeContextProvider>
+        <MotionProvider>
+          <ThemeContextProvider>
+            <ActiveSectionContextProvider>
+              <Header />
+              {children}
+              <Footer />
+              <Toaster position='top-right' />
+              <ThemeSwitch />
+            </ActiveSectionContextProvider>
+          </ThemeContextProvider>
+        </MotionProvider>
         <Analytics />
         <SpeedInsights />
       </body>

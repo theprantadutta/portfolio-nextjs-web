@@ -1,7 +1,8 @@
 'use client'
 
 import React, { ReactNode } from 'react'
-import { motion } from 'motion/react'
+// import { motion } from 'motion/react'
+import * as m from 'motion/react-m'
 import { useSectionInView } from '@/lib/hooks'
 import { sendEmail } from '@/actions/sendEmail'
 import toast from 'react-hot-toast'
@@ -16,7 +17,7 @@ export const Contact: React.FC<IContactProps> = () => {
   const { ref } = useSectionInView('Contact')
 
   return (
-    <motion.section
+    <m.section
       id='contact'
       ref={ref}
       className='mb-20 w-[min(100%,38rem)] scroll-mt-28 text-center sm:mb-28'
@@ -73,6 +74,6 @@ export const Contact: React.FC<IContactProps> = () => {
         />
         <SubmitBtn />
       </form>
-    </motion.section>
+    </m.section>
   )
 }

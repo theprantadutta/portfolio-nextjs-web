@@ -2,7 +2,8 @@
 
 import React, { ReactNode, useRef } from 'react'
 import Image from 'next/image'
-import { motion, useScroll, useTransform } from 'motion/react'
+import { useScroll, useTransform } from 'motion/react'
+import * as m from 'motion/react-m'
 import { ProjectDataAttributes } from '@/types/types'
 import { ProjectModal } from './project-modal'
 
@@ -30,7 +31,7 @@ export const Project: React.FC<IProjectProps> = ({
   // const imageUrl = `${process.env.NEXT_PUBLIC_STRAPI_PROD_API_URL}${cover.formats.large.url}`
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       style={{
         scale: scaleProgress,
@@ -69,6 +70,6 @@ export const Project: React.FC<IProjectProps> = ({
           className='absolute -right-40 top-8 hidden w-[28.25rem] rounded-t-lg shadow-2xl transition group-even:-left-40 group-even:right-[initial] group-hover:-translate-x-3 group-hover:translate-y-3 group-hover:-rotate-2 group-hover:scale-[1.04] group-even:group-hover:translate-x-3 group-even:group-hover:translate-y-3 group-even:group-hover:rotate-2 sm:block'
         />
       </section>
-    </motion.div>
+    </m.div>
   )
 }

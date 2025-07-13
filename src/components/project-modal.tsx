@@ -2,7 +2,8 @@
 
 import { StrapiImage } from '@/shared/StrapiImage'
 import { IStrapiImageData } from '@/types/types'
-import { motion } from 'motion/react'
+// import { motion } from 'motion/react'
+import * as m from 'motion/react-m'
 import Link from 'next/link'
 import React, { ReactNode, useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
@@ -82,7 +83,7 @@ export const ProjectModal: React.FC<IProjectModal> = ({ imageUrls, slug }) => {
 
       {showModal &&
         ReactDOM.createPortal(
-          <motion.div
+          <m.div
             id='default-modal'
             className='fixed inset-0 z-[9999] flex items-center justify-center overflow-x-hidden'
             initial={{ opacity: 0, scale: 0.8 }}
@@ -96,7 +97,7 @@ export const ProjectModal: React.FC<IProjectModal> = ({ imageUrls, slug }) => {
               onClick={handleClose}
             ></div>
 
-            <motion.div
+            <m.div
               ref={modalRef}
               className='relative max-h-full w-full max-w-full p-4 md:max-w-xl lg:max-w-2xl'
               initial={{ opacity: 0, y: -50 }}
@@ -136,7 +137,7 @@ export const ProjectModal: React.FC<IProjectModal> = ({ imageUrls, slug }) => {
                       </div>
                     )}
 
-                    <motion.div
+                    <m.div
                       className='duration-700 ease-in-out'
                       data-carousel-item=''
                       key={currentImage.url}
@@ -160,7 +161,7 @@ export const ProjectModal: React.FC<IProjectModal> = ({ imageUrls, slug }) => {
                         alt='...'
                         onLoad={() => setIsLoading(false)} // Hide loader when the image is loaded
                       />
-                    </motion.div>
+                    </m.div>
                   </div>
 
                   {/* Slider indicators */}
@@ -220,8 +221,8 @@ export const ProjectModal: React.FC<IProjectModal> = ({ imageUrls, slug }) => {
                   </button>
                 </div>
               </div>
-            </motion.div>
-          </motion.div>,
+            </m.div>
+          </m.div>,
           document.body
         )}
     </>

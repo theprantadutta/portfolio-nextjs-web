@@ -2,7 +2,8 @@
 
 import React, { ReactNode } from 'react'
 import { useSectionInView } from '@/lib/hooks'
-import { motion } from 'motion/react'
+// import { motion } from 'motion/react'
+import * as m from 'motion/react-m'
 import { SectionHeading } from '@/components/section-heading'
 import { IStrapiApiResponse, SkillDataAttributes } from '@/types/types'
 
@@ -37,7 +38,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
       <SectionHeading>My skills</SectionHeading>
       <ul className='flex flex-wrap justify-center gap-2 text-lg text-gray-800'>
         {skills.data.map((skill, index) => (
-          <motion.li
+          <m.li
             className='borderBlack special-border bg-white px-5 py-3 dark:bg-white/10 dark:text-white/80'
             key={skill.id}
             variants={fadeInAnimationVariants}
@@ -49,7 +50,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
             custom={index}
           >
             {skill.title}
-          </motion.li>
+          </m.li>
         ))}
       </ul>
     </section>
