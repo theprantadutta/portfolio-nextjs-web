@@ -2,7 +2,7 @@
 
 import { StrapiImage } from '@/shared/StrapiImage'
 import { IStrapiImageData } from '@/types/types'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import Link from 'next/link'
 import React, { ReactNode, useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'

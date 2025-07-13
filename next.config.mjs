@@ -4,7 +4,7 @@ import bundleAnalyzer from '@next/bundle-analyzer'
 const nextConfig = {
   experimental: {
     reactCompiler: true,
-    optimizePackageImports: ['framer-motion'], // trying to reduce size
+    optimizePackageImports: ['motion/react'], // trying to reduce size
   },
   typescript: {
     // !! WARN !!

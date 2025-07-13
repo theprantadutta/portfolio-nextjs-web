@@ -2,7 +2,7 @@
 
 import React, { ReactNode, useRef } from 'react'
 import Image from 'next/image'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'motion/react'
 import { ProjectDataAttributes } from '@/types/types'
 import { ProjectModal } from './project-modal'
 

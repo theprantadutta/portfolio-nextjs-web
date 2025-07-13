@@ -1,7 +1,7 @@
 'use client'
 
 import React, { ReactNode, useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion } from 'motion/react'
 import Link from 'next/link'
 import clsx from 'clsx'
 
