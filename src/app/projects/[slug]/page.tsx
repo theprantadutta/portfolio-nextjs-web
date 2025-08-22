@@ -55,11 +55,15 @@ export default async function ProjectPage({
 }: {
   params: Promise<{ slug: string }>
 }) {
-  let projectResponse: ProjectDataAttributes
-
-  const { slug } = await params // Fixed: awaiting params for Next.js 15
+  let projectResponse: ProjectDataAttributes | null = null
 
   try {
+    const { slug } = await params // Fixed: awaiting params for Next.js 15
+
+    if (!slug || typeof slug !== 'string') {
+      return notFound()
+    }
+
     projectResponse = await getProjectData(slug)
   } catch (error) {
     console.error('Error fetching project data:', error)

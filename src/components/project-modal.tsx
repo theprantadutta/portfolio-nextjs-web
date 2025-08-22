@@ -2,13 +2,12 @@
 
 import { StrapiImage } from '@/shared/StrapiImage'
 import { IStrapiImageData } from '@/types/types'
-// import { motion } from 'motion/react'
-import * as m from 'motion/react-m'
 import Link from 'next/link'
 import React, { ReactNode, useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { FaArrowLeft, FaArrowRight, FaTimes } from 'react-icons/fa'
-import { CirclesWithBar } from 'react-loader-spinner'
+import { CirclesWithBars } from '@/components/ui/loading-spinners'
+import { useModalAnimation } from '@/lib/animation-hooks'
 
 interface IProjectModal {
   children?: ReactNode
@@ -19,10 +18,13 @@ interface IProjectModal {
 export const ProjectModal: React.FC<IProjectModal> = ({ imageUrls, slug }) => {
   const [showModal, setShowModal] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
-  const [isLoading, setIsLoading] = useState(false) // Track loading state
+  const [isLoading, setIsLoading] = useState(false)
   const modalRef = useRef<HTMLDivElement | null>(null)
 
-  const handleClose = () => setShowModal(false) // Change to close modal properly
+  const { shouldRender, getOverlayClassName, getModalClassName } =
+    useModalAnimation(showModal)
+
+  const handleClose = () => setShowModal(false)
 
   useEffect(() => {
     const html = document.querySelector('html')
@@ -56,24 +58,33 @@ export const ProjectModal: React.FC<IProjectModal> = ({ imageUrls, slug }) => {
 
   const currentImage = imageUrls[currentSlide].formats.large
 
-  const imageVariants = {
-    hidden: { opacity: 0, x: 100 },
-    visible: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -100 },
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev === imageUrls.length - 1 ? 0 : prev + 1))
+    setIsLoading(true)
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev === 0 ? imageUrls.length - 1 : prev - 1))
+    setIsLoading(true)
+  }
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index)
+    setIsLoading(true)
   }
 
   return (
     <>
       <div className='mt-5 flex flex-col justify-center gap-2 sm:flex-row'>
         <Link
-          className='btn group bg-gray-900 px-3 py-1 text-center text-white hover:bg-gray-950'
+          className='btn-primary special-border px-6 py-2 text-center text-sm font-medium'
           type='button'
           href={`/projects/${slug}`}
         >
           Show Detail
         </Link>
         <button
-          className='borderBlack btn group bg-gray-200 px-3 py-1 text-center dark:bg-white dark:bg-white/10'
+          className='btn-secondary special-border px-6 py-2 text-center text-sm font-medium'
           type='button'
           onClick={() => setShowModal(true)}
         >
@@ -81,102 +92,81 @@ export const ProjectModal: React.FC<IProjectModal> = ({ imageUrls, slug }) => {
         </button>
       </div>
 
-      {showModal &&
+      {shouldRender &&
         ReactDOM.createPortal(
-          <m.div
-            id='default-modal'
-            className='fixed inset-0 z-[9999] flex items-center justify-center overflow-x-hidden'
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.3 }}
+          <div
+            className={`${getOverlayClassName()} flex items-center justify-center p-4 backdrop-blur-md`}
           >
-            {/* Backdrop */}
             <div
-              className='fixed inset-0 bg-black opacity-50'
-              onClick={handleClose}
-            ></div>
-
-            <m.div
               ref={modalRef}
-              className='relative max-h-full w-full max-w-full p-4 md:max-w-xl lg:max-w-2xl'
-              initial={{ opacity: 0, y: -50 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 50 }}
-              transition={{ duration: 0.3 }}
+              className={getModalClassName(
+                'relative mx-auto max-h-full w-full max-w-4xl'
+              )}
             >
-              <div className='relative rounded-lg'>
+              <div className='glass-card special-border relative overflow-hidden border border-white/20 bg-white/10 shadow-2xl backdrop-blur-xl dark:border-gray-700/50 dark:bg-gray-900/80'>
+                {/* Enhanced gradient background */}
+                <div className='absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 dark:from-blue-500/5 dark:via-purple-500/5 dark:to-pink-500/5' />
+
                 {/* Close Button */}
                 <button
-                  className='absolute right-2 top-2 z-40 flex h-10 w-10 items-center justify-center rounded-full bg-white/30 hover:bg-white/50 dark:bg-gray-800/30 dark:hover:bg-gray-800/60'
+                  className='special-border glass-card group absolute right-4 top-4 z-40 flex h-10 w-10 items-center justify-center border-white/20 transition-all duration-300 hover:bg-red-500/20 dark:border-white/10'
                   onClick={handleClose}
                 >
-                  <FaTimes className='text-gray-800 dark:text-white' />
+                  <FaTimes className='h-4 w-4 text-gray-700 transition-colors duration-300 group-hover:text-red-500 dark:text-gray-300' />
                 </button>
 
                 {/* Carousel */}
-                <div
-                  id='default-carousel'
-                  className='relative w-full'
-                  data-carousel='slide'
-                >
+                <div className='relative w-full'>
                   {/* Carousel wrapper */}
-                  <div className='relative h-[80vh] max-h-screen rounded-lg'>
+                  <div className='special-border relative h-[80vh] max-h-screen overflow-hidden'>
                     {isLoading && (
-                      <div className='absolute inset-0 z-50 flex items-center justify-center'>
-                        <CirclesWithBar
-                          height='100'
-                          width='100'
-                          color='#ffffff'
-                          outerCircleColor='#ffffff'
-                          innerCircleColor='#ffffff'
-                          barColor='#ffffff'
-                          ariaLabel='circles-with-bar-loading'
-                          visible={true}
-                        />
+                      <div className='absolute inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm'>
+                        <div className='glass-card special-border p-6'>
+                          <CirclesWithBars
+                            size='lg'
+                            color='white'
+                            outerCircleColor='text-blue-500'
+                            innerCircleColor='text-purple-500'
+                            barColor='text-blue-400'
+                          />
+                          <p className='mt-3 text-center text-sm text-white'>
+                            Loading...
+                          </p>
+                        </div>
                       </div>
                     )}
 
-                    <m.div
-                      className='duration-700 ease-in-out'
-                      data-carousel-item=''
-                      key={currentImage.url}
-                      initial='hidden'
-                      animate='visible'
-                      exit='exit'
-                      variants={imageVariants}
-                      transition={{
-                        type: 'spring',
-                        stiffness: 100,
-                        damping: 20,
-                      }}
+                    <div
+                      className={`h-full w-full transition-all duration-500 ease-out ${
+                        isLoading
+                          ? 'scale-95 opacity-0'
+                          : 'scale-100 opacity-100'
+                      }`}
                     >
                       <StrapiImage
                         height={500}
                         width={500}
                         src={currentImage.url}
-                        className={`absolute left-1/2 top-1/2 block max-h-full max-w-full -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ${
-                          isLoading ? 'opacity-0' : 'opacity-100'
-                        }`}
-                        alt='...'
-                        onLoad={() => setIsLoading(false)} // Hide loader when the image is loaded
+                        className='absolute left-1/2 top-1/2 block max-h-full max-w-full -translate-x-1/2 -translate-y-1/2 object-contain'
+                        alt='Project screenshot'
+                        onLoad={() => setIsLoading(false)}
                       />
-                    </m.div>
+                    </div>
                   </div>
 
                   {/* Slider indicators */}
-                  <div className='absolute bottom-5 left-1/2 z-30 flex -translate-x-1/2 space-x-3'>
+                  <div className='absolute bottom-6 left-1/2 z-30 flex -translate-x-1/2 space-x-3'>
                     {imageUrls.map((_, i) => (
                       <button
                         key={i}
                         type='button'
-                        className='h-3 w-3 rounded-full'
+                        className={`h-3 w-3 rounded-full transition-all duration-300 ${
+                          currentSlide === i
+                            ? 'scale-125 bg-white shadow-lg'
+                            : 'bg-white/50 hover:scale-110 hover:bg-white/75'
+                        }`}
                         aria-label={`Slide ${i + 1}`}
-                        data-carousel-slide-to={i}
-                        onClick={() => {
-                          setCurrentSlide(i)
-                          setIsLoading(true) // Set loading to true when switching slides
-                        }}
+                        onClick={() => goToSlide(i)}
                       />
                     ))}
                   </div>
@@ -184,45 +174,23 @@ export const ProjectModal: React.FC<IProjectModal> = ({ imageUrls, slug }) => {
                   {/* Slider controls */}
                   <button
                     type='button'
-                    className='group absolute start-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none'
-                    data-carousel-prev=''
-                    onClick={() => {
-                      setCurrentSlide(
-                        currentSlide === 0
-                          ? imageUrls.length - 1
-                          : currentSlide - 1
-                      )
-                      setIsLoading(true) // Set loading to true when changing slides
-                    }}
+                    className='special-border glass-card group absolute start-4 top-1/2 z-30 flex h-12 w-12 -translate-y-1/2 items-center justify-center border-white/20 transition-all duration-300 hover:bg-white/20 dark:border-white/10'
+                    onClick={prevSlide}
                   >
-                    <span className='inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/20 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white dark:bg-gray-800/20 dark:group-hover:bg-gray-800/60 dark:group-focus:ring-gray-800/70'>
-                      <FaArrowLeft className='h-4 w-4 text-gray-800 dark:text-white rtl:rotate-180' />
-                      <span className='sr-only'>Previous</span>
-                    </span>
+                    <FaArrowLeft className='h-4 w-4 text-gray-700 transition-colors duration-300 group-hover:text-white dark:text-gray-300' />
                   </button>
 
                   <button
                     type='button'
-                    className='group absolute end-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none'
-                    data-carousel-next=''
-                    onClick={() => {
-                      setCurrentSlide(
-                        currentSlide === imageUrls.length - 1
-                          ? 0
-                          : currentSlide + 1
-                      )
-                      setIsLoading(true) // Set loading to true when changing slides
-                    }}
+                    className='special-border glass-card group absolute end-4 top-1/2 z-30 flex h-12 w-12 -translate-y-1/2 items-center justify-center border-white/20 transition-all duration-300 hover:bg-white/20 dark:border-white/10'
+                    onClick={nextSlide}
                   >
-                    <span className='inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/20 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white dark:bg-gray-800/20 dark:group-hover:bg-gray-800/60 dark:group-focus:ring-gray-800/70'>
-                      <FaArrowRight className='h-4 w-4 text-gray-800 dark:text-white rtl:rotate-180' />
-                      <span className='sr-only'>Next</span>
-                    </span>
+                    <FaArrowRight className='h-4 w-4 text-gray-700 transition-colors duration-300 group-hover:text-white dark:text-gray-300' />
                   </button>
                 </div>
               </div>
-            </m.div>
-          </m.div>,
+            </div>
+          </div>,
           document.body
         )}
     </>

@@ -1,9 +1,11 @@
 'use client'
 
 import React, { ReactNode } from 'react'
-// import { motion } from 'motion/react'
-import * as m from 'motion/react-m'
 import { useSectionInView } from '@/lib/hooks'
+import {
+  useAnimationOnScroll,
+  useStaggeredAnimation,
+} from '@/lib/animation-hooks'
 import { sendEmail } from '@/actions/sendEmail'
 import toast from 'react-hot-toast'
 import { SectionHeading } from '@/components/section-heading'
@@ -16,64 +18,136 @@ interface IContactProps {
 export const Contact: React.FC<IContactProps> = () => {
   const { ref } = useSectionInView('Contact')
 
+  const sectionAnimation = useAnimationOnScroll({
+    delay: 200,
+    animationClass: 'animate-fade-in-up',
+  })
+
+  const { containerRef, getItemClassName } = useStaggeredAnimation({
+    itemCount: 3, // heading, description, form
+    delay: 400,
+    staggerDelay: 150,
+    animationClass: 'animate-fade-in-up',
+  })
+
   return (
-    <m.section
-      id='contact'
-      ref={ref}
-      className='mb-20 w-[min(100%,38rem)] scroll-mt-28 text-center sm:mb-28'
-      initial={{
-        opacity: 0,
-      }}
-      whileInView={{
-        opacity: 1,
-      }}
-      transition={{
-        duration: 1,
-      }}
-      viewport={{
-        once: true,
-      }}
-    >
-      <SectionHeading>Contact me</SectionHeading>
+    <section id='contact' ref={ref} className='section-spacing scroll-mt-28'>
+      {/* Background Elements */}
+      <div className='absolute inset-0 -z-10 overflow-hidden'>
+        <div className='absolute left-1/4 top-1/4 h-[400px] w-[400px] rounded-full bg-gradient-to-br from-blue-400/10 to-purple-400/10 blur-3xl' />
+        <div className='absolute bottom-1/4 right-1/4 h-[300px] w-[300px] rounded-full bg-gradient-to-br from-purple-400/10 to-pink-400/10 blur-3xl' />
+      </div>
 
-      <p className='-mt-4 text-gray-700 dark:text-white/80'>
-        Please contact me directly at{' '}
-        <a className='underline' href='mailto:prantadutta1997@gmail.com'>
-          prantadutta1997@gmail.com
-        </a>{' '}
-        or through this form.
-      </p>
+      <div className='content-container mx-auto max-w-2xl'>
+        <div ref={containerRef} className='text-center'>
+          {/* Section Header */}
+          <div className={`mb-8 ${getItemClassName(0)}`}>
+            <SectionHeading>Contact Me</SectionHeading>
+            <p className='mt-4 text-lg text-gray-600 dark:text-gray-400'>
+              Let&apos;s discuss your project and bring your ideas to life
+            </p>
+          </div>
 
-      <form
-        className='mt-10 flex flex-col dark:text-black'
-        action={async (formData) => {
-          const { error } = await sendEmail(formData)
+          {/* Contact Info */}
+          <div className={`mb-10 ${getItemClassName(1)}`}>
+            <p className='mb-6 text-gray-700 dark:text-white/80'>
+              Please contact me directly at{' '}
+              <a
+                className='text-gradient hover:text-gradient-accent font-semibold transition-all duration-300'
+                href='mailto:prantadutta1997@gmail.com'
+              >
+                prantadutta1997@gmail.com
+              </a>{' '}
+              or through this form.
+            </p>
 
-          if (error) {
-            toast.error(error)
-            return
-          }
+            {/* Availability Badge */}
+            <div className='glass-card special-border inline-flex items-center gap-2 border border-green-200 px-4 py-2 dark:border-green-800'>
+              <div className='h-2 w-2 animate-pulse rounded-full bg-green-500' />
+              <span className='text-sm font-medium text-green-700 dark:text-green-400'>
+                Available to hire
+              </span>
+            </div>
+          </div>
 
-          toast.success('Email sent successfully!')
-        }}
-      >
-        <input
-          className='borderBlack special-border h-14 px-4 text-sm font-semibold transition-all dark:bg-gray-900 dark:bg-opacity-80 dark:text-gray-300 dark:outline-none dark:focus:bg-opacity-100'
-          name='senderEmail'
-          type='email'
-          required
-          maxLength={500}
-          placeholder='Your email'
-        />
-        <textarea
-          className='borderBlack special-border my-3 h-52 p-4 text-sm font-semibold transition-all dark:bg-gray-900 dark:bg-opacity-80 dark:text-gray-300 dark:outline-none dark:focus:bg-opacity-100'
-          name='message'
-          placeholder='Your message'
-          required
-          maxLength={5000}
-        />
-        <SubmitBtn />
-      </form>
-    </m.section>
+          {/* Contact Form */}
+          <div className={`${getItemClassName(2)}`}>
+            <form
+              className='space-y-6'
+              action={async (formData) => {
+                const { error } = await sendEmail(formData)
+
+                if (error) {
+                  toast.error(error)
+                  return
+                }
+
+                toast.success('Email sent successfully!')
+              }}
+            >
+              <div className='grid gap-6 md:grid-cols-2'>
+                <div className='space-y-2'>
+                  <label
+                    htmlFor='senderName'
+                    className='block text-left text-sm font-medium text-gray-700 dark:text-gray-300'
+                  >
+                    Your Name
+                  </label>
+                  <input
+                    id='senderName'
+                    name='senderName'
+                    type='text'
+                    required
+                    maxLength={100}
+                    placeholder='John Doe'
+                    className='glass-card special-border h-14 w-full border border-gray-200 px-4 text-gray-900 placeholder-gray-500 transition-all duration-300 focus:border-transparent focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:text-gray-100 dark:placeholder-gray-400'
+                  />
+                </div>
+
+                <div className='space-y-2'>
+                  <label
+                    htmlFor='senderEmail'
+                    className='block text-left text-sm font-medium text-gray-700 dark:text-gray-300'
+                  >
+                    Your Email
+                  </label>
+                  <input
+                    id='senderEmail'
+                    name='senderEmail'
+                    type='email'
+                    required
+                    maxLength={500}
+                    placeholder='john@example.com'
+                    className='glass-card special-border h-14 w-full border border-gray-200 px-4 text-gray-900 placeholder-gray-500 transition-all duration-300 focus:border-transparent focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:text-gray-100 dark:placeholder-gray-400'
+                  />
+                </div>
+              </div>
+
+              <div className='space-y-2'>
+                <label
+                  htmlFor='message'
+                  className='block text-left text-sm font-medium text-gray-700 dark:text-gray-300'
+                >
+                  Your Message
+                </label>
+                <textarea
+                  id='message'
+                  name='message'
+                  placeholder='Hi Pranta, I would like to discuss...'
+                  required
+                  maxLength={5000}
+                  rows={6}
+                  className='glass-card special-border w-full resize-none border border-gray-200 p-4 text-gray-900 placeholder-gray-500 transition-all duration-300 focus:border-transparent focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:text-gray-100 dark:placeholder-gray-400'
+                />
+              </div>
+
+              <div className='pt-4'>
+                <SubmitBtn />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
   )
 }

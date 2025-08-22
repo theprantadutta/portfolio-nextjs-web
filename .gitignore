@@ -42,3 +42,5 @@ next-env.d.ts
 
 # Eslint Cache
 .eslintcache
+
+.qoder/

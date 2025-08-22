@@ -1,181 +1,248 @@
 'use client'
 
-import React, { ReactNode, useState } from 'react'
-// import { motion } from 'motion/react'
-import * as m from 'motion/react-m'
+import React, { ReactNode, useState, useEffect } from 'react'
 import Link from 'next/link'
 import clsx from 'clsx'
 
 import { links } from '@/lib/data'
 import { useActiveSectionContext } from '@/context/active-section-context'
-import { FiMenu, FiX } from 'react-icons/fi'
+import { useStaggeredAnimation } from '@/lib/animation-hooks'
+import {
+  FiMenu,
+  FiX,
+  FiHome,
+  FiUser,
+  FiBriefcase,
+  FiStar,
+  FiMail,
+} from 'react-icons/fi'
 
 interface IHeaderProps {
   children?: ReactNode
+}
+
+// Icon mapping for navigation items
+const navigationIcons = {
+  Home: FiHome,
+  About: FiUser,
+  Projects: FiBriefcase,
+  Skills: FiStar,
+  Experience: FiBriefcase,
+  Contact: FiMail,
 }
 
 export const Header: React.FC<IHeaderProps> = () => {
   const { activeSection, setActiveSection, setTimeOfLastClick } =
     useActiveSectionContext()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  const { containerRef, getItemClassName } = useStaggeredAnimation({
+    itemCount: links.length,
+    delay: 100,
+    staggerDelay: 50,
+    animationClass: 'animate-fade-in',
+  })
+
+  // Handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
   }
 
+  const handleNavClick = (sectionName: any) => {
+    setActiveSection(sectionName)
+    setTimeOfLastClick(Date.now())
+    setIsMenuOpen(false)
+  }
+
   return (
     <header className='relative z-[999]'>
-      <m.div
-        className='sm:special-border fixed left-1/2 top-0 hidden h-[4.5rem] w-full rounded-none border border-white border-opacity-40 bg-white bg-opacity-80 shadow-lg shadow-black/[0.03] backdrop-blur-[0.5rem] dark:border-black/40 dark:bg-gray-950 dark:bg-opacity-75 sm:top-6 sm:block sm:h-[3.25rem] sm:w-[36rem]'
-        initial={{ y: -100, x: '-50%', opacity: 0 }}
-        animate={{ y: 0, x: '-50%', opacity: 1 }}
-      ></m.div>
+      {/* Desktop Navigation Background - Only visible when scrolled */}
+      {isScrolled && (
+        <div
+          className='special-border glass-card fixed left-1/2 top-6 hidden -translate-x-1/2 border-white/30 bg-white/20 shadow-2xl backdrop-blur-xl transition-all duration-500 ease-out dark:border-white/20 dark:bg-gray-900/40 sm:block'
+          style={{
+            width: 'fit-content',
+            padding: '0.5rem',
+          }}
+        >
+          {/* Enhanced gradient overlay */}
+          <div className='special-border absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-cyan-500/10' />
+          {/* Additional blur layer for better separation */}
+          <div className='special-border absolute inset-0 backdrop-blur-md' />
+        </div>
+      )}
 
-      {/* Desktop Menu */}
-      <nav className='fixed left-1/2 top-[0.15rem] hidden h-12 -translate-x-1/2 py-2 sm:top-[1.7rem] sm:flex sm:h-[initial] sm:py-0'>
-        <ul className='flex w-[22rem] flex-wrap items-center justify-center gap-y-1 text-[0.9rem] font-medium text-gray-500 sm:w-[initial] sm:flex-nowrap sm:gap-5'>
-          {links.map((link) => (
-            <m.li
-              className='relative flex h-3/4 items-center justify-center'
-              key={link.hash}
-              initial={{ y: -100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-            >
-              <Link
-                className={clsx(
-                  'flex w-full items-center justify-center px-3 py-3 transition hover:text-gray-950 dark:text-gray-400 dark:hover:text-gray-300',
-                  {
-                    'text-gray-950 dark:text-gray-200':
-                      activeSection === link.name,
-                  }
-                )}
-                href={link.hash}
-                onClick={() => {
-                  setActiveSection(link.name)
-                  setTimeOfLastClick(Date.now())
-                }}
-              >
-                {link.name}
+      {/* Desktop Navigation */}
+      <nav
+        ref={containerRef}
+        className='fixed left-1/2 top-[1.875rem] z-[1000] hidden -translate-x-1/2 sm:flex'
+      >
+        <ul className='flex items-center gap-1 px-2'>
+          {links.map((link, index) => {
+            const IconComponent =
+              navigationIcons[link.name as keyof typeof navigationIcons]
+            const itemClassName = getItemClassName(index)
 
-                {link.name === activeSection && (
-                  <m.span
-                    className='special-border absolute inset-0 -z-10 bg-gray-100 dark:bg-gray-800'
-                    layoutId='activeSection'
-                    transition={{
-                      type: 'spring',
-                      stiffness: 380,
-                      damping: 30,
-                    }}
-                  ></m.span>
-                )}
-              </Link>
-            </m.li>
-          ))}
+            return (
+              <li className={`relative ${itemClassName}`} key={link.hash}>
+                <Link
+                  className={clsx(
+                    'special-border group relative flex items-center gap-2 px-4 py-2.5 text-sm font-medium transition-all duration-300',
+                    {
+                      'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25':
+                        activeSection === link.name,
+                      [`text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white ${
+                        isScrolled
+                          ? 'hover:bg-white/50 dark:hover:bg-white/10'
+                          : 'hover:bg-white/30 dark:hover:bg-white/5'
+                      }`]: activeSection !== link.name,
+                    }
+                  )}
+                  href={link.hash}
+                  onClick={() => handleNavClick(link.name)}
+                >
+                  {IconComponent && <IconComponent className='h-4 w-4' />}
+                  <span>{link.name}</span>
+
+                  {/* Hover effect */}
+                  {activeSection !== link.name && (
+                    <div className='absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
+                  )}
+                </Link>
+              </li>
+            )
+          })}
         </ul>
       </nav>
 
       {/* Mobile Menu Button */}
-      <div className='fixed right-4 top-4 z-[1000] sm:hidden'>
+      <div className='fixed right-4 top-4 z-[1001] sm:hidden'>
         <button
           onClick={toggleMenu}
-          className='special-border flex h-[3rem] w-[3rem] items-center justify-center border border-white border-opacity-40 bg-gray-300 bg-opacity-80 shadow-2xl backdrop-blur-[0.5rem] transition-all hover:scale-[1.15] active:scale-105 dark:bg-gray-950 dark:text-gray-50'
+          className={`special-border glass-card relative h-12 w-12 transform border-white/30 bg-white/20 shadow-lg backdrop-blur-xl transition-all duration-300 hover:scale-110 active:scale-95 dark:border-white/20 dark:bg-gray-900/40 ${isMenuOpen ? 'bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-red-500/25' : 'text-gray-700 dark:text-gray-300'} `}
         >
-          {isMenuOpen ? <FiX /> : <FiMenu />}
+          <div className='flex h-full w-full items-center justify-center'>
+            {isMenuOpen ? (
+              <FiX className='h-5 w-5' />
+            ) : (
+              <FiMenu className='h-5 w-5' />
+            )}
+          </div>
+
+          {/* Glow effect */}
+          <div
+            className={`absolute inset-0 rounded-2xl transition-opacity duration-300 ${
+              isMenuOpen
+                ? 'bg-gradient-to-r from-red-500 to-pink-500 opacity-20 blur-lg'
+                : 'bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 blur-lg hover:opacity-20'
+            } `}
+          />
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Overlay */}
       {isMenuOpen && (
-        <m.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className='fixed inset-0 z-[998] bg-gray-900 bg-opacity-50 backdrop-blur-sm'
+        <div
+          className='fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm transition-opacity duration-300 sm:hidden'
           onClick={toggleMenu}
         >
-          <m.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className='absolute right-4 top-20 w-64 rounded-lg bg-white p-4 shadow-xl dark:bg-gray-900'
+          {/* Mobile Menu Panel */}
+          <div
+            className={`glass-card special-border absolute right-4 top-20 w-72 transform border-white/30 bg-white/20 shadow-2xl backdrop-blur-xl transition-all duration-300 ease-out dark:border-white/20 dark:bg-gray-900/40 ${isMenuOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'} `}
+            style={{
+              padding: '1.5rem',
+            }}
             onClick={(e) => e.stopPropagation()}
           >
-            <ul className='flex flex-col gap-y-2'>
-              {links.map((link) => (
-                <m.li
-                  key={link.hash}
-                  initial={{ y: -10, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.05 + links.indexOf(link) * 0.03 }}
-                  className='relative'
-                >
-                  <Link
-                    href={link.hash}
-                    className={clsx(
-                      'block rounded-md px-3 py-2 text-base font-medium text-gray-800 transition hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800',
-                      {
-                        'bg-gray-100 text-gray-950 dark:bg-gray-800 dark:text-gray-50':
-                          activeSection === link.name,
-                      }
-                    )}
-                    onClick={() => {
-                      setActiveSection(link.name)
-                      setTimeOfLastClick(Date.now())
-                      toggleMenu()
-                    }}
-                  >
-                    {link.name}
-                  </Link>
-                </m.li>
-              ))}
-            </ul>
-          </m.div>
-        </m.div>
+            {/* Enhanced gradient background */}
+            <div className='special-border absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10' />
+            {/* Additional blur layer */}
+            <div className='special-border absolute inset-0 backdrop-blur-lg' />
+
+            <div className='relative'>
+              {/* Menu Header */}
+              <div className='mb-6'>
+                <h3 className='mb-1 text-lg font-semibold text-gray-800 dark:text-gray-200'>
+                  Navigation
+                </h3>
+                <div className='h-1 w-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500' />
+              </div>
+
+              {/* Menu Items */}
+              <ul className='space-y-2'>
+                {links.map((link, index) => {
+                  const IconComponent =
+                    navigationIcons[link.name as keyof typeof navigationIcons]
+
+                  return (
+                    <li
+                      key={link.hash}
+                      className={`transform transition-all duration-300 ease-out ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'} `}
+                      style={{
+                        transitionDelay: `${index * 50}ms`,
+                      }}
+                    >
+                      <Link
+                        href={link.hash}
+                        className={clsx(
+                          'special-border group relative flex items-center gap-3 overflow-hidden px-4 py-3 text-base font-medium transition-all duration-300',
+                          {
+                            'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg':
+                              activeSection === link.name,
+                            'text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:text-gray-300 dark:hover:from-blue-900/20 dark:hover:to-purple-900/20':
+                              activeSection !== link.name,
+                          }
+                        )}
+                        onClick={() => handleNavClick(link.name)}
+                      >
+                        {/* Icon */}
+                        <div
+                          className={`flex h-8 w-8 items-center justify-center rounded-lg transition-all duration-300 ${
+                            activeSection === link.name
+                              ? 'bg-white/20'
+                              : 'bg-gradient-to-br from-blue-100 to-purple-100 group-hover:scale-110 dark:from-blue-900/30 dark:to-purple-900/30'
+                          } `}
+                        >
+                          {IconComponent && (
+                            <IconComponent
+                              className={`h-4 w-4 transition-colors duration-300 ${
+                                activeSection === link.name
+                                  ? 'text-white'
+                                  : 'text-blue-600 dark:text-blue-400'
+                              } `}
+                            />
+                          )}
+                        </div>
+
+                        {/* Text */}
+                        <span className='flex-1'>{link.name}</span>
+
+                        {/* Active indicator */}
+                        {activeSection === link.name && (
+                          <div className='h-2 w-2 rounded-full bg-white' />
+                        )}
+
+                        {/* Hover effect */}
+                        <div className='absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/0 to-purple-500/0 transition-all duration-300 group-hover:from-blue-500/5 group-hover:to-purple-500/5' />
+                      </Link>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          </div>
+        </div>
       )}
-
-      {/* Original Code
-      <nav className='fixed left-1/2 top-[0.15rem] flex h-12 -translate-x-1/2 py-2 sm:top-[1.7rem] sm:h-[initial] sm:py-0'>
-        <ul className='flex w-[22rem] flex-wrap items-center justify-center gap-y-1 text-[0.9rem] font-medium text-gray-500 sm:w-[initial] sm:flex-nowrap sm:gap-5'>
-          {links.map((link) => (
-            <motion.li
-              className='relative flex h-3/4 items-center justify-center'
-              key={link.hash}
-              initial={{ y: -100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-            >
-              <Link
-                className={clsx(
-                  'flex w-full items-center justify-center px-3 py-3 transition hover:text-gray-950 dark:text-gray-400 dark:hover:text-gray-300',
-                  {
-                    'text-gray-950 dark:text-gray-200':
-                      activeSection === link.name,
-                  }
-                )}
-                href={link.hash}
-                onClick={() => {
-                  setActiveSection(link.name)
-                  setTimeOfLastClick(Date.now())
-                }}
-              >
-                {link.name}
-
-                {link.name === activeSection && (
-                  <motion.span
-                    className='special-border absolute inset-0 -z-10 bg-gray-100 dark:bg-gray-800'
-                    layoutId='activeSection'
-                    transition={{
-                      type: 'spring',
-                      stiffness: 380,
-                      damping: 30,
-                    }}
-                  ></motion.span>
-                )}
-              </Link>
-            </motion.li>
-          ))}
-        </ul>
-      </nav>
-      */}
     </header>
   )
 }

@@ -1,20 +1,26 @@
 'use client'
 
 import React, { ReactNode } from 'react'
-// import { motion } from 'motion/react'
-import * as m from 'motion/react-m'
+import { useAnimationOnScroll } from '@/lib/animation-hooks'
 
 interface ISectionDividerProps {
   children?: ReactNode
 }
 
 export const SectionDivider: React.FC<ISectionDividerProps> = () => {
+  const animation = useAnimationOnScroll({
+    delay: 125,
+    animationClass: 'animate-fade-in-up',
+  })
+
   return (
-    <m.div
-      className='special-border my-24 hidden h-16 w-1 bg-gray-200 dark:bg-opacity-20 sm:block'
-      initial={{ opacity: 0, y: 100 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.125 }}
-    ></m.div>
+    <div
+      ref={animation.ref}
+      className={`my-24 hidden sm:block ${animation.className}`}
+    >
+      <div className='flex justify-center'>
+        <div className='h-16 w-1 rounded-full bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 opacity-60 shadow-lg' />
+      </div>
+    </div>
   )
 }

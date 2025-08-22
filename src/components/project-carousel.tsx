@@ -1,17 +1,10 @@
 'use client'
 
 import React from 'react'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Parallax, Navigation, Pagination } from 'swiper/modules'
 import Image from 'next/image'
 import { IStrapiImageData } from '@/types/types'
 import IphoneMockup from './iphone-mockup'
-
-// Import Swiper styles
-import 'swiper/css'
-import 'swiper/css/parallax'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
+import { Carousel } from '@/components/ui/carousel'
 
 interface ProjectCarouselProps {
   imageUrls: IStrapiImageData[]
@@ -53,25 +46,24 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
   })
 
   return (
-    <Swiper
-      modules={[Parallax, Navigation, Pagination]}
-      spaceBetween={30}
-      slidesPerView={'auto'}
-      centeredSlides={true}
-      loop={true}
-      parallax={true}
-      navigation
-      pagination={{ clickable: true }}
-      className='h-full w-full'
-    >
-      {sortedImageUrls.map((image, index) => {
-        const imageUrl = `${getBestImageUrl(image)}`
-        return (
-          <SwiperSlide key={image.id} style={{ width: '270px' }}>
-            <div data-swiper-parallax='-23%'>
-              <div
-                style={{ transform: 'scale(0.85)', transformOrigin: 'center' }}
-              >
+    <div className='relative h-[500px] w-full'>
+      <Carousel
+        autoplay={true}
+        autoplayDelay={4000}
+        showNavigation={true}
+        showPagination={true}
+        loop={true}
+        centeredSlides={true}
+        slidesPerView={'auto'}
+        spaceBetween={30}
+        className='h-full w-full'
+        slideClassName='w-[270px] flex items-center justify-center'
+      >
+        {sortedImageUrls.map((image, index) => {
+          const imageUrl = `${getBestImageUrl(image)}`
+          return (
+            <div key={image.id} className='relative'>
+              <div className='scale-85 origin-center transform'>
                 <IphoneMockup>
                   <Image
                     src={imageUrl}
@@ -84,10 +76,10 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({
                 </IphoneMockup>
               </div>
             </div>
-          </SwiperSlide>
-        )
-      })}
-    </Swiper>
+          )
+        })}
+      </Carousel>
+    </div>
   )
 }
 
