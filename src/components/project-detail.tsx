@@ -15,9 +15,15 @@ import {
   FaExternalLinkAlt,
   FaCode,
   FaMobile,
+  FaStar,
+  FaHeart,
 } from 'react-icons/fa'
 import { useState } from 'react'
 import { StrapiImage } from '@/shared/StrapiImage'
+import { analyzeProject, getPlatformBadgeInfo } from '@/lib/project-utils'
+import { ProjectOverviewCards } from '@/components/project-overview-cards'
+import { EnhancedGallery } from '@/components/enhanced-gallery'
+import { FeaturesShowcase } from '@/components/features-showcase'
 
 interface ProjectDetailProps {
   project: ProjectDataAttributes
@@ -25,24 +31,41 @@ interface ProjectDetailProps {
 
 export const ProjectDetail = ({ project }: ProjectDetailProps) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
+
+  // Analyze project data for smart content generation
+  const analysis = analyzeProject(project)
+  const platformBadge = getPlatformBadgeInfo(analysis)
   const { ref: heroRef, className: heroAnimation } = useAnimationOnScroll({
     animationClass: 'animate-fade-in-up',
     delay: 100,
   })
 
-  const { containerRef: galleryRef, getItemClassName: getGalleryItemClass } =
+  const { containerRef: overviewRef, getItemClassName: getOverviewItemClass } =
     useStaggeredAnimation<HTMLDivElement>({
-      itemCount: project.imageUrls?.length || 0,
+      itemCount: 3, // overview cards
       delay: 200,
       staggerDelay: 100,
     })
 
   const { containerRef: contentRef, getItemClassName: getContentItemClass } =
     useStaggeredAnimation<HTMLDivElement>({
-      itemCount: 4, // description, tech stack, links, etc.
+      itemCount: 4, // content sections
       delay: 300,
       staggerDelay: 150,
     })
+
+  // Enhanced tech stack with Flutter highlighting per user preference
+  const getEnhancedTechStack = () => {
+    if (!project.Tags || project.Tags.length === 0) return []
+
+    return project.Tags.map((tag) => ({
+      ...tag,
+      isFlutter: tag.name.toLowerCase().includes('flutter'),
+      isFavorite: tag.name.toLowerCase().includes('flutter'), // User prefers Flutter
+    }))
+  }
+
+  const enhancedTags = getEnhancedTechStack()
 
   return (
     <div className='relative min-h-screen'>
@@ -70,18 +93,34 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
         </Link>
       </div>
 
-      {/* Hero Section */}
+      {/* Enhanced Hero Section */}
       <section
         ref={heroRef}
-        className={`relative px-4 pb-16 pt-20 sm:px-6 lg:px-8 ${heroAnimation}`}
+        className={`relative px-4 pb-8 pt-3 sm:px-6 lg:px-8 ${heroAnimation}`}
       >
         <div className='mx-auto max-w-7xl'>
-          <div className='mb-12 text-center'>
-            {/* Project Category/Type Badge */}
-            <div className='mb-6 inline-block'>
-              <span className='special-border glass-card bg-gradient-to-r from-blue-500/20 to-purple-500/20 px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400'>
-                {project.Tags?.[0]?.name || 'Mobile App'}
+          <div className='mb-8 text-center'>
+            {/* Enhanced Project Category/Type Badge */}
+            <div className='mb-6 flex flex-wrap justify-center gap-3'>
+              <span
+                className={`special-border glass-card bg-gradient-to-r ${platformBadge?.color} px-4 py-2 text-sm font-medium ${platformBadge?.textColor}`}
+              >
+                {platformBadge?.label}
               </span>
+
+              {/* Featured Project Badge */}
+              {analysis.featuredProject && (
+                <span className='special-border glass-card flex items-center gap-2 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 px-4 py-2 text-sm font-medium text-yellow-600 dark:text-yellow-400'>
+                  <FaStar className='h-4 w-4' />
+                  Featured Project
+                </span>
+              )}
+
+              {/* Employment Focus Badge per user preference */}
+              {/* <span className='special-border glass-card bg-gradient-to-r from-green-500/20 to-teal-500/20 px-4 py-2 text-sm font-medium text-green-600 dark:text-green-400 flex items-center gap-2'>
+                <FaHeart className='h-4 w-4' />
+                Employment Ready
+              </span> */}
             </div>
 
             {/* Project Title */}
@@ -89,14 +128,30 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
               {project.title}
             </h1>
 
-            {/* Project Description */}
-            <p className='mx-auto max-w-3xl text-lg leading-relaxed text-gray-600 dark:text-gray-300 md:text-xl'>
+            {/* Enhanced Project Description */}
+            <p className='mx-auto mb-6 max-w-3xl text-lg leading-relaxed text-gray-600 dark:text-gray-300 md:text-xl'>
               {project.description ||
                 'A showcase of problem-solving and creativity.'}
             </p>
 
-            {/* Quick Actions */}
-            <div className='mt-8 flex flex-col justify-center gap-4 sm:flex-row'>
+            {/* Quick Project Stats */}
+            <div className='mb-8 flex flex-wrap justify-center gap-6 text-sm text-gray-600 dark:text-gray-400'>
+              <div className='flex items-center gap-2'>
+                <div className='h-2 w-2 rounded-full bg-blue-500'></div>
+                <span>{project.Tags?.length || 0} Technologies</span>
+              </div>
+              <div className='flex items-center gap-2'>
+                <div className='h-2 w-2 rounded-full bg-green-500'></div>
+                <span>{project.imageUrls?.length || 0} Screenshots</span>
+              </div>
+              <div className='flex items-center gap-2'>
+                <div className='h-2 w-2 rounded-full bg-purple-500'></div>
+                <span>{analysis.projectInsights.completeness}% Complete</span>
+              </div>
+            </div>
+
+            {/* Enhanced Quick Actions */}
+            <div className='flex flex-col justify-center gap-4 sm:flex-row'>
               {project.githubLink && (
                 <a
                   href={project.githubLink}
@@ -105,7 +160,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                   className='btn-primary special-border group inline-flex items-center gap-2 px-6 py-3 font-medium'
                 >
                   <FaGithub className='h-5 w-5' />
-                  View Source
+                  View Source Code
                   <FaExternalLinkAlt className='h-4 w-4 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1' />
                 </a>
               )}
@@ -117,7 +172,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                   className='btn-secondary special-border group inline-flex items-center gap-2 px-6 py-3 font-medium'
                 >
                   <FaGooglePlay className='h-5 w-5' />
-                  Get App
+                  Download App
                   <FaExternalLinkAlt className='h-4 w-4 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1' />
                 </a>
               )}
@@ -125,166 +180,40 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
           </div>
         </div>
       </section>
-      {/* Screenshot Gallery */}
+
+      {/* Enhanced Project Overview Cards */}
+      <section className='px-4 py-8 sm:px-6 lg:px-8'>
+        <div className='mx-auto max-w-7xl'>
+          <div ref={overviewRef} className={getOverviewItemClass(0)}>
+            <ProjectOverviewCards project={project} analysis={analysis} />
+          </div>
+        </div>
+      </section>
+
+      {/* Enhanced Screenshot Gallery */}
       {project.imageUrls?.length > 0 && (
         <section className='px-4 py-12 sm:px-6 lg:px-8'>
           <div className='mx-auto max-w-7xl'>
-            <div ref={galleryRef} className='mb-12 text-center'>
-              <h2
-                className={`mb-4 text-3xl font-bold md:text-4xl ${getGalleryItemClass(0)}`}
-              >
-                All Screenshots
+            <div className='mb-12 text-center'>
+              <h2 className='mb-4 text-3xl font-bold md:text-4xl'>
+                Project Gallery
               </h2>
-              <p
-                className={`text-lg text-gray-600 dark:text-gray-300 ${getGalleryItemClass(1)}`}
-              >
-                Explore {project.imageUrls.length} screens showcasing the
-                app&apos;s interface and design
+              <p className='text-lg text-gray-600 dark:text-gray-300'>
+                Explore the interface and design in detail
               </p>
             </div>
 
-            {/* Enhanced Gallery Layout */}
-            <div className={`${getGalleryItemClass(2)} min-w-full`}>
-              {/* Main Featured Image with Glow Effect and Spacing */}
-              <div className='mb-12 px-8'>
-                <div className='relative mx-auto aspect-[9/16] w-80 max-w-sm'>
-                  {/* Enhanced Glow Effect */}
-                  <div className='absolute -inset-8 bg-gradient-to-br from-blue-500/30 via-purple-500/20 to-pink-500/30 blur-2xl'></div>
-                  <div className='absolute -inset-4 bg-gradient-to-br from-blue-400/20 via-purple-400/15 to-pink-400/20 blur-xl'></div>
-
-                  {/* Enhanced Glassmorphic Container with Padding for Background Visibility */}
-                  <div className='special-border glass-card relative z-10 h-full overflow-hidden border border-white/20 bg-white/10 p-4 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/30'>
-                    <div className='h-full w-full overflow-hidden rounded-lg'>
-                      <StrapiImage
-                        src={
-                          project.imageUrls[selectedImageIndex]?.formats?.medium
-                            ?.url ||
-                          project.imageUrls[selectedImageIndex]?.formats?.large
-                            ?.url ||
-                          ''
-                        }
-                        alt={`${project.title} screenshot ${selectedImageIndex + 1}`}
-                        className='h-full w-full object-cover'
-                        width={280}
-                        height={560}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Enhanced Navigation Buttons */}
-                  {project.imageUrls.length > 1 && (
-                    <>
-                      <button
-                        onClick={() =>
-                          setSelectedImageIndex((prev) =>
-                            prev === 0 ? project.imageUrls.length - 1 : prev - 1
-                          )
-                        }
-                        className='special-border glass-card absolute -left-4 top-1/2 z-20 -translate-y-1/2 p-3 transition-all duration-300 hover:scale-110 hover:bg-white/30 dark:hover:bg-gray-800/50'
-                      >
-                        <FaArrowLeft className='h-5 w-5' />
-                      </button>
-                      <button
-                        onClick={() =>
-                          setSelectedImageIndex((prev) =>
-                            prev === project.imageUrls.length - 1 ? 0 : prev + 1
-                          )
-                        }
-                        className='special-border glass-card absolute -right-4 top-1/2 z-20 -translate-y-1/2 p-3 transition-all duration-300 hover:scale-110 hover:bg-white/30 dark:hover:bg-gray-800/50'
-                      >
-                        <FaArrowLeft className='h-5 w-5 rotate-180' />
-                      </button>
-                    </>
-                  )}
-
-                  {/* Enhanced Counter */}
-                  <div className='special-border glass-card absolute bottom-4 left-1/2 z-20 -translate-x-1/2 bg-black/50 px-4 py-2 backdrop-blur-md'>
-                    <span className='text-sm font-medium text-white'>
-                      {selectedImageIndex + 1} / {project.imageUrls.length}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Centered Responsive Round Thumbnail Grid */}
-              <div className='flex justify-center px-4'>
-                <div
-                  className='flex max-w-full gap-3 overflow-x-auto pb-4'
-                  style={{ scrollbarWidth: 'thin' }}
-                >
-                  {project.imageUrls.map((image, index) => (
-                    <button
-                      key={image.id}
-                      onClick={() => setSelectedImageIndex(index)}
-                      className={`group relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-full transition-all duration-300 ${
-                        selectedImageIndex === index
-                          ? 'scale-110 shadow-lg ring-1 ring-blue-500 ring-offset-2 ring-offset-white/10'
-                          : 'opacity-80 hover:scale-105 hover:opacity-100'
-                      }`}
-                    >
-                      <StrapiImage
-                        src={
-                          image.formats?.thumbnail?.url ||
-                          image.formats?.small?.url ||
-                          ''
-                        }
-                        alt={`${project.title} thumbnail ${index + 1}`}
-                        className='h-full w-full object-cover transition-all duration-300 group-hover:scale-110'
-                        width={48}
-                        height={48}
-                        objectFit='cover'
-                      />
-                      <div
-                        className={`absolute inset-0 rounded-full transition-all duration-300 ${
-                          selectedImageIndex === index
-                            ? 'bg-blue-500/20'
-                            : 'bg-black/0 group-hover:bg-black/10'
-                        }`}
-                      />
-                      {/* Enhanced Selection Indicator */}
-                      {selectedImageIndex === index && (
-                        <div className='absolute -top-1 left-1/2 -translate-x-1/2'>
-                          <div className='h-2 w-2 animate-pulse rounded-full bg-blue-500'></div>
-                        </div>
-                      )}
-                      {/* Small Index Indicator */}
-                      <div
-                        className={`absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full text-xs font-bold transition-all duration-300 ${
-                          selectedImageIndex === index
-                            ? 'scale-100 bg-blue-500 text-white'
-                            : 'scale-90 bg-black/70 text-white/90'
-                        }`}
-                      >
-                        {index + 1}
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Enhanced Stats */}
-              <div className='mt-8 text-center'>
-                <div className='special-border glass-card inline-flex items-center gap-6 bg-white/10 px-6 py-3 backdrop-blur-xl dark:bg-gray-900/30'>
-                  <div className='flex items-center gap-2'>
-                    <div className='h-3 w-3 rounded-full bg-green-500 shadow-lg'></div>
-                    <span className='text-sm font-medium text-gray-700 dark:text-gray-300'>
-                      {project.imageUrls.length} Screenshots
-                    </span>
-                  </div>
-                  <div className='flex items-center gap-2'>
-                    <div className='h-3 w-3 rounded-full bg-blue-500 shadow-lg'></div>
-                    <span className='text-sm font-medium text-gray-700 dark:text-gray-300'>
-                      Mobile App
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <EnhancedGallery
+              images={project.imageUrls}
+              projectTitle={project.title}
+              selectedIndex={selectedImageIndex}
+              onIndexChange={setSelectedImageIndex}
+            />
           </div>
         </section>
       )}
 
-      {/* Content Sections */}
+      {/* Enhanced Content Sections */}
       <section className='px-4 py-16 sm:px-6 lg:px-8'>
         <div className='mx-auto max-w-4xl'>
           <div ref={contentRef} className='grid gap-8 md:grid-cols-2 lg:gap-12'>
@@ -309,48 +238,76 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                   <div className='space-y-4'>
                     <p className='leading-relaxed text-gray-700 dark:text-gray-300'>
                       {project.description ||
-                        'This project showcases modern mobile app development with a focus on user experience and clean design patterns.'}
+                        'This project showcases modern development with a focus on user experience and clean design patterns.'}
                     </p>
                     <p className='leading-relaxed text-gray-600 dark:text-gray-400'>
                       Built with attention to detail, this application
-                      demonstrates best practices in mobile development,
-                      responsive design, and user interface optimization.
+                      demonstrates best practices in{' '}
+                      {analysis.platformType === 'mobile-app'
+                        ? 'mobile'
+                        : 'web'}{' '}
+                      development, responsive design, and user interface
+                      optimization. The project emphasizes employment-ready
+                      skills and industry best practices.
                     </p>
+                    {analysis.featuredProject && (
+                      <p className='leading-relaxed text-gray-600 dark:text-gray-400'>
+                        As a featured project, this work represents some of the
+                        highest quality development in the portfolio,
+                        demonstrating advanced technical skills and professional
+                        development practices.
+                      </p>
+                    )}
                   </div>
                 )}
               </div>
             </div>
 
-            {/* Technical Details & Links */}
+            {/* Enhanced Technical Details */}
             <div className='space-y-8'>
-              {/* Tech Stack */}
-              {project.Tags?.length > 0 && (
+              {/* Enhanced Tech Stack with Flutter Highlighting */}
+              {enhancedTags.length > 0 && (
                 <div className={getContentItemClass(1)}>
                   <div className='mb-4 flex items-center gap-3'>
                     <div className='special-border glass-card bg-gradient-to-r from-green-500/20 to-teal-500/20 p-2'>
                       <FaMobile className='h-5 w-5 text-green-600 dark:text-green-400' />
                     </div>
                     <h3 className='text-xl font-bold text-gray-900 dark:text-white'>
-                      Tech Stack
+                      Technology Stack
                     </h3>
                   </div>
                   <div className='flex flex-wrap gap-2'>
-                    {project.Tags.map((tag) => (
+                    {enhancedTags.map((tag) => (
                       <span
                         key={tag.id}
-                        className='special-border glass-card bg-gradient-to-r from-gray-500/10 to-gray-600/10 px-3 py-2 text-sm font-medium text-gray-700 transition-transform duration-200 hover:scale-105 dark:text-gray-300'
+                        className={`special-border glass-card px-3 py-2 text-sm font-medium transition-transform duration-200 hover:scale-105 ${
+                          tag.isFavorite
+                            ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-700 ring-2 ring-blue-500/30 dark:text-blue-300'
+                            : 'bg-gradient-to-r from-gray-500/10 to-gray-600/10 text-gray-700 dark:text-gray-300'
+                        }`}
                       >
+                        {tag.isFavorite && (
+                          <FaHeart className='mr-1 inline h-3 w-3' />
+                        )}
                         {tag.name}
+                        {tag.isFavorite && (
+                          <span className='ml-1 text-xs'>★</span>
+                        )}
                       </span>
                     ))}
                   </div>
+                  {enhancedTags.some((tag) => tag.isFavorite) && (
+                    <p className='mt-3 text-sm text-blue-600 dark:text-blue-400'>
+                      ★ Flutter is highlighted as the preferred technology for
+                      mobile development
+                    </p>
+                  )}
                 </div>
-              )}
-
-              {/* Project Links */}
+              )}{' '}
+              {/* Enhanced Project Links */}
               <div className={`space-y-4 ${getContentItemClass(2)}`}>
                 <h3 className='mb-4 text-xl font-bold text-gray-900 dark:text-white'>
-                  Project Links
+                  Project Access
                 </h3>
 
                 {project.githubLink && (
@@ -365,10 +322,10 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                         <FaGithub className='h-5 w-5 text-gray-700 dark:text-gray-300' />
                         <div>
                           <div className='font-medium text-gray-900 dark:text-white'>
-                            Source Code
+                            Source Code Repository
                           </div>
                           <div className='text-sm text-gray-600 dark:text-gray-400'>
-                            View on GitHub
+                            View implementation details and contribute
                           </div>
                         </div>
                       </div>
@@ -389,10 +346,10 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                         <FaGooglePlay className='h-5 w-5 text-green-600 dark:text-green-400' />
                         <div>
                           <div className='font-medium text-gray-900 dark:text-white'>
-                            Get The App
+                            Download Application
                           </div>
                           <div className='text-sm text-gray-600 dark:text-gray-400'>
-                            Download on Google Play
+                            Available on Google Play Store
                           </div>
                         </div>
                       </div>
@@ -401,48 +358,55 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                   </a>
                 )}
               </div>
-
-              {/* Project Stats/Info */}
+              {/* Enhanced Project Insights */}
               <div
                 className={`special-border glass-card bg-gradient-to-br from-blue-500/5 to-purple-500/5 p-6 ${getContentItemClass(3)}`}
               >
                 <h3 className='mb-4 text-lg font-bold text-gray-900 dark:text-white'>
-                  Project Highlights
+                  Project Analytics
                 </h3>
                 <div className='space-y-3'>
                   <div className='flex items-center justify-between'>
                     <span className='text-gray-600 dark:text-gray-400'>
-                      Screenshots
+                      Completeness Score
                     </span>
                     <span className='font-medium text-gray-900 dark:text-white'>
-                      {project.imageUrls?.length || 0}
+                      {analysis.projectInsights.completeness}%
                     </span>
                   </div>
                   <div className='flex items-center justify-between'>
                     <span className='text-gray-600 dark:text-gray-400'>
-                      Technologies
+                      Technical Complexity
                     </span>
                     <span className='font-medium text-gray-900 dark:text-white'>
-                      {project.Tags?.length || 0}
+                      {analysis.projectInsights.technicalComplexity}/10
                     </span>
                   </div>
-                  {project.googlePlayLink && (
+                  <div className='flex items-center justify-between'>
+                    <span className='text-gray-600 dark:text-gray-400'>
+                      Platform Reach
+                    </span>
+                    <span className='font-medium text-gray-900 dark:text-white'>
+                      {analysis.projectInsights.platformReach} Platform
+                      {analysis.projectInsights.platformReach !== 1 ? 's' : ''}
+                    </span>
+                  </div>
+                  <div className='flex items-center justify-between'>
+                    <span className='text-gray-600 dark:text-gray-400'>
+                      Visual Documentation
+                    </span>
+                    <span className='font-medium text-gray-900 dark:text-white'>
+                      {analysis.projectInsights.visualRichness} Asset
+                      {analysis.projectInsights.visualRichness !== 1 ? 's' : ''}
+                    </span>
+                  </div>
+                  {analysis.availabilityMetrics.accessibilityScore && (
                     <div className='flex items-center justify-between'>
                       <span className='text-gray-600 dark:text-gray-400'>
-                        Platform
+                        Accessibility
                       </span>
                       <span className='font-medium text-gray-900 dark:text-white'>
-                        Google Play
-                      </span>
-                    </div>
-                  )}
-                  {project.githubLink && (
-                    <div className='flex items-center justify-between'>
-                      <span className='text-gray-600 dark:text-gray-400'>
-                        Source
-                      </span>
-                      <span className='font-medium text-gray-900 dark:text-white'>
-                        Available
+                        {analysis.availabilityMetrics.accessibilityScore}%
                       </span>
                     </div>
                   )}
@@ -450,6 +414,13 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Features Showcase Section */}
+      <section className='px-4 py-16 sm:px-6 lg:px-8'>
+        <div className='mx-auto max-w-7xl'>
+          <FeaturesShowcase project={project} analysis={analysis} />
         </div>
       </section>
     </div>
