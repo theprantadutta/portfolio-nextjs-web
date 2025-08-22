@@ -128,44 +128,50 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
       {/* Screenshot Gallery */}
       {project.imageUrls?.length > 0 && (
         <section className='px-4 py-12 sm:px-6 lg:px-8'>
-          <div className='mx-auto max-w-6xl'>
-            <div ref={galleryRef} className='mb-8 text-center'>
+          <div className='mx-auto max-w-7xl'>
+            <div ref={galleryRef} className='mb-12 text-center'>
               <h2
-                className={`mb-3 text-2xl font-bold md:text-3xl ${getGalleryItemClass(0)}`}
+                className={`mb-4 text-3xl font-bold md:text-4xl ${getGalleryItemClass(0)}`}
               >
-                App Screenshots
+                All Screenshots
               </h2>
               <p
-                className={`text-sm text-gray-600 dark:text-gray-300 ${getGalleryItemClass(1)}`}
+                className={`text-lg text-gray-600 dark:text-gray-300 ${getGalleryItemClass(1)}`}
               >
                 Explore {project.imageUrls.length} screens showcasing the
-                app&apos;s interface
+                app&apos;s interface and design
               </p>
             </div>
 
-            {/* Compact Gallery Layout */}
-            <div className={`${getGalleryItemClass(2)}`}>
-              {/* Featured Image */}
-              <div className='mb-6'>
-                <div className='relative mx-auto aspect-[9/16] max-w-xs'>
-                  <div className='special-border absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 blur-lg'></div>
-                  <div className='special-border glass-card relative z-10 h-full overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm dark:border-gray-700/30 dark:bg-gray-900/30'>
-                    <StrapiImage
-                      src={
-                        project.imageUrls[selectedImageIndex]?.formats?.medium
-                          ?.url ||
-                        project.imageUrls[selectedImageIndex]?.formats?.large
-                          ?.url ||
-                        ''
-                      }
-                      alt={`${project.title} screenshot ${selectedImageIndex + 1}`}
-                      className='h-full w-full object-cover'
-                      width={300}
-                      height={600}
-                    />
+            {/* Enhanced Gallery Layout */}
+            <div className={`${getGalleryItemClass(2)} min-w-full`}>
+              {/* Main Featured Image with Glow Effect and Spacing */}
+              <div className='mb-12 px-8'>
+                <div className='relative mx-auto aspect-[9/16] w-80 max-w-sm'>
+                  {/* Enhanced Glow Effect */}
+                  <div className='absolute -inset-8 bg-gradient-to-br from-blue-500/30 via-purple-500/20 to-pink-500/30 blur-2xl'></div>
+                  <div className='absolute -inset-4 bg-gradient-to-br from-blue-400/20 via-purple-400/15 to-pink-400/20 blur-xl'></div>
+
+                  {/* Enhanced Glassmorphic Container with Padding for Background Visibility */}
+                  <div className='special-border glass-card relative z-10 h-full overflow-hidden border border-white/20 bg-white/10 p-4 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/30'>
+                    <div className='h-full w-full overflow-hidden rounded-lg'>
+                      <StrapiImage
+                        src={
+                          project.imageUrls[selectedImageIndex]?.formats?.medium
+                            ?.url ||
+                          project.imageUrls[selectedImageIndex]?.formats?.large
+                            ?.url ||
+                          ''
+                        }
+                        alt={`${project.title} screenshot ${selectedImageIndex + 1}`}
+                        className='h-full w-full object-cover'
+                        width={280}
+                        height={560}
+                      />
+                    </div>
                   </div>
 
-                  {/* Compact Navigation */}
+                  {/* Enhanced Navigation Buttons */}
                   {project.imageUrls.length > 1 && (
                     <>
                       <button
@@ -174,9 +180,9 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                             prev === 0 ? project.imageUrls.length - 1 : prev - 1
                           )
                         }
-                        className='special-border glass-card absolute left-2 top-1/2 z-20 -translate-y-1/2 p-2 text-xs transition-all duration-300 hover:bg-white/20 dark:hover:bg-gray-800/40'
+                        className='special-border glass-card absolute -left-4 top-1/2 z-20 -translate-y-1/2 p-3 transition-all duration-300 hover:scale-110 hover:bg-white/30 dark:hover:bg-gray-800/50'
                       >
-                        <FaArrowLeft className='h-3 w-3' />
+                        <FaArrowLeft className='h-5 w-5' />
                       </button>
                       <button
                         onClick={() =>
@@ -184,72 +190,90 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                             prev === project.imageUrls.length - 1 ? 0 : prev + 1
                           )
                         }
-                        className='special-border glass-card absolute right-2 top-1/2 z-20 -translate-y-1/2 p-2 text-xs transition-all duration-300 hover:bg-white/20 dark:hover:bg-gray-800/40'
+                        className='special-border glass-card absolute -right-4 top-1/2 z-20 -translate-y-1/2 p-3 transition-all duration-300 hover:scale-110 hover:bg-white/30 dark:hover:bg-gray-800/50'
                       >
-                        <FaArrowLeft className='h-3 w-3 rotate-180' />
+                        <FaArrowLeft className='h-5 w-5 rotate-180' />
                       </button>
                     </>
                   )}
 
-                  {/* Compact Counter */}
-                  <div className='special-border glass-card absolute bottom-2 left-1/2 z-20 -translate-x-1/2 bg-black/30 px-3 py-1 backdrop-blur-sm'>
-                    <span className='text-xs font-medium text-white'>
+                  {/* Enhanced Counter */}
+                  <div className='special-border glass-card absolute bottom-4 left-1/2 z-20 -translate-x-1/2 bg-black/50 px-4 py-2 backdrop-blur-md'>
+                    <span className='text-sm font-medium text-white'>
                       {selectedImageIndex + 1} / {project.imageUrls.length}
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* Thumbnail Grid - Horizontal Scroll */}
-              <div className='custom-scrollbar flex gap-3 overflow-x-auto px-2 pb-4'>
-                {project.imageUrls.map((image, index) => (
-                  <button
-                    key={image.id}
-                    onClick={() => setSelectedImageIndex(index)}
-                    className={`special-border group relative h-28 w-16 flex-shrink-0 overflow-hidden transition-all duration-300 ${
-                      selectedImageIndex === index
-                        ? 'scale-110 shadow-md ring-2 ring-blue-500'
-                        : 'opacity-70 hover:scale-105 hover:opacity-100'
-                    }`}
-                  >
-                    <StrapiImage
-                      src={
-                        image.formats?.thumbnail?.url ||
-                        image.formats?.small?.url ||
-                        ''
-                      }
-                      alt={`${project.title} thumbnail ${index + 1}`}
-                      className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-110'
-                      width={60}
-                      height={120}
-                    />
-                    <div
-                      className={`absolute inset-0 transition-opacity duration-300 ${
+              {/* Centered Responsive Round Thumbnail Grid */}
+              <div className='flex justify-center px-4'>
+                <div
+                  className='flex max-w-full gap-3 overflow-x-auto pb-4'
+                  style={{ scrollbarWidth: 'thin' }}
+                >
+                  {project.imageUrls.map((image, index) => (
+                    <button
+                      key={image.id}
+                      onClick={() => setSelectedImageIndex(index)}
+                      className={`group relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-full transition-all duration-300 ${
                         selectedImageIndex === index
-                          ? 'bg-blue-500/20'
-                          : 'bg-black/0 group-hover:bg-black/10'
+                          ? 'scale-110 shadow-lg ring-1 ring-blue-500 ring-offset-2 ring-offset-white/10'
+                          : 'opacity-80 hover:scale-105 hover:opacity-100'
                       }`}
-                    />
-                    {/* Thumbnail index */}
-                    <div className='absolute bottom-1 right-1 rounded bg-black/50 px-1 text-xs text-white'>
-                      {index + 1}
-                    </div>
-                  </button>
-                ))}
+                    >
+                      <StrapiImage
+                        src={
+                          image.formats?.thumbnail?.url ||
+                          image.formats?.small?.url ||
+                          ''
+                        }
+                        alt={`${project.title} thumbnail ${index + 1}`}
+                        className='h-full w-full object-cover transition-all duration-300 group-hover:scale-110'
+                        width={48}
+                        height={48}
+                        objectFit='cover'
+                      />
+                      <div
+                        className={`absolute inset-0 rounded-full transition-all duration-300 ${
+                          selectedImageIndex === index
+                            ? 'bg-blue-500/20'
+                            : 'bg-black/0 group-hover:bg-black/10'
+                        }`}
+                      />
+                      {/* Enhanced Selection Indicator */}
+                      {selectedImageIndex === index && (
+                        <div className='absolute -top-1 left-1/2 -translate-x-1/2'>
+                          <div className='h-2 w-2 animate-pulse rounded-full bg-blue-500'></div>
+                        </div>
+                      )}
+                      {/* Small Index Indicator */}
+                      <div
+                        className={`absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full text-xs font-bold transition-all duration-300 ${
+                          selectedImageIndex === index
+                            ? 'scale-100 bg-blue-500 text-white'
+                            : 'scale-90 bg-black/70 text-white/90'
+                        }`}
+                      >
+                        {index + 1}
+                      </div>
+                    </button>
+                  ))}
+                </div>
               </div>
 
-              {/* Quick Stats */}
-              <div className='mt-4 text-center'>
-                <div className='special-border glass-card inline-flex items-center gap-4 bg-white/5 px-4 py-2 dark:bg-gray-900/20'>
-                  <div className='flex items-center gap-1'>
-                    <div className='h-2 w-2 rounded-full bg-green-500'></div>
-                    <span className='text-xs text-gray-600 dark:text-gray-400'>
+              {/* Enhanced Stats */}
+              <div className='mt-8 text-center'>
+                <div className='special-border glass-card inline-flex items-center gap-6 bg-white/10 px-6 py-3 backdrop-blur-xl dark:bg-gray-900/30'>
+                  <div className='flex items-center gap-2'>
+                    <div className='h-3 w-3 rounded-full bg-green-500 shadow-lg'></div>
+                    <span className='text-sm font-medium text-gray-700 dark:text-gray-300'>
                       {project.imageUrls.length} Screenshots
                     </span>
                   </div>
-                  <div className='flex items-center gap-1'>
-                    <div className='h-2 w-2 rounded-full bg-blue-500'></div>
-                    <span className='text-xs text-gray-600 dark:text-gray-400'>
+                  <div className='flex items-center gap-2'>
+                    <div className='h-3 w-3 rounded-full bg-blue-500 shadow-lg'></div>
+                    <span className='text-sm font-medium text-gray-700 dark:text-gray-300'>
                       Mobile App
                     </span>
                   </div>

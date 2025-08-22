@@ -95,7 +95,7 @@ export const ProjectModal: React.FC<IProjectModal> = ({ imageUrls, slug }) => {
       {shouldRender &&
         ReactDOM.createPortal(
           <div
-            className={`${getOverlayClassName()} flex items-center justify-center p-4 backdrop-blur-md`}
+            className={`${getOverlayClassName()} flex flex-col items-center justify-center p-4 backdrop-blur-md`}
           >
             <div
               ref={modalRef}
@@ -154,23 +154,6 @@ export const ProjectModal: React.FC<IProjectModal> = ({ imageUrls, slug }) => {
                     </div>
                   </div>
 
-                  {/* Slider indicators */}
-                  <div className='absolute bottom-6 left-1/2 z-30 flex -translate-x-1/2 space-x-3'>
-                    {imageUrls.map((_, i) => (
-                      <button
-                        key={i}
-                        type='button'
-                        className={`h-3 w-3 rounded-full transition-all duration-300 ${
-                          currentSlide === i
-                            ? 'scale-125 bg-white shadow-lg'
-                            : 'bg-white/50 hover:scale-110 hover:bg-white/75'
-                        }`}
-                        aria-label={`Slide ${i + 1}`}
-                        onClick={() => goToSlide(i)}
-                      />
-                    ))}
-                  </div>
-
                   {/* Slider controls */}
                   <button
                     type='button'
@@ -189,6 +172,23 @@ export const ProjectModal: React.FC<IProjectModal> = ({ imageUrls, slug }) => {
                   </button>
                 </div>
               </div>
+            </div>
+
+            {/* Slider indicators - moved outside modal */}
+            <div className='mt-6 flex space-x-3'>
+              {imageUrls.map((_, i) => (
+                <button
+                  key={i}
+                  type='button'
+                  className={`h-3 w-3 rounded-full transition-all duration-300 ${
+                    currentSlide === i
+                      ? 'scale-125 bg-white shadow-lg'
+                      : 'bg-white/50 hover:scale-110 hover:bg-white/75'
+                  }`}
+                  aria-label={`Slide ${i + 1}`}
+                  onClick={() => goToSlide(i)}
+                />
+              ))}
             </div>
           </div>,
           document.body

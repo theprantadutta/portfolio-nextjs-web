@@ -1,5 +1,6 @@
 import { useRouter } from 'next/navigation'
 import { ReactNode } from 'react'
+import { BsArrowRight } from 'react-icons/bs'
 
 interface IAllProjectButton {
   children?: ReactNode
@@ -11,10 +12,16 @@ export const AllProjectButton = () => {
     <div className='flex justify-center'>
       <button
         onClick={() => router.push('/projects')}
-        type='submit'
-        className='special-border group mt-10 flex h-[3rem] w-[8rem] items-center justify-center gap-2 bg-gray-900 text-white outline-none transition-all hover:scale-110 hover:bg-gray-950 focus:scale-110 active:scale-105 disabled:scale-100 disabled:bg-opacity-65 dark:bg-white dark:bg-opacity-10'
+        type='button'
+        className='btn-primary special-border group relative mt-10 overflow-hidden px-8 py-4'
       >
-        All Projects
+        <span className='relative z-10 flex items-center gap-2'>
+          All Projects
+          <BsArrowRight className='transition-transform duration-300 group-hover:translate-x-1' />
+        </span>
+
+        {/* Animated background */}
+        <div className='animate-gradient absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-[length:200%_100%] opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
       </button>
     </div>
   )

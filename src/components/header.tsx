@@ -66,28 +66,24 @@ export const Header: React.FC<IHeaderProps> = () => {
 
   return (
     <header className='relative z-[10]'>
-      {/* Desktop Navigation Background - Only visible when scrolled */}
-      {isScrolled && (
-        <div
-          className='special-border glass-card fixed left-1/2 top-6 hidden -translate-x-1/2 border-white/30 bg-white/20 shadow-2xl backdrop-blur-xl transition-all duration-500 ease-out dark:border-white/20 dark:bg-gray-900/40 sm:block'
-          style={{
-            width: 'fit-content',
-            padding: '0.5rem',
-          }}
-        >
-          {/* Enhanced gradient overlay */}
-          <div className='special-border absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-cyan-500/10' />
-          {/* Additional blur layer for better separation */}
-          <div className='special-border absolute inset-0 backdrop-blur-md' />
-        </div>
-      )}
-
       {/* Desktop Navigation */}
       <nav
         ref={containerRef}
-        className='fixed left-1/2 top-[1.875rem] z-[1000] hidden -translate-x-1/2 sm:flex'
+        className={`special-border glass-card fixed left-1/2 top-6 z-[1000] hidden -translate-x-1/2 transform border-transparent transition-all duration-500 ease-out sm:block ${
+          isScrolled
+            ? 'border-white/30 bg-white/20 shadow-2xl backdrop-blur-xl dark:border-white/20 dark:bg-gray-900/40'
+            : 'border-transparent bg-transparent'
+        }`}
       >
-        <ul className='flex items-center gap-1 px-2'>
+        {/* Enhanced gradient overlay - only when scrolled */}
+        <div
+          className='special-border absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-cyan-500/10 transition-opacity duration-500'
+          style={{
+            opacity: isScrolled ? 1 : 0,
+          }}
+        />
+
+        <ul className='relative z-10 flex items-center gap-1 px-4 py-2'>
           {links.map((link, index) => {
             const IconComponent =
               navigationIcons[link.name as keyof typeof navigationIcons]

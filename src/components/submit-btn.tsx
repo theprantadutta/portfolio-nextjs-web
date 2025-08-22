@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react'
 import { FaPaperPlane } from 'react-icons/fa'
+import { BsArrowRight } from 'react-icons/bs'
 import { useFormStatus } from 'react-dom'
 
 interface ISubmitBtnProps {
@@ -12,16 +13,26 @@ export const SubmitBtn: React.FC<ISubmitBtnProps> = () => {
   return (
     <button
       type='submit'
-      className='special-border group flex h-[3rem] w-[8rem] items-center justify-center gap-2 bg-gray-900 text-white outline-none transition-all hover:scale-110 hover:bg-gray-950 focus:scale-110 active:scale-105 disabled:scale-100 disabled:bg-opacity-65 dark:bg-white dark:bg-opacity-10'
+      className='btn-primary special-border group relative overflow-hidden px-8 py-4 disabled:cursor-not-allowed disabled:opacity-65'
       disabled={pending}
     >
-      {pending ? (
-        <div className='special-border h-5 w-5 animate-spin border-b-2 border-white'></div>
-      ) : (
-        <>
-          Submit{' '}
-          <FaPaperPlane className='text-xs opacity-70 transition-all group-hover:-translate-y-1 group-hover:translate-x-1' />{' '}
-        </>
+      <span className='relative z-10 flex items-center gap-2'>
+        {pending ? (
+          <>
+            Sending...
+            <div className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent'></div>
+          </>
+        ) : (
+          <>
+            Submit
+            <FaPaperPlane className='transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1' />
+          </>
+        )}
+      </span>
+
+      {/* Animated background */}
+      {!pending && (
+        <div className='animate-gradient absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-[length:200%_100%] opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
       )}
     </button>
   )
