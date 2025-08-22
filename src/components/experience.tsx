@@ -15,7 +15,6 @@ interface IExperienceProps {
 
 export const Experience: React.FC<IExperienceProps> = ({ experiences }) => {
   const { ref, inView } = useSectionInView('Experience', 0.1)
-  const { theme } = useTheme()
 
   // Transform experience data for our custom timeline
   const timelineItems = experiences.data.map((item) => ({

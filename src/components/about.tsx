@@ -13,19 +13,20 @@ interface IAboutProps {
 }
 
 export const About: React.FC<IAboutProps> = () => {
-  const { ref } = useSectionInView('About')
+  const { ref } = useSectionInView('About', 0.5)
 
-  const sectionAnimation = useAnimationOnScroll({
+  const sectionAnimation = useAnimationOnScroll<HTMLDivElement>({
     delay: 100,
     animationClass: 'animate-fade-in-up',
   })
 
-  const { containerRef, getItemClassName } = useStaggeredAnimation({
-    itemCount: 4, // Number of paragraphs
-    delay: 300,
-    staggerDelay: 150,
-    animationClass: 'animate-fade-in-up',
-  })
+  const { containerRef, getItemClassName } =
+    useStaggeredAnimation<HTMLDivElement>({
+      itemCount: 4, // Number of paragraphs
+      delay: 300,
+      staggerDelay: 150,
+      animationClass: 'animate-fade-in-up',
+    })
 
   return (
     <section ref={ref} id='about' className='section-spacing scroll-mt-28'>

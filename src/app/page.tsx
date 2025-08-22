@@ -55,7 +55,7 @@ const Home: NextPage = async () => {
   return (
     <main className='flex flex-col items-center px-4'>
       <Intro />
-      <SectionDivider />
+      {/* <SectionDivider /> */}
       <About />
       <Projects showAllProjects={false} projects={projects} />
       <Skills skills={skills} />

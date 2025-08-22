@@ -34,13 +34,13 @@ interface UseAnimationOnScrollOptions {
   triggerOnce?: boolean
 }
 
-export const useAnimationOnScroll = ({
+export const useAnimationOnScroll = <T extends HTMLElement = HTMLElement>({
   threshold = 0.1,
   delay = 0,
   animationClass = 'animate-fade-in-up',
   triggerOnce = true,
 }: UseAnimationOnScrollOptions = {}) => {
-  const elementRef = useRef<HTMLElement>(null)
+  const elementRef = useRef<T>(null)
   const [isVisible, setIsVisible] = useState(false)
   const [hasAnimated, setHasAnimated] = useState(false)
 
@@ -93,14 +93,14 @@ interface UseStaggeredAnimationOptions {
   threshold?: number
 }
 
-export const useStaggeredAnimation = ({
+export const useStaggeredAnimation = <T extends HTMLElement = HTMLElement>({
   itemCount,
   delay = 0,
   staggerDelay = 100,
   animationClass = 'animate-fade-in-up',
   threshold = 0.1,
 }: UseStaggeredAnimationOptions) => {
-  const containerRef = useRef<HTMLElement>(null)
+  const containerRef = useRef<T>(null)
   const [visibleItems, setVisibleItems] = useState<Set<number>>(new Set())
   const [hasTriggered, setHasTriggered] = useState(false)
 
@@ -154,10 +154,10 @@ export const useStaggeredAnimation = ({
 }
 
 // Hook for hover animations and micro-interactions
-export const useHoverAnimation = (
+export const useHoverAnimation = <T extends HTMLElement = HTMLElement>(
   animationClass: string = 'transform transition-transform duration-300 hover:scale-105'
 ) => {
-  const elementRef = useRef<HTMLElement>(null)
+  const elementRef = useRef<T>(null)
 
   return {
     ref: elementRef,

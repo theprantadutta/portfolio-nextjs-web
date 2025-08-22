@@ -31,14 +31,14 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
   })
 
   const { containerRef: galleryRef, getItemClassName: getGalleryItemClass } =
-    useStaggeredAnimation({
+    useStaggeredAnimation<HTMLDivElement>({
       itemCount: project.imageUrls?.length || 0,
       delay: 200,
       staggerDelay: 100,
     })
 
   const { containerRef: contentRef, getItemClassName: getContentItemClass } =
-    useStaggeredAnimation({
+    useStaggeredAnimation<HTMLDivElement>({
       itemCount: 4, // description, tech stack, links, etc.
       delay: 300,
       staggerDelay: 150,

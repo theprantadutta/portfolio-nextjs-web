@@ -16,19 +16,20 @@ interface IContactProps {
 }
 
 export const Contact: React.FC<IContactProps> = () => {
-  const { ref } = useSectionInView('Contact')
+  const { ref } = useSectionInView('Contact', 0.3)
 
-  const sectionAnimation = useAnimationOnScroll({
+  const sectionAnimation = useAnimationOnScroll<HTMLDivElement>({
     delay: 200,
     animationClass: 'animate-fade-in-up',
   })
 
-  const { containerRef, getItemClassName } = useStaggeredAnimation({
-    itemCount: 3, // heading, description, form
-    delay: 400,
-    staggerDelay: 150,
-    animationClass: 'animate-fade-in-up',
-  })
+  const { containerRef, getItemClassName } =
+    useStaggeredAnimation<HTMLDivElement>({
+      itemCount: 3, // heading, description, form
+      delay: 400,
+      staggerDelay: 150,
+      animationClass: 'animate-fade-in-up',
+    })
 
   return (
     <section id='contact' ref={ref} className='section-spacing scroll-mt-28'>

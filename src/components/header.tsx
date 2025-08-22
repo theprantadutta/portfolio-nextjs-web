@@ -65,7 +65,7 @@ export const Header: React.FC<IHeaderProps> = () => {
   }
 
   return (
-    <header className='relative z-[999]'>
+    <header className='relative z-[10]'>
       {/* Desktop Navigation Background - Only visible when scrolled */}
       {isScrolled && (
         <div

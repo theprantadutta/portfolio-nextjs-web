@@ -23,28 +23,29 @@ export const Intro: React.FC<IIntroProps> = () => {
   const { ref } = useSectionInView('Home', 0.5)
   const { setActiveSection, setTimeOfLastClick } = useActiveSectionContext()
 
-  const profileAnimation = useAnimationOnScroll({
+  const profileAnimation = useAnimationOnScroll<HTMLDivElement>({
     delay: 100,
     animationClass: 'animate-scale-in',
   })
 
-  const textAnimation = useAnimationOnScroll({
+  const textAnimation = useAnimationOnScroll<HTMLDivElement>({
     delay: 300,
     animationClass: 'animate-fade-in-up',
   })
 
-  const { containerRef: buttonsRef, getItemClassName } = useStaggeredAnimation({
-    itemCount: 4, // Profile image + buttons + social links
-    delay: 500,
-    staggerDelay: 100,
-    animationClass: 'animate-fade-in-up',
-  })
+  const { containerRef: buttonsRef, getItemClassName } =
+    useStaggeredAnimation<HTMLDivElement>({
+      itemCount: 4, // Profile image + buttons + social links
+      delay: 500,
+      staggerDelay: 100,
+      animationClass: 'animate-fade-in-up',
+    })
 
   return (
     <section
       ref={ref}
       id='home'
-      className='relative mb-28 flex min-h-[80vh] max-w-[50rem] scroll-mt-[100rem] flex-col justify-center text-center sm:mb-0'
+      className='relative mb-10 flex min-h-[80vh] max-w-[50rem] scroll-mt-[100rem] flex-col justify-center text-center sm:mb-0'
     >
       {/* Background Elements */}
       <div className='absolute inset-0 -z-10'>
@@ -204,7 +205,7 @@ export const Intro: React.FC<IIntroProps> = () => {
         <div className='glass-card special-border border border-green-200 px-4 py-2 dark:border-green-800'>
           <div className='flex items-center gap-2 text-sm font-medium text-green-700 dark:text-green-400'>
             <div className='h-2 w-2 animate-pulse rounded-full bg-green-500' />
-            <span>Available for freelance projects</span>
+            <span>Available to hire</span>
           </div>
         </div>
       </div>

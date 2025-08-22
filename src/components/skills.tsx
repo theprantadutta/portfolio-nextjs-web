@@ -92,11 +92,11 @@ const getSkillLevel = (skillName: string) => {
 }
 
 export const Skills: React.FC<ISkillProps> = ({ skills }) => {
-  const { ref } = useSectionInView('Skills')
+  const { ref } = useSectionInView('Skills', 0.1)
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null)
   const [viewMode, setViewMode] = useState<'hexagon' | 'cards'>('hexagon')
 
-  const sectionAnimation = useAnimationOnScroll({
+  const sectionAnimation = useAnimationOnScroll<HTMLDivElement>({
     delay: 100,
     animationClass: 'animate-fade-in-up',
   })

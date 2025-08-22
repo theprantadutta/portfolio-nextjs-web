@@ -17,7 +17,7 @@ export const Projects: React.FC<IProjectsProps> = ({
   showAllProjects,
   projects,
 }) => {
-  const { ref } = useSectionInView('Projects', 0.5)
+  const { ref } = useSectionInView('Projects', 0.3)
   return (
     <section ref={ref} id='projects' className='mb-28 scroll-mt-28'>
       <SectionHeading>My projects</SectionHeading>
