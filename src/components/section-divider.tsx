@@ -8,7 +8,7 @@ interface ISectionDividerProps {
 }
 
 export const SectionDivider: React.FC<ISectionDividerProps> = () => {
-  const animation = useAnimationOnScroll({
+  const animation = useAnimationOnScroll<HTMLDivElement>({
     delay: 125,
     animationClass: 'animate-fade-in-up',
   })

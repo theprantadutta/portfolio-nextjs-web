@@ -14,7 +14,7 @@ export const Footer: React.FC<IFooterProps> = () => {
         <span className='bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text font-bold text-transparent'>
           AI
         </span>
-        . 🤩
+        {' ✨'}
       </p>
     </footer>
   )

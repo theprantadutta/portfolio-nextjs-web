@@ -52,6 +52,21 @@ export const Carousel: React.FC<CarouselProps> = ({
   const totalSlides = children.length
   const displaySlides = loop ? totalSlides + 2 : totalSlides
 
+  const goToSlide = useCallback(
+    (index: number) => {
+      if (isTransitioning) return
+
+      setIsTransitioning(true)
+      setCurrentSlide(index)
+      onSlideChange?.(index)
+
+      setTimeout(() => {
+        setIsTransitioning(false)
+      }, 300)
+    },
+    [isTransitioning, onSlideChange]
+  )
+
   const nextSlide = useCallback(() => {
     if (loop) {
       const nextIndex = currentSlide === totalSlides - 1 ? 0 : currentSlide + 1
@@ -99,21 +114,6 @@ export const Carousel: React.FC<CarouselProps> = ({
       }, autoplayDelay)
     }
   }
-
-  const goToSlide = useCallback(
-    (index: number) => {
-      if (isTransitioning) return
-
-      setIsTransitioning(true)
-      setCurrentSlide(index)
-      onSlideChange?.(index)
-
-      setTimeout(() => {
-        setIsTransitioning(false)
-      }, 300)
-    },
-    [isTransitioning, onSlideChange]
-  )
 
   // Touch handlers
   const handleTouchStart = (e: TouchEvent) => {

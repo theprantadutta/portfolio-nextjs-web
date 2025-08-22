@@ -19,7 +19,7 @@ export const getAllProjects = async () => {
 const ProjectsPage: NextPage = async () => {
   const projects = await getAllProjects()
   return (
-    <main className='flex flex-col items-center px-4'>
+    <main className='flex scroll-mt-36 flex-col items-center px-4'>
       <Projects showAllProjects={true} projects={projects} />
     </main>
   )

@@ -19,7 +19,7 @@ export const Projects: React.FC<IProjectsProps> = ({
 }) => {
   const { ref } = useSectionInView('Projects', 0.3)
   return (
-    <section ref={ref} id='projects' className='mb-28 scroll-mt-28'>
+    <section ref={ref} id='projects' className='scroll-mt-28'>
       <SectionHeading>My projects</SectionHeading>
       <div>
         {projects.data.map((project, index) => (

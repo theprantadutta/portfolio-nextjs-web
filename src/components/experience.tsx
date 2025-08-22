@@ -26,7 +26,11 @@ export const Experience: React.FC<IExperienceProps> = ({ experiences }) => {
   }))
 
   return (
-    <section id='experience' ref={ref} className='section-spacing scroll-mt-28'>
+    <section
+      id='experience'
+      ref={ref}
+      className='section-spacing-sm scroll-mt-28'
+    >
       {/* Section Header */}
       <div className='mb-16 text-center'>
         <SectionHeading>My Experience</SectionHeading>

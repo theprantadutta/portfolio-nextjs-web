@@ -135,6 +135,10 @@ export const About: React.FC<IAboutProps> = () => {
                       <div className='h-2 w-2 rounded-full bg-cyan-500' />
                       <span>Flutter</span>
                     </div>
+                    <div className='flex items-center gap-2'>
+                      <div className='h-2 w-2 rounded-full bg-emerald-500' />
+                      <span>Android/IOS</span>
+                    </div>
                   </div>
                 </div>
                 <div className='space-y-2'>
@@ -142,6 +146,10 @@ export const About: React.FC<IAboutProps> = () => {
                     Backend
                   </h4>
                   <div className='space-y-1 text-sm'>
+                    <div className='flex items-center gap-2'>
+                      <div className='h-2 w-2 rounded-full bg-teal-500' />
+                      <span>ASP.Net Core</span>
+                    </div>
                     <div className='flex items-center gap-2'>
                       <div className='h-2 w-2 rounded-full bg-green-500' />
                       <span>Node.js</span>

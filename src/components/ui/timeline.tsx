@@ -59,7 +59,11 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
         </div>
 
         {/* Content card */}
-        <div className='special-border border border-gray-200 bg-white p-6 shadow-sm backdrop-blur-sm transition-all duration-300 group-hover:border-blue-200 group-hover:shadow-md dark:border-gray-700 dark:bg-gray-800/50 dark:group-hover:border-blue-700'>
+        {/* <div className='special-border border border-gray-200 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 p-6 shadow-sm backdrop-blur-sm transition-all duration-300 group-hover:border-blue-200 group-hover:shadow-md dark:border-gray-700 dark:group-hover:border-blue-700'> */}
+        <div className='special-border glass-card relative mx-auto max-w-4xl overflow-hidden border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-all duration-500 hover:-translate-y-3 hover:bg-white/10 hover:shadow-2xl dark:border-gray-700/30 dark:bg-gray-900/20 dark:hover:bg-gray-900/30'>
+          {/* Enhanced gradient overlay */}
+          <div className='absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
+
           <h3 className='mb-1 text-lg font-semibold text-gray-900 dark:text-gray-100'>
             {title}
           </h3>
@@ -86,12 +90,13 @@ export const VerticalTimeline: React.FC<VerticalTimelineProps> = ({
   animate = true,
   items = [],
 }) => {
-  const { containerRef, getItemClassName } = useStaggeredAnimation({
-    itemCount: items.length,
-    delay: 200,
-    staggerDelay: 150,
-    animationClass: 'animate-fade-in-up',
-  })
+  const { containerRef, getItemClassName } =
+    useStaggeredAnimation<HTMLDivElement>({
+      itemCount: items.length,
+      delay: 200,
+      staggerDelay: 150,
+      animationClass: 'animate-fade-in-up',
+    })
 
   if (items.length > 0) {
     return (
@@ -123,12 +128,13 @@ export const HorizontalTimeline: React.FC<{
   items: TimelineItemProps[]
   animate?: boolean
 }> = ({ items, animate = true }) => {
-  const { containerRef, getItemClassName } = useStaggeredAnimation({
-    itemCount: items.length,
-    delay: 200,
-    staggerDelay: 100,
-    animationClass: 'animate-fade-in-up',
-  })
+  const { containerRef, getItemClassName } =
+    useStaggeredAnimation<HTMLDivElement>({
+      itemCount: items.length,
+      delay: 200,
+      staggerDelay: 100,
+      animationClass: 'animate-fade-in-up',
+    })
 
   return (
     <div ref={containerRef} className='w-full py-8'>
@@ -186,12 +192,13 @@ export const CompactTimeline: React.FC<{
   items: Pick<TimelineItemProps, 'date' | 'title' | 'description'>[]
   animate?: boolean
 }> = ({ items, animate = true }) => {
-  const { containerRef, getItemClassName } = useStaggeredAnimation({
-    itemCount: items.length,
-    delay: 100,
-    staggerDelay: 50,
-    animationClass: 'animate-fade-in-up',
-  })
+  const { containerRef, getItemClassName } =
+    useStaggeredAnimation<HTMLDivElement>({
+      itemCount: items.length,
+      delay: 100,
+      staggerDelay: 50,
+      animationClass: 'animate-fade-in-up',
+    })
 
   return (
     <div ref={containerRef} className='space-y-4'>

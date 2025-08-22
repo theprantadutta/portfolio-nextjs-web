@@ -1,94 +1,111 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import { useSectionInView } from '@/lib/hooks'
-import { useAnimationOnScroll } from '@/lib/animation-hooks'
 import { SectionHeading } from '@/components/section-heading'
+import { useAnimationOnScroll } from '@/lib/animation-hooks'
+import { useSectionInView } from '@/lib/hooks'
 import { IStrapiApiResponse, SkillDataAttributes } from '@/types/types'
+import React, { useState } from 'react'
+import { BiLogoPostgresql } from 'react-icons/bi'
+import { DiGoogleCloudPlatform, DiMsqlServer } from 'react-icons/di'
 import {
-  FaReact,
-  FaNodeJs,
-  FaPython,
-  FaJava,
-  FaHtml5,
-  FaCss3,
-  FaJs,
-  FaGitAlt,
-  FaDocker,
-  FaAws,
-  FaMobile,
-  FaDatabase,
-  FaTools,
+  FaCloud,
   FaCode,
+  FaDatabase,
+  FaDocker,
+  FaGitAlt,
   FaHeart,
-  FaStar,
+  FaNodeJs,
+  FaReact,
   FaRocket,
-  FaFlask,
-  FaPalette,
+  FaRust,
+  FaStar,
+  FaTools,
 } from 'react-icons/fa'
+import { FaGolang } from 'react-icons/fa6'
+import { IoLogoFirebase } from 'react-icons/io5'
+import { LuBoxes } from 'react-icons/lu'
 import {
-  SiTypescript,
-  SiNextdotjs,
-  SiFlutter,
   SiDart,
-  SiMongodb,
-  SiPostgresql,
+  SiDotnet,
+  SiFlutter,
+  SiKotlin,
+  SiKubernetes,
+  SiNextdotjs,
   SiRedis,
-  SiFigma,
-  SiTailwindcss,
-  SiExpress,
+  SiTypescript,
 } from 'react-icons/si'
+import { TbBrandReactNative } from 'react-icons/tb'
 
 interface ISkillProps {
   skills: IStrapiApiResponse<SkillDataAttributes>
 }
 
 const getSkillIcon = (skillName: string) => {
-  const name = skillName.toLowerCase()
-  if (name.includes('react')) return FaReact
-  if (name.includes('flutter')) return SiFlutter
-  if (name.includes('typescript')) return SiTypescript
-  if (name.includes('next')) return SiNextdotjs
-  if (name.includes('javascript')) return FaJs
-  if (name.includes('node')) return FaNodeJs
-  if (name.includes('python')) return FaPython
-  if (name.includes('java')) return FaJava
-  if (name.includes('html')) return FaHtml5
-  if (name.includes('css')) return FaCss3
-  if (name.includes('dart')) return SiDart
-  if (name.includes('mongodb')) return SiMongodb
-  if (name.includes('postgresql')) return SiPostgresql
-  if (name.includes('redis')) return SiRedis
-  if (name.includes('figma')) return SiFigma
-  if (name.includes('tailwind')) return SiTailwindcss
-  if (name.includes('express')) return SiExpress
-  if (name.includes('git')) return FaGitAlt
-  if (name.includes('docker')) return FaDocker
-  if (name.includes('aws')) return FaAws
+  if (skillName.includes('ASP.Net Core')) return SiDotnet
+  if (skillName.includes('Cloud Computing')) return FaCloud
+  if (skillName.includes('Dart')) return SiDart
+  if (skillName.includes('Docker')) return FaDocker
+  if (skillName.includes('Flutter')) return SiFlutter
+  if (skillName.includes('Git')) return FaGitAlt
+  if (skillName.includes('Golang')) return FaGolang
+  if (skillName.includes('Kotlin')) return SiKotlin
+  if (skillName.includes('Kubernetes')) return SiKubernetes
+  if (skillName.includes('Microservices')) return LuBoxes
+  if (skillName.includes('Next.js')) return SiNextdotjs
+  if (skillName.includes('PostgreSQL')) return BiLogoPostgresql
+  if (skillName.includes('React')) return FaReact
+  if (skillName.includes('React Native')) return TbBrandReactNative
+  if (skillName.includes('Rust')) return FaRust
+  if (skillName.includes('SQL Server')) return DiMsqlServer
+  if (skillName.includes('Typescript')) return SiTypescript
+  if (skillName.includes('Google Cloud Platform')) return DiGoogleCloudPlatform
+  if (skillName.includes('Firebase')) return IoLogoFirebase
+  if (skillName.includes('Redis')) return SiRedis
   return FaCode
 }
 
 const getSkillLevel = (skillName: string) => {
   const name = skillName.toLowerCase()
   if (
-    ['flutter', 'dart', 'react', 'typescript', 'javascript'].some((tech) =>
-      name.includes(tech)
-    )
+    [
+      'next.js',
+      'flutter',
+      'dart',
+      'react',
+      'react native',
+      'typescript',
+      'javascript',
+      'docker',
+      'git',
+      'microservices',
+    ].some((tech) => name.includes(tech))
   )
     return 5
   if (
-    ['next.js', 'node.js', 'python', 'tailwind'].some((tech) =>
-      name.includes(tech)
-    )
+    [
+      'node.js',
+      'python',
+      'tailwind',
+      'asp.net core',
+      'firebase',
+      'postgresql',
+    ].some((tech) => name.includes(tech))
   )
     return 4
   if (
-    ['java', 'mongodb', 'postgresql', 'figma'].some((tech) =>
-      name.includes(tech)
-    )
+    [
+      'java',
+      'mongodb',
+      'postgresql',
+      'figma',
+      'golang',
+      'rust',
+      'google cloud platform',
+      'sql server',
+    ].some((tech) => name.includes(tech))
   )
     return 3
-  return 2
+  return 3
 }
 
 export const Skills: React.FC<ISkillProps> = ({ skills }) => {
@@ -107,6 +124,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
       skills: skills.data.filter((s) =>
         [
           'react',
+          'react native',
           'flutter',
           'next.js',
           'typescript',
@@ -123,9 +141,17 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
     {
       name: 'Backend',
       skills: skills.data.filter((s) =>
-        ['node.js', 'python', 'java', 'express', 'api'].some((tech) =>
-          s.title.toLowerCase().includes(tech)
-        )
+        [
+          'node.js',
+          'python',
+          'java',
+          'golang',
+          'rust',
+          'asp.net core',
+          'express',
+          'api',
+          'microservices',
+        ].some((tech) => s.title.toLowerCase().includes(tech))
       ),
       color: 'from-green-500 to-emerald-500',
       icon: FaNodeJs,
@@ -133,21 +159,39 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
     {
       name: 'Database',
       skills: skills.data.filter((s) =>
-        ['mongodb', 'postgresql', 'mysql', 'redis', 'database'].some((tech) =>
-          s.title.toLowerCase().includes(tech)
-        )
+        [
+          'mongodb',
+          'postgresql',
+          'mysql',
+          'sql server',
+          'redis',
+          'database',
+        ].some((tech) => s.title.toLowerCase().includes(tech))
       ),
       color: 'from-orange-500 to-red-500',
       icon: FaDatabase,
     },
     {
-      name: 'Tools',
+      name: 'Cloud & DevOps',
       skills: skills.data.filter((s) =>
-        ['git', 'docker', 'aws', 'figma', 'tools'].some((tech) =>
-          s.title.toLowerCase().includes(tech)
-        )
+        [
+          'docker',
+          'git',
+          'aws',
+          'google cloud platform',
+          'firebase',
+          'tools',
+        ].some((tech) => s.title.toLowerCase().includes(tech))
       ),
       color: 'from-purple-500 to-pink-500',
+      icon: FaTools,
+    },
+    {
+      name: 'Design',
+      skills: skills.data.filter((s) =>
+        ['figma'].some((tech) => s.title.toLowerCase().includes(tech))
+      ),
+      color: 'from-yellow-500 to-amber-500',
       icon: FaTools,
     },
   ].filter((cat) => cat.skills.length > 0)
@@ -156,7 +200,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
     <section
       ref={ref}
       id='skills'
-      className='section-spacing relative scroll-mt-28 overflow-hidden'
+      className='section-spacing-sm relative scroll-mt-28 overflow-hidden'
     >
       {/* Background Elements */}
       <div className='absolute inset-0 -z-10'>
@@ -167,7 +211,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
         />
       </div>
 
-      <div className='content-container max-w-7xl'>
+      <div className='content-container'>
         {/* Header */}
         <div
           className={`mb-16 text-center ${sectionAnimation.className}`}
@@ -184,9 +228,9 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
           <div className='special-border glass-card flex bg-white/10 p-1 backdrop-blur-lg dark:bg-gray-900/20'>
             <button
               onClick={() => setViewMode('hexagon')}
-              className={`px-6 py-2 transition-all duration-300 ${
+              className={`special-border mr-1 px-6 py-2 transition-all duration-300 ${
                 viewMode === 'hexagon'
-                  ? 'special-border bg-gradient-to-r from-blue-500 to-purple-500 text-white'
+                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
                   : 'hover:bg-white/10'
               }`}
             >
@@ -194,9 +238,9 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
             </button>
             <button
               onClick={() => setViewMode('cards')}
-              className={`px-6 py-2 transition-all duration-300 ${
+              className={`special-border ml-1 px-6 py-2 transition-all duration-300 ${
                 viewMode === 'cards'
-                  ? 'special-border bg-gradient-to-r from-blue-500 to-purple-500 text-white'
+                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
                   : 'hover:bg-white/10'
               }`}
             >

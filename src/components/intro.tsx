@@ -45,20 +45,24 @@ export const Intro: React.FC<IIntroProps> = () => {
     <section
       ref={ref}
       id='home'
-      className='relative mb-10 flex min-h-[80vh] max-w-[50rem] scroll-mt-[100rem] flex-col justify-center text-center sm:mb-0'
+      // className='relative mb-10 flex min-h-[80vh] max-w-[20rem] md:max-w-[50rem] flex-col justify-center text-center sm:mb-0'
+      className='relative flex min-h-[80vh] scroll-mt-28 flex-col justify-center text-center sm:mb-0'
     >
       {/* Background Elements */}
       <div className='absolute inset-0 -z-10'>
         {/* Main gradient orb */}
-        <div className='animate-float absolute left-1/2 top-1/4 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-blue-400/20 via-purple-400/20 to-pink-400/20 blur-3xl' />
+        {/* <div className='animate-float absolute left-1/2 top-1/4 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-blue-400/20 via-purple-400/20 to-pink-400/20 blur-3xl' /> */}
+        <div className='animate-float absolute left-1/2 top-1/4 h-[40vw] max-h-[600px] w-[40vw] max-w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-blue-400/20 via-purple-400/20 to-pink-400/20 blur-3xl' />
 
         {/* Secondary gradient orbs */}
         <div
-          className='animate-float absolute right-1/4 top-1/3 h-[300px] w-[300px] rounded-full bg-gradient-to-br from-cyan-400/15 to-blue-500/15 blur-2xl'
+          // className='animate-float absolute right-1/4 top-1/3 h-[300px] w-[300px] rounded-full bg-gradient-to-br from-cyan-400/15 to-blue-500/15 blur-2xl'
+          className='animate-float absolute right-1/4 top-1/3 h-[20vw] max-h-[300px] w-[20vw] max-w-[300px] rounded-full bg-gradient-to-br from-cyan-400/15 to-blue-500/15 blur-2xl'
           style={{ animationDelay: '1s' }}
         />
         <div
-          className='animate-float absolute bottom-1/3 left-1/4 h-[400px] w-[400px] rounded-full bg-gradient-to-br from-purple-400/15 to-pink-500/15 blur-2xl'
+          // className='animate-float absolute bottom-1/3 left-1/4 h-[400px] w-[400px] rounded-full bg-gradient-to-br from-purple-400/15 to-pink-500/15 blur-2xl'
+          className='animate-float absolute bottom-1/3 left-1/4 h-[25vw] max-h-[400px] w-[25vw] max-w-[400px] rounded-full bg-gradient-to-br from-purple-400/15 to-pink-500/15 blur-2xl'
           style={{ animationDelay: '2s' }}
         />
 
@@ -73,7 +77,7 @@ export const Intro: React.FC<IIntroProps> = () => {
       >
         <div className='group relative'>
           {/* Gradient border ring */}
-          <div className='animate-glow absolute inset-0 h-28 w-28 rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 opacity-75 blur-sm transition-all duration-500 group-hover:opacity-100 group-hover:blur-md' />
+          <div className='animate-glow absolute inset-0 h-28 w-28 rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 opacity-25 blur-sm transition-all duration-500 group-hover:opacity-100 group-hover:blur-md' />
 
           {/* Profile image container */}
           <div className='relative h-24 w-24 overflow-hidden rounded-full border-4 border-white shadow-2xl transition-transform duration-500 group-hover:scale-110 dark:border-gray-800'>
@@ -81,7 +85,7 @@ export const Intro: React.FC<IIntroProps> = () => {
               src={profilePic}
               alt='pranta-portrait'
               fill
-              quality='95'
+              // quality='95'
               priority={true}
               className='object-cover transition-transform duration-500 group-hover:scale-110'
             />
@@ -127,7 +131,8 @@ export const Intro: React.FC<IIntroProps> = () => {
           </span>
         </h1>
 
-        <div className='mx-auto max-w-2xl'>
+        {/* <div className='mx-auto w-full md:max-w-2xl'> */}
+        <div className='mx-auto w-full'>
           <p className='text-lg leading-relaxed text-gray-600 dark:text-gray-400 sm:text-xl'>
             My focus is{' '}
             <span className='text-gradient font-semibold'>Flutter</span> &{' '}
@@ -145,7 +150,7 @@ export const Intro: React.FC<IIntroProps> = () => {
         {/* Primary CTA */}
         <Link
           href='#contact'
-          className={`btn-primary special-border group relative overflow-hidden px-8 py-4 ${getItemClassName(0)}`}
+          className={`btn-primary special-border group relative overflow-hidden px-5 py-2.5 ${getItemClassName(0)}`}
           onClick={() => {
             setActiveSection('Contact')
             setTimeOfLastClick(Date.now())
@@ -162,7 +167,7 @@ export const Intro: React.FC<IIntroProps> = () => {
 
         {/* Download CV */}
         <a
-          className={`btn-secondary special-border group relative overflow-hidden px-8 py-4 ${getItemClassName(1)}`}
+          className={`btn-secondary special-border group relative overflow-hidden px-5 py-2.5 ${getItemClassName(1)}`}
           href={CV_PATH}
           download
         >

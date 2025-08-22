@@ -32,7 +32,7 @@ export const Contact: React.FC<IContactProps> = () => {
     })
 
   return (
-    <section id='contact' ref={ref} className='section-spacing scroll-mt-28'>
+    <section id='contact' ref={ref} className='section-spacing-sm scroll-mt-28'>
       {/* Background Elements */}
       <div className='absolute inset-0 -z-10 overflow-hidden'>
         <div className='absolute left-1/4 top-1/4 h-[400px] w-[400px] rounded-full bg-gradient-to-br from-blue-400/10 to-purple-400/10 blur-3xl' />
@@ -45,7 +45,7 @@ export const Contact: React.FC<IContactProps> = () => {
           <div className={`mb-8 ${getItemClassName(0)}`}>
             <SectionHeading>Contact Me</SectionHeading>
             <p className='mt-4 text-lg text-gray-600 dark:text-gray-400'>
-              Let&apos;s discuss your project and bring your ideas to life
+              Looking for a developer? Let&apos;s make it happen together.
             </p>
           </div>
 

@@ -13,7 +13,7 @@ export const AllProjectButton = () => {
       <button
         onClick={() => router.push('/projects')}
         type='button'
-        className='btn-primary special-border group relative mt-10 overflow-hidden px-8 py-4'
+        className='btn-primary special-border group relative mt-5 overflow-hidden px-5 py-2.5'
       >
         <span className='relative z-10 flex items-center gap-2'>
           All Projects
