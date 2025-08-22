@@ -1,4 +1,3 @@
-import React from 'react'
 import { NextPage } from 'next'
 
 import { About } from '@/components/about'
@@ -6,47 +5,9 @@ import { Contact } from '@/components/contact'
 import { Experience } from '@/components/experience'
 import { Intro } from '@/components/intro'
 import { Projects } from '@/components/projects'
-import { SectionDivider } from '@/components/section-divider'
 import { Skills } from '@/components/skills'
-import {
-  IStrapiApiResponse,
-  ExperienceDataAttributes,
-  ProjectDataAttributes,
-} from '@/types/types'
-import { STRAPI_API_URL } from '@/constants/urls'
-
-export const getAllExperiences = async () => {
-  const data = await fetch(`${STRAPI_API_URL}/experiences?sort=sortBy:asc`, {
-    headers: {
-      Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-  })
-  return (await data.json()) as IStrapiApiResponse<ExperienceDataAttributes>
-}
-
-export const getAllProjects = async () => {
-  const data = await fetch(
-    `${STRAPI_API_URL}/projects?populate=*&filters[isFeatured][$eq]=true&sort=sortBy:asc`,
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-    }
-  )
-  return (await data.json()) as IStrapiApiResponse<ProjectDataAttributes>
-}
-
-export const getAllSkills = async () => {
-  const data = await fetch(`${STRAPI_API_URL}/skills`, {
-    headers: {
-      Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-  })
-  return (await data.json()) as IStrapiApiResponse<ProjectDataAttributes>
-}
+import { getAllExperiences, getAllSkills } from '@/lib/strapi'
+import { getAllProjects } from './projects/page'
 
 const Home: NextPage = async () => {
   const experiences = await getAllExperiences()

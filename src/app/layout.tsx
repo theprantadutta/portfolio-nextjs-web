@@ -3,14 +3,14 @@ import './globals.css'
 import React, { ReactNode } from 'react'
 import { Inter } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
-import { Analytics } from '@vercel/analytics/react'
+// import { Analytics } from '@vercel/analytics/react'
 
 import { Header } from '@/components/header'
 import { ActiveSectionContextProvider } from '@/context/active-section-context'
 import { Footer } from '@/components/footer'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { ThemeContextProvider } from '@/context/theme-context'
-import { SpeedInsights } from '@vercel/speed-insights/next'
+// import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -52,8 +52,8 @@ const RootLayout: React.FC<IRootLayoutProps> = ({ children }) => {
             <ThemeSwitch />
           </ActiveSectionContextProvider>
         </ThemeContextProvider>
-        <Analytics />
-        <SpeedInsights />
+        {/* <Analytics />
+        <SpeedInsights /> */}
       </body>
     </html>
   )
