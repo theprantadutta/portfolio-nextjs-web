@@ -29,7 +29,7 @@ export const About: React.FC<IAboutProps> = () => {
     })
 
   return (
-    <section ref={ref} id='about' className='section-spacing scroll-mt-28'>
+    <section ref={ref} id='about' className='section-spacing-sm scroll-mt-28'>
       {/* Background Elements */}
       <div className='absolute inset-0 -z-10 overflow-hidden'>
         <div className='absolute right-0 top-1/4 h-[300px] w-[300px] rounded-full bg-gradient-to-br from-purple-400/10 to-pink-400/10 blur-3xl' />
