@@ -15,9 +15,22 @@ export const getAllExperiences = async () => {
   return (await data.json()) as IStrapiApiResponse<ExperienceDataAttributes>
 }
 
-export const getAllProjects = async () => {
+export const getAllFeaturedProjects = async () => {
   const data = await fetch(
     `${STRAPI_API_URL}/projects?populate=*&filters[isFeatured][$eq]=true&sort=sortBy:asc`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+    }
+  )
+  return (await data.json()) as IStrapiApiResponse<ProjectDataAttributes>
+}
+
+export const getAllProjects = async () => {
+  const data = await fetch(
+    `${STRAPI_API_URL}/projects?populate=*&sort=sortBy:asc`,
     {
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,

@@ -6,12 +6,16 @@ import { Experience } from '@/components/experience'
 import { Intro } from '@/components/intro'
 import { Projects } from '@/components/projects'
 import { Skills } from '@/components/skills'
-import { getAllExperiences, getAllSkills, getAllProjects } from '@/lib/strapi'
+import {
+  getAllExperiences,
+  getAllSkills,
+  getAllFeaturedProjects,
+} from '@/lib/strapi'
 import { SectionDivider } from '@/components/section-divider'
 
 const Home: NextPage = async () => {
   const experiences = await getAllExperiences()
-  const projects = await getAllProjects()
+  const projects = await getAllFeaturedProjects()
   const skills = await getAllSkills()
   return (
     <main className='flex flex-col items-center px-4'>
