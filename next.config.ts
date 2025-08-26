@@ -11,6 +11,7 @@ const nextConfig = {
     // ignoreBuildErrors: true,
   },
   images: {
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -37,6 +38,24 @@ const nextConfig = {
         hostname: 'placehold.co',
       },
     ],
+  },
+  // Enable gzip compression
+  compress: true,
+  // Optimize chunks
+  webpack: (config: any, { isServer }: { isServer: boolean }) => {
+    if (!isServer) {
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
+        },
+      }
+    }
+    return config
   },
 }
 

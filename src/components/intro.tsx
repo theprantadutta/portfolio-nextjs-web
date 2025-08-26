@@ -83,10 +83,10 @@ export const Intro: React.FC<IIntroProps> = () => {
           <div className='relative h-24 w-24 overflow-hidden rounded-full border-4 border-white shadow-2xl transition-transform duration-500 group-hover:scale-110 dark:border-gray-800'>
             <Image
               src={profilePic}
-              alt='pranta-portrait'
+              alt='Pranta Dutta - Full Stack Developer'
               fill
-              // quality='95'
               priority={true}
+              sizes='96px'
               className='object-cover transition-transform duration-500 group-hover:scale-110'
             />
 

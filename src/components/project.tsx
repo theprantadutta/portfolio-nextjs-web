@@ -1,12 +1,12 @@
 'use client'
 
 import React, { ReactNode } from 'react'
-import Image from 'next/image'
 import { useAnimationOnScroll } from '@/lib/animation-hooks'
 import { ProjectDataAttributes } from '@/types/types'
 import { ProjectModal } from './project-modal'
 import { FaCode, FaMobile, FaDesktop, FaExternalLinkAlt } from 'react-icons/fa'
 import { useRouter } from 'next/navigation'
+import { StrapiImage } from '@/shared/StrapiImage'
 
 type IProjectProps = {
   children?: ReactNode
@@ -120,12 +120,14 @@ export const Project: React.FC<IProjectProps> = ({
               {/* Main Project Image */}
               <div className='relative flex h-full items-center justify-center p-4'>
                 <div className='special-border relative aspect-[9/16] w-full max-w-[170px] transform overflow-hidden bg-white shadow-xl transition-all duration-500 group-hover/image:rotate-2 group-hover/image:scale-105 dark:bg-gray-900'>
-                  <Image
+                  <StrapiImage
                     src={cover.formats.medium?.url || cover.formats.large.url}
                     alt={`${title} project preview`}
+                    width={170}
+                    height={300}
                     fill
                     sizes='(max-width: 768px) 100vw, 170px'
-                    quality={90}
+                    objectFit='cover'
                     className='object-cover'
                   />
 
