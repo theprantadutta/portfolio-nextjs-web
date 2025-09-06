@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "clean": "npx rimraf .next",
-    "dev": "yarn clean && next dev",
+    "dev": "yarn clean && next dev --turbopack",
     "prebuild": "yarn clean",
-    "build": "next build",
+    "build": "next build --turbopack",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --check --ignore-unknown",

@@ -42,21 +42,21 @@ const nextConfig = {
   // Enable gzip compression
   compress: true,
   // Optimize chunks
-  webpack: (config: any, { isServer }: { isServer: boolean }) => {
-    if (!isServer) {
-      config.optimization.splitChunks = {
-        chunks: 'all',
-        cacheGroups: {
-          vendor: {
-            test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
-            chunks: 'all',
-          },
-        },
-      }
-    }
-    return config
-  },
+  // webpack: (config: any, { isServer }: { isServer: boolean }) => {
+  //   if (!isServer) {
+  //     config.optimization.splitChunks = {
+  //       chunks: 'all',
+  //       cacheGroups: {
+  //         vendor: {
+  //           test: /[\\/]node_modules[\\/]/,
+  //           name: 'vendors',
+  //           chunks: 'all',
+  //         },
+  //       },
+  //     }
+  //   }
+  //   return config
+  // },
 }
 
 export default nextConfig
