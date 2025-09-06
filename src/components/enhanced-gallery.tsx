@@ -97,23 +97,23 @@ export const EnhancedGallery = ({
   return (
     <>
       {/* Gallery Header with Enhanced Stats */}
-      <div className='mb-8 text-center'>
-        <div className='special-border glass-card inline-flex items-center gap-4 bg-white/10 px-6 py-3 backdrop-blur-xl dark:bg-gray-900/30'>
+      <div className='mb-6 text-center sm:mb-8'>
+        <div className='special-border glass-card inline-flex flex-wrap items-center justify-center gap-2 bg-white/10 px-3 py-2 backdrop-blur-xl dark:bg-gray-900/30 sm:gap-4 sm:px-6 sm:py-3'>
           <div className='flex items-center gap-2'>
-            <FaImage className='h-4 w-4 text-blue-500' />
-            <span className='font-medium text-gray-900 dark:text-white'>
+            <FaImage className='h-3 w-3 text-blue-500 sm:h-4 sm:w-4' />
+            <span className='text-sm font-medium text-gray-900 dark:text-white sm:text-base'>
               {images.length} Screenshots
             </span>
           </div>
-          <div className='h-4 w-px bg-gray-300 dark:bg-gray-600'></div>
+          <div className='hidden h-4 w-px bg-gray-300 dark:bg-gray-600 sm:block'></div>
           <div className='flex items-center gap-2'>
-            <span className='text-sm text-gray-600 dark:text-gray-400'>
+            <span className='text-xs text-gray-600 dark:text-gray-400 sm:text-sm'>
               Current: {selectedIndex + 1}/{images.length}
             </span>
           </div>
-          <div className='h-4 w-px bg-gray-300 dark:bg-gray-600'></div>
+          <div className='hidden h-4 w-px bg-gray-300 dark:bg-gray-600 sm:block'></div>
           <div className='flex items-center gap-2'>
-            <span className='text-sm text-gray-600 dark:text-gray-400'>
+            <span className='text-xs text-gray-600 dark:text-gray-400 sm:text-sm'>
               {getImageDimensions(currentImage).width}×
               {getImageDimensions(currentImage).height}
             </span>
@@ -122,8 +122,8 @@ export const EnhancedGallery = ({
       </div>
 
       {/* Main Image Display with Enhanced Container */}
-      <div className='relative mb-8 px-8'>
-        <div className='relative mx-auto aspect-[9/16] w-80 max-w-sm'>
+      <div className='relative mb-6 px-4 sm:mb-8 sm:px-8'>
+        <div className='relative mx-auto aspect-[9/16] w-full max-w-[280px] sm:max-w-sm'>
           {/* Enhanced Glow Effects */}
           <div className='absolute -inset-8 bg-gradient-to-br from-blue-500/30 via-purple-500/20 to-pink-500/30 blur-2xl'></div>
           <div className='absolute -inset-4 bg-gradient-to-br from-blue-400/20 via-purple-400/15 to-pink-400/20 blur-xl'></div>
@@ -183,24 +183,24 @@ export const EnhancedGallery = ({
             <>
               <button
                 onClick={prevImage}
-                className='special-border glass-card absolute -left-6 top-1/2 z-20 -translate-y-1/2 p-3 transition-all duration-300 hover:scale-110 hover:bg-white/30 dark:hover:bg-gray-800/50'
+                className='special-border glass-card absolute -left-4 top-1/2 z-20 -translate-y-1/2 p-2 transition-all duration-300 hover:scale-110 hover:bg-white/30 dark:hover:bg-gray-800/50 sm:-left-6 sm:p-3'
                 title='Previous Image'
               >
-                <FaArrowLeft className='h-5 w-5' />
+                <FaArrowLeft className='h-4 w-4 sm:h-5 sm:w-5' />
               </button>
               <button
                 onClick={nextImage}
-                className='special-border glass-card absolute -right-6 top-1/2 z-20 -translate-y-1/2 p-3 transition-all duration-300 hover:scale-110 hover:bg-white/30 dark:hover:bg-gray-800/50'
+                className='special-border glass-card absolute -right-4 top-1/2 z-20 -translate-y-1/2 p-2 transition-all duration-300 hover:scale-110 hover:bg-white/30 dark:hover:bg-gray-800/50 sm:-right-6 sm:p-3'
                 title='Next Image'
               >
-                <FaArrowRight className='h-5 w-5' />
+                <FaArrowRight className='h-4 w-4 sm:h-5 sm:w-5' />
               </button>
             </>
           )}
 
           {/* Enhanced Counter */}
-          <div className='special-border glass-card absolute bottom-4 left-1/2 z-20 -translate-x-1/2 bg-black/50 px-4 py-2 backdrop-blur-md'>
-            <span className='text-sm font-medium text-white'>
+          <div className='special-border glass-card absolute bottom-2 left-1/2 z-20 -translate-x-1/2 bg-black/50 px-3 py-1 backdrop-blur-md sm:bottom-4 sm:px-4 sm:py-2'>
+            <span className='text-xs font-medium text-white sm:text-sm'>
               {selectedIndex + 1} / {images.length}
             </span>
           </div>
@@ -208,16 +208,16 @@ export const EnhancedGallery = ({
       </div>
 
       {/* Enhanced Thumbnail Navigation */}
-      <div className='flex justify-center px-4'>
+      <div className='flex justify-center px-2 sm:px-4'>
         <div
-          className='flex max-w-full gap-3 overflow-x-auto pb-4'
+          className='flex max-w-full gap-2 overflow-x-auto pb-4 sm:gap-3'
           style={{ scrollbarWidth: 'thin' }}
         >
           {images.map((image, index) => (
             <button
               key={image.id}
               onClick={() => onIndexChange(index)}
-              className={`group relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl transition-all duration-300 ${
+              className={`group relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg transition-all duration-300 sm:h-20 sm:w-20 sm:rounded-xl ${
                 selectedIndex === index
                   ? 'scale-90 shadow-lg ring-2 ring-blue-500 ring-offset-2 ring-offset-white/10'
                   : 'opacity-80 hover:scale-105 hover:opacity-100'
