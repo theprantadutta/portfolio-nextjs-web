@@ -69,15 +69,15 @@ export const Header: React.FC<IHeaderProps> = () => {
       {/* Desktop Navigation */}
       <nav
         ref={containerRef}
-        className={`special-border glass-card fixed left-1/2 top-6 z-[1000] hidden -translate-x-1/2 transform border-transparent transition-all duration-500 ease-out sm:block ${
+        className={`fixed left-1/2 top-6 z-[1000] hidden -translate-x-1/2 transform rounded-bl-3xl rounded-br-3xl rounded-tl-3xl rounded-tr-lg transition-all duration-500 ease-out sm:block ${
           isScrolled
-            ? 'border-white/30 bg-white/20 shadow-2xl backdrop-blur-xl dark:border-white/20 dark:bg-gray-900/40'
-            : 'border-transparent bg-transparent'
+            ? 'border border-white/30 bg-white/20 shadow-lg backdrop-blur-xl dark:border-white/20 dark:bg-gray-900/40'
+            : 'border border-transparent bg-transparent'
         }`}
       >
         {/* Enhanced gradient overlay - only when scrolled */}
         <div
-          className='special-border absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-cyan-500/10 transition-opacity duration-500'
+          className='absolute inset-0 rounded-bl-3xl rounded-br-3xl rounded-tl-3xl rounded-tr-lg bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-cyan-500/10 transition-opacity duration-500'
           style={{
             opacity: isScrolled ? 1 : 0,
           }}
@@ -93,7 +93,7 @@ export const Header: React.FC<IHeaderProps> = () => {
               <li className={`relative ${itemClassName}`} key={link.hash}>
                 <Link
                   className={clsx(
-                    'special-border group relative flex items-center gap-2 px-4 py-2.5 text-sm font-medium transition-all duration-300',
+                    'group relative flex items-center gap-2 rounded-bl-3xl rounded-br-3xl rounded-tl-3xl rounded-tr-lg px-4 py-2.5 text-sm font-medium transition-all duration-300',
                     {
                       'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25':
                         activeSection === link.name,
@@ -191,7 +191,7 @@ export const Header: React.FC<IHeaderProps> = () => {
                       <Link
                         href={link.hash}
                         className={clsx(
-                          'special-border group relative flex items-center gap-3 overflow-hidden px-4 py-3 text-base font-medium transition-all duration-300',
+                          'group relative flex items-center gap-3 overflow-hidden rounded-bl-3xl rounded-br-3xl rounded-tl-3xl rounded-tr-lg px-4 py-3 text-base font-medium transition-all duration-300',
                           {
                             'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg':
                               activeSection === link.name,
