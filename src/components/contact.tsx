@@ -66,7 +66,7 @@ export const Contact: React.FC<IContactProps> = () => {
             <div className='glass-card special-border inline-flex items-center gap-2 border border-green-200 px-4 py-2 dark:border-green-800'>
               <div className='h-2 w-2 animate-pulse rounded-full bg-green-500' />
               <span className='text-sm font-medium text-green-700 dark:text-green-400'>
-                Available to hire
+                Available for hire
               </span>
             </div>
           </div>

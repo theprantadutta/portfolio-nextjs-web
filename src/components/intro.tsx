@@ -210,7 +210,7 @@ export const Intro: React.FC<IIntroProps> = () => {
         <div className='glass-card special-border border border-green-200 px-4 py-2 dark:border-green-800'>
           <div className='flex items-center gap-2 text-sm font-medium text-green-700 dark:text-green-400'>
             <div className='h-2 w-2 animate-pulse rounded-full bg-green-500' />
-            <span>Available to hire</span>
+            <span>Available for hire</span>
           </div>
         </div>
       </div>
