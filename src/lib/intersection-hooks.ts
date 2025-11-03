@@ -1,8 +1,9 @@
 'use client'
 
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-// Basic intersection observer hook
+import { observeElement, unobserveElement } from '@/lib/observer-manager'
+
 interface UseIntersectionObserverOptions {
   threshold?: number | number[]
   root?: Element | null
@@ -23,34 +24,31 @@ export const useIntersectionObserver = (
   const elementRef = useRef<HTMLElement>(null)
   const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null)
   const [isIntersecting, setIsIntersecting] = useState(false)
-
-  const observerRef = useRef<IntersectionObserver | null>(null)
+  const hasTriggeredRef = useRef(false)
 
   useEffect(() => {
+    if (typeof window === 'undefined') return
     const element = elementRef.current
     if (!element) return
 
-    const observer = new IntersectionObserver(
-      ([observerEntry]) => {
-        setEntry(observerEntry)
-        setIsIntersecting(observerEntry.isIntersecting)
+    const handler = (observerEntry: IntersectionObserverEntry) => {
+      setEntry(observerEntry)
+      setIsIntersecting(observerEntry.isIntersecting)
 
-        if (triggerOnce && observerEntry.isIntersecting) {
-          observer.unobserve(element)
-        }
-      },
-      {
-        threshold,
-        root,
-        rootMargin,
+      if (
+        triggerOnce &&
+        observerEntry.isIntersecting &&
+        !hasTriggeredRef.current
+      ) {
+        hasTriggeredRef.current = true
+        unobserveElement(element, { threshold, root, rootMargin })
       }
-    )
+    }
 
-    observerRef.current = observer
-    observer.observe(element)
+    observeElement(element, handler, { threshold, root, rootMargin })
 
     return () => {
-      observer.disconnect()
+      unobserveElement(element, { threshold, root, rootMargin })
     }
   }, [threshold, root, rootMargin, triggerOnce])
 
@@ -58,11 +56,10 @@ export const useIntersectionObserver = (
     ref: elementRef,
     entry,
     isIntersecting,
-    inView: isIntersecting, // Alias for compatibility
+    inView: isIntersecting,
   }
 }
 
-// Hook specifically for tracking multiple elements
 export const useMultipleIntersectionObserver = (
   elementsCount: number,
   options: UseIntersectionObserverOptions = {}
@@ -75,56 +72,52 @@ export const useMultipleIntersectionObserver = (
   const elementRefs = useRef<(HTMLElement | null)[]>(
     new Array(elementsCount).fill(null)
   )
+  const [version, setVersion] = useState(0)
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const index = elementRefs.current.findIndex(
-            (el) => el === entry.target
-          )
-          if (index !== -1) {
-            setIntersectingElements((prev) => {
-              const newSet = new Set(prev)
-              if (entry.isIntersecting) {
-                newSet.add(index)
-              } else {
-                newSet.delete(index)
-              }
-              return newSet
-            })
-          }
-        })
-      },
-      {
-        threshold,
-        root,
-        rootMargin,
-      }
-    )
+    if (typeof window === 'undefined') return
 
-    elementRefs.current.forEach((element) => {
-      if (element) {
-        observer.observe(element)
+    const handlers = new Map<
+      Element,
+      (entry: IntersectionObserverEntry) => void
+    >()
+
+    elementRefs.current.forEach((element, index) => {
+      if (!element) return
+
+      const handler = (entry: IntersectionObserverEntry) => {
+        setIntersectingElements((prev) => {
+          const next = new Set(prev)
+          if (entry.isIntersecting) {
+            next.add(index)
+          } else {
+            next.delete(index)
+          }
+          return next
+        })
       }
+
+      handlers.set(element, handler)
+      observeElement(element, handler, { threshold, root, rootMargin })
     })
 
     return () => {
-      observer.disconnect()
+      handlers.forEach((_, element) => {
+        unobserveElement(element, { threshold, root, rootMargin })
+      })
     }
-  }, [threshold, root, rootMargin])
+  }, [threshold, root, rootMargin, version, elementsCount])
 
   const getRef = useCallback(
     (index: number) => (element: HTMLElement | null) => {
       elementRefs.current[index] = element
+      setVersion((current) => current + 1)
     },
     []
   )
 
   const isElementIntersecting = useCallback(
-    (index: number) => {
-      return intersectingElements.has(index)
-    },
+    (index: number) => intersectingElements.has(index),
     [intersectingElements]
   )
 
@@ -135,11 +128,12 @@ export const useMultipleIntersectionObserver = (
   }
 }
 
-// Scroll progress hook
 export const useScrollProgress = () => {
   const [scrollProgress, setScrollProgress] = useState(0)
 
   useEffect(() => {
+    if (typeof window === 'undefined') return
+
     const updateScrollProgress = () => {
       const scrollTop = window.scrollY
       const docHeight =
@@ -149,7 +143,7 @@ export const useScrollProgress = () => {
     }
 
     window.addEventListener('scroll', updateScrollProgress, { passive: true })
-    updateScrollProgress() // Initial call
+    updateScrollProgress()
 
     return () => {
       window.removeEventListener('scroll', updateScrollProgress)
@@ -159,24 +153,19 @@ export const useScrollProgress = () => {
   return scrollProgress
 }
 
-// Parallax effect hook
 export const useParallax = (speed: number = 0.5) => {
   const elementRef = useRef<HTMLElement>(null)
   const [offset, setOffset] = useState(0)
 
   useEffect(() => {
+    if (typeof window === 'undefined') return
+
     const handleScroll = () => {
-      if (!elementRef.current) return
-
-      const rect = elementRef.current.getBoundingClientRect()
-      const scrolled = window.scrollY
-      const newOffset = scrolled * speed
-
-      setOffset(newOffset)
+      setOffset(window.scrollY * speed)
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll() // Initial call
+    handleScroll()
 
     return () => {
       window.removeEventListener('scroll', handleScroll)
@@ -186,13 +175,15 @@ export const useParallax = (speed: number = 0.5) => {
   return {
     ref: elementRef,
     offset,
-    style: {
-      transform: `translateY(${offset}px)`,
-    },
+    style: useMemo(
+      () => ({
+        transform: `translateY(${offset}px)`,
+      }),
+      [offset]
+    ),
   }
 }
 
-// Visibility tracking hook with callbacks
 interface UseVisibilityTrackingOptions extends UseIntersectionObserverOptions {
   onEnter?: () => void
   onExit?: () => void

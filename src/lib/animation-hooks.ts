@@ -1,37 +1,34 @@
 'use client'
 
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+
+import { observeElement, unobserveElement } from '@/lib/observer-manager'
 
 // Animation utilities for performance
 export const animationUtils = {
-  // CSS classes for animations
   fadeInUp: 'animate-fade-in-up',
   fadeIn: 'animate-fade-in',
   slideInLeft: 'animate-slide-in-left',
   slideInRight: 'animate-slide-in-right',
   scaleIn: 'animate-scale-in',
   bounceIn: 'animate-bounce-in',
-
-  // Check if user prefers reduced motion
   prefersReducedMotion: () => {
     if (typeof window !== 'undefined') {
       return window.matchMedia('(prefers-reduced-motion: reduce)').matches
     }
     return false
   },
-
-  // Add CSS variables for dynamic delays
   setAnimationDelay: (element: HTMLElement, delay: number) => {
     element.style.setProperty('--animation-delay', `${delay}ms`)
   },
 }
 
-// Hook for basic scroll-triggered animations
 interface UseAnimationOnScrollOptions {
   threshold?: number
   delay?: number
   animationClass?: string
   triggerOnce?: boolean
+  rootMargin?: string
 }
 
 export const useAnimationOnScroll = <T extends HTMLElement = HTMLElement>({
@@ -39,39 +36,47 @@ export const useAnimationOnScroll = <T extends HTMLElement = HTMLElement>({
   delay = 0,
   animationClass = 'animate-fade-in-up',
   triggerOnce = true,
+  rootMargin = '0px',
 }: UseAnimationOnScrollOptions = {}) => {
   const elementRef = useRef<T>(null)
   const [isVisible, setIsVisible] = useState(false)
-  const [hasAnimated, setHasAnimated] = useState(false)
+  const hasAnimatedRef = useRef(false)
+  const shouldReduceMotion = animationUtils.prefersReducedMotion()
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && (!triggerOnce || !hasAnimated)) {
-          setTimeout(() => {
-            setIsVisible(true)
-            setHasAnimated(true)
-          }, delay)
-        } else if (!triggerOnce && !entry.isIntersecting) {
-          setIsVisible(false)
-        }
-      },
-      { threshold }
-    )
+    if (shouldReduceMotion || typeof window === 'undefined') {
+      setIsVisible(true)
+      hasAnimatedRef.current = true
+      return
+    }
 
     const element = elementRef.current
-    if (element) {
-      observer.observe(element)
-    }
+    if (!element) return
 
-    return () => {
-      if (element) {
-        observer.unobserve(element)
+    let timeoutId: number | undefined
+
+    const handler = (entry: IntersectionObserverEntry) => {
+      if (entry.isIntersecting && (!triggerOnce || !hasAnimatedRef.current)) {
+        timeoutId = window.setTimeout(() => {
+          setIsVisible(true)
+          hasAnimatedRef.current = true
+        }, delay)
+      } else if (!triggerOnce && !entry.isIntersecting) {
+        setIsVisible(false)
       }
     }
-  }, [threshold, delay, hasAnimated, triggerOnce])
 
-  const className = animationUtils.prefersReducedMotion()
+    observeElement(element, handler, { threshold, rootMargin })
+
+    return () => {
+      if (timeoutId) {
+        window.clearTimeout(timeoutId)
+      }
+      unobserveElement(element, { threshold, rootMargin })
+    }
+  }, [threshold, delay, triggerOnce, rootMargin, shouldReduceMotion])
+
+  const className = shouldReduceMotion
     ? ''
     : isVisible
       ? animationClass
@@ -84,13 +89,13 @@ export const useAnimationOnScroll = <T extends HTMLElement = HTMLElement>({
   }
 }
 
-// Hook for staggered animations (like in project grids)
 interface UseStaggeredAnimationOptions {
   itemCount: number
   delay?: number
   staggerDelay?: number
   animationClass?: string
   threshold?: number
+  rootMargin?: string
 }
 
 export const useStaggeredAnimation = <T extends HTMLElement = HTMLElement>({
@@ -99,51 +104,67 @@ export const useStaggeredAnimation = <T extends HTMLElement = HTMLElement>({
   staggerDelay = 100,
   animationClass = 'animate-fade-in-up',
   threshold = 0.1,
+  rootMargin = '0px',
 }: UseStaggeredAnimationOptions) => {
   const containerRef = useRef<T>(null)
   const [visibleItems, setVisibleItems] = useState<Set<number>>(new Set())
   const [hasTriggered, setHasTriggered] = useState(false)
+  const hasTriggeredRef = useRef(false)
+  const shouldReduceMotion = animationUtils.prefersReducedMotion()
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasTriggered) {
-          setHasTriggered(true)
-
-          // Trigger animations with stagger
-          for (let i = 0; i < itemCount; i++) {
-            setTimeout(
-              () => {
-                setVisibleItems((prev) => new Set([...prev, i]))
-              },
-              delay + i * staggerDelay
-            )
-          }
-        }
-      },
-      { threshold }
-    )
+    if (shouldReduceMotion || typeof window === 'undefined') {
+      setVisibleItems(new Set(Array.from({ length: itemCount }, (_, i) => i)))
+      setHasTriggered(true)
+      hasTriggeredRef.current = true
+      return
+    }
 
     const element = containerRef.current
-    if (element) {
-      observer.observe(element)
-    }
+    if (!element) return
 
-    return () => {
-      if (element) {
-        observer.unobserve(element)
+    const handler = (entry: IntersectionObserverEntry) => {
+      if (entry.isIntersecting && !hasTriggeredRef.current) {
+        hasTriggeredRef.current = true
+        setHasTriggered(true)
+
+        for (let i = 0; i < itemCount; i++) {
+          window.setTimeout(
+            () => {
+              setVisibleItems((prev) => {
+                const next = new Set(prev)
+                next.add(i)
+                return next
+              })
+            },
+            delay + i * staggerDelay
+          )
+        }
       }
     }
-  }, [itemCount, delay, staggerDelay, hasTriggered, threshold])
+
+    observeElement(element, handler, { threshold, rootMargin })
+
+    return () => {
+      unobserveElement(element, { threshold, rootMargin })
+    }
+  }, [
+    itemCount,
+    delay,
+    staggerDelay,
+    threshold,
+    rootMargin,
+    shouldReduceMotion,
+  ])
 
   const getItemClassName = useCallback(
     (index: number) => {
-      if (animationUtils.prefersReducedMotion()) return ''
+      if (shouldReduceMotion) return ''
       return visibleItems.has(index)
         ? animationClass
         : 'opacity-0 translate-y-8'
     },
-    [visibleItems, animationClass]
+    [visibleItems, animationClass, shouldReduceMotion]
   )
 
   return {
@@ -153,7 +174,6 @@ export const useStaggeredAnimation = <T extends HTMLElement = HTMLElement>({
   }
 }
 
-// Hook for hover animations and micro-interactions
 export const useHoverAnimation = <T extends HTMLElement = HTMLElement>(
   animationClass: string = 'transform transition-transform duration-300 hover:scale-105'
 ) => {
@@ -165,7 +185,6 @@ export const useHoverAnimation = <T extends HTMLElement = HTMLElement>(
   }
 }
 
-// Hook for modal/overlay animations
 export const useModalAnimation = (isOpen: boolean) => {
   const [shouldRender, setShouldRender] = useState(isOpen)
   const [animationPhase, setAnimationPhase] = useState<
@@ -176,19 +195,17 @@ export const useModalAnimation = (isOpen: boolean) => {
     if (isOpen) {
       setShouldRender(true)
       setAnimationPhase('entering')
-      // Trigger entry animation
-      const timer = setTimeout(() => {
+      const timer = window.setTimeout(() => {
         setAnimationPhase('entered')
       }, 10)
-      return () => clearTimeout(timer)
+      return () => window.clearTimeout(timer)
     } else {
       setAnimationPhase('exiting')
-      // Wait for exit animation to complete
-      const timer = setTimeout(() => {
+      const timer = window.setTimeout(() => {
         setShouldRender(false)
         setAnimationPhase('exited')
       }, 300)
-      return () => clearTimeout(timer)
+      return () => window.clearTimeout(timer)
     }
   }, [isOpen])
 
@@ -234,13 +251,12 @@ export const useModalAnimation = (isOpen: boolean) => {
   }
 }
 
-// Hook for page transitions
 export const usePageTransition = () => {
   const [isTransitioning, setIsTransitioning] = useState(false)
 
   const startTransition = useCallback(() => {
     setIsTransitioning(true)
-    setTimeout(() => setIsTransitioning(false), 300)
+    window.setTimeout(() => setIsTransitioning(false), 300)
   }, [])
 
   return {

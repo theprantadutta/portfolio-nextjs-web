@@ -1,9 +1,8 @@
-'use client'
+import type { ReactNode } from 'react'
 
-import React, { ReactNode } from 'react'
-import { useSectionInView } from '@/lib/hooks'
 import { Project } from '@/components/project'
 import { SectionHeading } from '@/components/section-heading'
+import { SectionMarker } from '@/components/section-marker'
 import { IStrapiApiResponse, ProjectDataAttributes } from '@/types/types'
 import { AllProjectButton } from './all-project-button'
 
@@ -17,15 +16,13 @@ export const Projects: React.FC<IProjectsProps> = ({
   showAllProjects,
   projects,
 }) => {
-  const { ref } = useSectionInView('Projects', 0.3)
   return (
-    <section ref={ref} id='projects' className='scroll-mt-28'>
+    <section id='projects' className='scroll-mt-28'>
+      <SectionMarker section='Projects' threshold={0.3} />
       <SectionHeading>My projects</SectionHeading>
       <div>
-        {projects.data.map((project, index) => (
-          <React.Fragment key={index}>
-            <Project {...project} />
-          </React.Fragment>
+        {projects.data.map((project) => (
+          <Project key={project.documentId ?? project.id} {...project} />
         ))}
       </div>
       {!showAllProjects && <AllProjectButton />}

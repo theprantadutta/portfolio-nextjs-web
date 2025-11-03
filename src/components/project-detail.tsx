@@ -2,12 +2,8 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { IStrapiImageData, ProjectDataAttributes } from '@/types/types'
-import { BlocksRenderer } from '@strapi/blocks-react-renderer'
-import {
-  useAnimationOnScroll,
-  useStaggeredAnimation,
-} from '@/lib/animation-hooks'
+import dynamic from 'next/dynamic'
+import { useState } from 'react'
 import {
   FaGithub,
   FaGooglePlay,
@@ -18,12 +14,42 @@ import {
   FaStar,
   FaHeart,
 } from 'react-icons/fa'
-import { useState } from 'react'
+
+import { IStrapiImageData, ProjectDataAttributes } from '@/types/types'
+import {
+  useAnimationOnScroll,
+  useStaggeredAnimation,
+} from '@/lib/animation-hooks'
 import { StrapiImage } from '@/shared/StrapiImage'
 import { analyzeProject, getPlatformBadgeInfo } from '@/lib/project-utils'
-import { ProjectOverviewCards } from '@/components/project-overview-cards'
-import { EnhancedGallery } from '@/components/enhanced-gallery'
-import { FeaturesShowcase } from '@/components/features-showcase'
+
+const BlocksRenderer = dynamic(
+  () =>
+    import('@strapi/blocks-react-renderer').then((mod) => mod.BlocksRenderer),
+  { ssr: false }
+)
+
+const ProjectOverviewCards = dynamic(
+  () =>
+    import('@/components/project-overview-cards').then(
+      (mod) => mod.ProjectOverviewCards
+    ),
+  { ssr: false }
+)
+
+const EnhancedGallery = dynamic(
+  () =>
+    import('@/components/enhanced-gallery').then((mod) => mod.EnhancedGallery),
+  { ssr: false }
+)
+
+const FeaturesShowcase = dynamic(
+  () =>
+    import('@/components/features-showcase').then(
+      (mod) => mod.FeaturesShowcase
+    ),
+  { ssr: false }
+)
 
 interface ProjectDetailProps {
   project: ProjectDataAttributes

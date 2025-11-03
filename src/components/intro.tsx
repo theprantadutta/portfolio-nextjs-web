@@ -1,173 +1,94 @@
-'use client'
-
 import Image from 'next/image'
-import React, { ReactNode } from 'react'
-import Link from 'next/link'
+import type { ReactNode } from 'react'
 import { BsArrowRight, BsLinkedin } from 'react-icons/bs'
 import { HiDownload } from 'react-icons/hi'
 import { FaGithubSquare } from 'react-icons/fa'
-import { useSectionInView } from '@/lib/hooks'
-import { useActiveSectionContext } from '@/context/active-section-context'
-import {
-  useAnimationOnScroll,
-  useStaggeredAnimation,
-} from '@/lib/animation-hooks'
+
 import profilePic from '@/../public/profile.png'
 import { CV_PATH, GITHUB_LINK, LINKED_IN_LINK } from '@/constants/selectors'
+import { SectionMarker } from '@/components/section-marker'
+import { SectionLink } from '@/components/section-link'
 
 interface IIntroProps {
   children?: ReactNode
 }
 
 export const Intro: React.FC<IIntroProps> = () => {
-  const { ref } = useSectionInView('Home', 0.5)
-  const { setActiveSection, setTimeOfLastClick } = useActiveSectionContext()
-
-  const profileAnimation = useAnimationOnScroll<HTMLDivElement>({
-    delay: 100,
-    animationClass: 'animate-scale-in',
-  })
-
-  const textAnimation = useAnimationOnScroll<HTMLDivElement>({
-    delay: 300,
-    animationClass: 'animate-fade-in-up',
-  })
-
-  const { containerRef: buttonsRef, getItemClassName } =
-    useStaggeredAnimation<HTMLDivElement>({
-      itemCount: 4, // Profile image + buttons + social links
-      delay: 500,
-      staggerDelay: 100,
-      animationClass: 'animate-fade-in-up',
-    })
-
   return (
     <section
-      ref={ref}
       id='home'
-      // className='relative mb-10 flex min-h-[80vh] max-w-[20rem] md:max-w-[50rem] flex-col justify-center text-center sm:mb-0'
-      className='relative flex min-h-[80vh] scroll-mt-28 flex-col justify-center text-center sm:mb-0'
+      className='relative flex min-h-[80vh] scroll-mt-28 flex-col items-center justify-center gap-10 px-4 text-center sm:mb-0'
     >
-      {/* Background Elements */}
-      <div className='absolute inset-0 -z-10'>
-        {/* Main gradient orb */}
-        {/* <div className='animate-float absolute left-1/2 top-1/4 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-blue-400/20 via-purple-400/20 to-pink-400/20 blur-3xl' /> */}
-        <div className='animate-float absolute left-1/2 top-1/4 h-[40vw] max-h-[600px] w-[40vw] max-w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-blue-400/20 via-purple-400/20 to-pink-400/20 blur-3xl' />
+      <SectionMarker section='Home' threshold={0.5} />
 
-        {/* Secondary gradient orbs */}
-        <div
-          // className='animate-float absolute right-1/4 top-1/3 h-[300px] w-[300px] rounded-full bg-gradient-to-br from-cyan-400/15 to-blue-500/15 blur-2xl'
-          className='animate-float absolute right-1/4 top-1/3 h-[20vw] max-h-[300px] w-[20vw] max-w-[300px] rounded-full bg-gradient-to-br from-cyan-400/15 to-blue-500/15 blur-2xl'
-          style={{ animationDelay: '1s' }}
-        />
-        <div
-          // className='animate-float absolute bottom-1/3 left-1/4 h-[400px] w-[400px] rounded-full bg-gradient-to-br from-purple-400/15 to-pink-500/15 blur-2xl'
-          className='animate-float absolute bottom-1/3 left-1/4 h-[25vw] max-h-[400px] w-[25vw] max-w-[400px] rounded-full bg-gradient-to-br from-purple-400/15 to-pink-500/15 blur-2xl'
-          style={{ animationDelay: '2s' }}
-        />
-
-        {/* Subtle pattern overlay */}
-        <div className='bg-pattern-dots absolute inset-0 opacity-30 dark:opacity-10' />
+      {/* Background accents */}
+      <div className='pointer-events-none absolute inset-0 -z-10 hidden overflow-hidden md:block'>
+        <div className='absolute left-1/2 top-1/4 h-[24rem] w-[24rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-blue-400/15 via-purple-400/15 to-pink-400/15 opacity-70 blur-2xl' />
+        <div className='absolute right-[12%] top-[32%] h-[16rem] w-[16rem] rounded-full bg-gradient-to-br from-cyan-400/15 to-blue-500/15 opacity-60 blur-xl' />
+        <div className='absolute bottom-[18%] left-[18%] h-[18rem] w-[18rem] rounded-full bg-gradient-to-br from-purple-400/15 to-pink-500/15 opacity-60 blur-xl' />
       </div>
 
-      {/* Profile Image Section */}
-      <div
-        className={`mb-8 flex items-center justify-center ${profileAnimation.className}`}
-        ref={profileAnimation.ref}
-      >
-        <div className='group relative'>
-          {/* Gradient border ring */}
-          <div className='animate-glow absolute inset-0 h-28 w-28 rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 opacity-25 blur-sm transition-all duration-500 group-hover:opacity-100 group-hover:blur-md' />
-
-          {/* Profile image container */}
-          <div className='relative h-24 w-24 overflow-hidden rounded-full border-4 border-white shadow-2xl transition-transform duration-500 group-hover:scale-110 dark:border-gray-800'>
+      {/* Profile */}
+      <div className='flex items-center justify-center'>
+        <div className='relative h-28 w-28'>
+          <span className='absolute inset-0 rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 opacity-25 blur-md' />
+          <div className='relative h-28 w-28 overflow-hidden rounded-full border-4 border-white shadow-2xl dark:border-gray-800'>
             <Image
               src={profilePic}
               alt='Pranta Dutta - Full Stack Developer'
               fill
-              priority={true}
-              sizes='96px'
-              className='object-cover transition-transform duration-500 group-hover:scale-110'
+              priority
+              sizes='112px'
+              className='object-cover'
             />
-
-            {/* Overlay gradient */}
-            <div className='absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-purple-500/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
           </div>
-
-          {/* Floating emoji */}
-          <div className='absolute -bottom-2 -right-2 animate-bounce text-2xl transition-transform duration-300 group-hover:scale-125'>
-            <div className='flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 shadow-lg'>
-              <span className='text-lg'>👋</span>
-            </div>
+          <div className='absolute -bottom-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 shadow-lg'>
+            <span className='text-lg'>👋</span>
           </div>
-
-          {/* Status indicator */}
           <div className='absolute right-0 top-0 h-6 w-6 rounded-full border-2 border-white bg-gradient-to-br from-green-400 to-emerald-500 shadow-lg dark:border-gray-800'>
-            <div className='h-full w-full animate-ping rounded-full bg-green-400 opacity-75' />
+            <div className='h-full w-full animate-ping rounded-full bg-green-300 opacity-75' />
           </div>
         </div>
       </div>
 
-      {/* Main Heading */}
-      <div
-        className={`mb-10 px-4 ${textAnimation.className}`}
-        ref={textAnimation.ref}
-      >
-        <h1 className='mb-6 text-3xl font-bold leading-tight sm:text-5xl lg:text-6xl'>
-          <span className='mb-2 block'>
-            <span className='text-gray-800 dark:text-gray-200'>
-              Hello, I&apos;m{' '}
-            </span>
-            <span className='heading-primary'>Pranta</span>
+      {/* Intro copy */}
+      <div className='space-y-6'>
+        <h1 className='text-3xl font-bold leading-tight text-gray-800 dark:text-gray-100 sm:text-5xl lg:text-6xl'>
+          <span className='block'>
+            Hello, I&apos;m <span className='heading-primary'>Pranta</span>
             <span className='text-2xl sm:text-4xl'>.</span>
           </span>
-          <span className='block text-xl font-medium text-gray-600 dark:text-gray-400 sm:text-3xl lg:text-4xl'>
-            I&apos;m a{' '}
-            <span className='text-gradient font-semibold'>
-              full-stack developer
-            </span>{' '}
-            with <span className='text-gradient font-semibold'>3 years</span> of
+          <span className='mt-3 block text-xl font-medium text-gray-600 dark:text-gray-400 sm:text-3xl lg:text-4xl'>
+            Full-stack developer with{' '}
+            <span className='text-gradient font-semibold'>3 years</span> of
             experience.
           </span>
         </h1>
 
-        {/* <div className='mx-auto w-full md:max-w-2xl'> */}
-        <div className='mx-auto w-full'>
-          <p className='text-lg leading-relaxed text-gray-600 dark:text-gray-400 sm:text-xl'>
-            My focus is{' '}
-            <span className='text-gradient font-semibold'>Flutter</span> &{' '}
-            <span className='text-gradient font-semibold'>React Native</span>
-            {', crafting beautiful mobile experiences that users love.'}
-          </p>
-        </div>
+        <p className='mx-auto max-w-2xl text-lg leading-relaxed text-gray-600 dark:text-gray-400 sm:text-xl'>
+          I build production-ready mobile and web experiences with{' '}
+          <span className='text-gradient font-semibold'>Flutter</span> and{' '}
+          <span className='text-gradient font-semibold'>React Native</span>,
+          focusing on performance, polish, and usability.
+        </p>
       </div>
 
-      {/* Action Buttons */}
-      <div
-        ref={buttonsRef}
-        className='flex flex-col items-center justify-center gap-4 px-4 sm:flex-row sm:gap-6'
-      >
-        {/* Primary CTA */}
-        <Link
+      {/* Calls-to-action */}
+      <div className='flex flex-col items-center gap-4 sm:flex-row sm:gap-6'>
+        <SectionLink
           href='#contact'
-          className={`btn-primary special-border group relative overflow-hidden px-5 py-2.5 ${getItemClassName(0)}`}
-          onClick={() => {
-            setActiveSection('Contact')
-            setTimeOfLastClick(Date.now())
-          }}
+          section='Contact'
+          className='btn-primary special-border group relative overflow-hidden px-5 py-2.5'
         >
           <span className='relative z-10 flex items-center gap-2'>
             Contact me here
             <BsArrowRight className='transition-transform duration-300 group-hover:translate-x-1' />
           </span>
+          <span className='absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
+        </SectionLink>
 
-          {/* Animated background */}
-          <div className='animate-gradient absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-[length:200%_100%] opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
-        </Link>
-
-        {/* Download CV */}
         <a
-          className={`btn-secondary special-border group relative overflow-hidden px-5 py-2.5 ${getItemClassName(1)}`}
+          className='btn-secondary special-border group relative overflow-hidden px-5 py-2.5'
           href={CV_PATH}
           download
         >
@@ -178,8 +99,8 @@ export const Intro: React.FC<IIntroProps> = () => {
         </a>
       </div>
 
-      {/* Social Links */}
-      <div className={`mt-8 flex justify-center gap-4 ${getItemClassName(2)}`}>
+      {/* Social links */}
+      <div className='mt-8 flex justify-center gap-4'>
         <a
           className='glass-card special-border group relative flex h-12 w-12 items-center justify-center text-gray-700 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400'
           href={LINKED_IN_LINK}
@@ -187,9 +108,7 @@ export const Intro: React.FC<IIntroProps> = () => {
           rel='noopener noreferrer'
         >
           <BsLinkedin className='h-5 w-5 transition-transform duration-300 group-hover:scale-110' />
-
-          {/* Hover glow */}
-          <div className='absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 opacity-0 blur-sm transition-opacity duration-300 group-hover:opacity-100' />
+          <span className='absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 opacity-0 blur-sm transition-opacity duration-300 group-hover:opacity-100' />
         </a>
 
         <a
@@ -199,20 +118,8 @@ export const Intro: React.FC<IIntroProps> = () => {
           rel='noopener noreferrer'
         >
           <FaGithubSquare className='h-5 w-5 transition-transform duration-300 group-hover:scale-110' />
-
-          {/* Hover glow */}
-          <div className='absolute inset-0 rounded-2xl bg-gradient-to-br from-gray-500/20 to-gray-600/20 opacity-0 blur-sm transition-opacity duration-300 group-hover:opacity-100' />
+          <span className='absolute inset-0 rounded-2xl bg-gradient-to-br from-gray-500/20 to-gray-700/20 opacity-0 blur-sm transition-opacity duration-300 group-hover:opacity-100' />
         </a>
-      </div>
-
-      {/* Availability Badge */}
-      <div className={`mt-8 flex justify-center ${getItemClassName(3)}`}>
-        <div className='glass-card special-border border border-green-200 px-4 py-2 dark:border-green-800'>
-          <div className='flex items-center gap-2 text-sm font-medium text-green-700 dark:text-green-400'>
-            <div className='h-2 w-2 animate-pulse rounded-full bg-green-500' />
-            <span>Available for hire</span>
-          </div>
-        </div>
       </div>
     </section>
   )

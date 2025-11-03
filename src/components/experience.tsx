@@ -1,12 +1,10 @@
-'use client'
+import type { ReactNode } from 'react'
 
-import React, { ReactNode } from 'react'
-import { useTheme } from '@/context/theme-context'
 import { SectionHeading } from '@/components/section-heading'
-import { useSectionInView } from '@/lib/hooks'
 import { VerticalTimeline } from '@/components/ui/timeline'
 import { CgWorkAlt } from 'react-icons/cg'
 import { ExperienceDataAttributes, IStrapiApiResponse } from '@/types/types'
+import { SectionMarker } from '@/components/section-marker'
 
 interface IExperienceProps {
   children?: ReactNode
@@ -14,8 +12,6 @@ interface IExperienceProps {
 }
 
 export const Experience: React.FC<IExperienceProps> = ({ experiences }) => {
-  const { ref, inView } = useSectionInView('Experience', 0.1)
-
   // Transform experience data for our custom timeline
   const timelineItems = experiences.data.map((item) => ({
     date: item.date,
@@ -26,11 +22,8 @@ export const Experience: React.FC<IExperienceProps> = ({ experiences }) => {
   }))
 
   return (
-    <section
-      id='experience'
-      ref={ref}
-      className='section-spacing-sm scroll-mt-28'
-    >
+    <section id='experience' className='section-spacing-sm scroll-mt-28'>
+      <SectionMarker section='Experience' threshold={0.1} />
       {/* Section Header */}
       <div className='mb-16 text-center'>
         <SectionHeading>My Experience</SectionHeading>
@@ -40,7 +33,7 @@ export const Experience: React.FC<IExperienceProps> = ({ experiences }) => {
       </div>
 
       {/* Custom Timeline */}
-      <VerticalTimeline items={timelineItems} animate={inView} />
+      <VerticalTimeline items={timelineItems} />
     </section>
   )
 }

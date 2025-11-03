@@ -12,38 +12,29 @@ import {
   getAllFeaturedProjects,
 } from '@/lib/strapi'
 import { SectionDivider } from '@/components/section-divider'
-import { LazyComponent } from '@/components/ui/lazy-component'
 
 // Enable ISR for this page
 export const revalidate = 3600 // Revalidate every hour
 
 const Home: NextPage = async () => {
-  const experiences = await getAllExperiences()
-  const projects = await getAllFeaturedProjects()
-  const skills = await getAllSkills()
+  const [experiences, projects, skills] = await Promise.all([
+    getAllExperiences(),
+    getAllFeaturedProjects(),
+    getAllSkills(),
+  ])
   return (
     <main className='flex flex-col items-center px-4'>
       <Intro />
       <SectionDivider />
-      <LazyComponent rootMargin='200px'>
-        <About />
-      </LazyComponent>
+      <About />
       <SectionDivider />
-      <LazyComponent rootMargin='200px'>
-        <Projects showAllProjects={false} projects={projects} />
-      </LazyComponent>
+      <Projects showAllProjects={false} projects={projects} />
       <SectionDivider />
-      <LazyComponent rootMargin='150px'>
-        <Skills skills={skills} />
-      </LazyComponent>
+      <Skills skills={skills} />
       <SectionDivider />
-      <LazyComponent rootMargin='150px'>
-        <Experience experiences={experiences} />
-      </LazyComponent>
+      <Experience experiences={experiences} />
       <SectionDivider />
-      <LazyComponent rootMargin='100px'>
-        <Contact />
-      </LazyComponent>
+      <Contact />
     </main>
   )
 }
