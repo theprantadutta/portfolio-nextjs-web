@@ -15,9 +15,29 @@ export const metadata = {
   },
 }
 
-export default async function CheckoutPage() {
+export default async function CheckoutPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
   // Fetch products directly from Polar
-  const products = await getAllPolarProducts()
+  const allProducts = await getAllPolarProducts()
+
+  // Read searchParams to check for productIds filter
+  const params = await searchParams
+  const productIdsParam = params.productIds
+
+  // Filter products by IDs if productIds parameter is provided
+  let products = allProducts
+  if (productIdsParam) {
+    // Parse comma-separated product IDs
+    const requestedIds = Array.isArray(productIdsParam)
+      ? productIdsParam
+      : productIdsParam.split(',').map((id) => id.trim())
+
+    // Filter to show only requested products
+    products = allProducts.filter((p: any) => requestedIds.includes(p.id))
+  }
 
   // Filter donation products (you can customize the logic to identify donations)
   const donationProducts = products.filter(
