@@ -4,7 +4,9 @@
       "Bash(git add:*)",
       "Bash(yarn add:*)",
       "Bash(yarn lint:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(git commit:*)",
+      "Bash(flutter pub get:*)"
     ],
     "deny": [],
     "ask": []
