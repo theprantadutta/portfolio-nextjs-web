@@ -39,8 +39,8 @@ export const Header: React.FC<IHeaderProps> = () => {
 
   const { containerRef, getItemClassName } = useStaggeredAnimation({
     itemCount: links.length,
-    delay: 100,
-    staggerDelay: 50,
+    delay: 0,
+    staggerDelay: 20,
     animationClass: 'animate-fade-in',
   })
 
@@ -183,9 +183,9 @@ export const Header: React.FC<IHeaderProps> = () => {
                   return (
                     <li
                       key={link.hash}
-                      className={`transform transition-all duration-300 ease-out ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'} `}
+                      className={`transform transition-all duration-200 ease-out ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'} `}
                       style={{
-                        transitionDelay: `${index * 50}ms`,
+                        transitionDelay: `${index * 30}ms`,
                       }}
                     >
                       <Link

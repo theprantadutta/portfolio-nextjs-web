@@ -1,0 +1,2 @@
+This file exists to test if the [id] dynamic route folder is properly recognized by Next.js.
+If you can read this file in the file system, the folder structure is correct.
