@@ -24,5 +24,9 @@ export const GET = CustomerPortal({
   },
 
   // Return URL after customer manages their subscriptions
-  returnUrl: process.env.NEXT_PUBLIC_SUCCESS_URL || 'http://localhost:3000',
+  returnUrl:
+    process.env.NEXT_PUBLIC_SUCCESS_URL ||
+    (process.env.NODE_ENV === 'production'
+      ? 'https://pranta.dev/checkout/success'
+      : 'http://localhost:3000/checkout/success'),
 })
