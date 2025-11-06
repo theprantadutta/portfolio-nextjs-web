@@ -36,7 +36,7 @@ export default async function DebugPage() {
         </h2>
 
         <div className='space-y-4'>
-          {products.map((product) => (
+          {products.map((product: any) => (
             <div
               key={product.id}
               className='rounded-lg border border-gray-200 p-4 dark:border-gray-700'

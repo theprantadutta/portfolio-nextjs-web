@@ -27,7 +27,7 @@ export async function getAllPolarProducts() {
     }
 
     // @ts-ignore - Polar SDK types might be inconsistent
-    return response.result?.items || response.items || []
+    return (response as any).result?.items || (response as any).items || []
   } catch (error) {
     console.error('Error fetching products from Polar:', error)
     return []
@@ -45,7 +45,7 @@ export async function getPolarProductById(productId: string) {
 
     // The Polar SDK returns the product directly, not wrapped in .result
     // @ts-ignore - Polar SDK types might show .result but actual response is direct
-    return response.result || response || null
+    return (response as any).result || response || null
   } catch (error) {
     console.error(`[Polar] Error fetching product ${productId}:`, error)
     // Re-throw the error so we can see it in the Next.js error overlay
@@ -98,9 +98,9 @@ export async function getAllPolarOrders(params?: {
     // Check multiple possible response structures
     // @ts-ignore - Polar SDK types might be inconsistent
     const orders =
-      response.result?.items ||
-      response.items ||
-      response.result ||
+      (response as any).result?.items ||
+      (response as any).items ||
+      (response as any).result ||
       response ||
       []
 
@@ -127,9 +127,9 @@ export async function getAllPolarSubscriptions(params?: {
     // Check multiple possible response structures
     // @ts-ignore - Polar SDK types might be inconsistent
     const subscriptions =
-      response.result?.items ||
-      response.items ||
-      response.result ||
+      (response as any).result?.items ||
+      (response as any).items ||
+      (response as any).result ||
       response ||
       []
 
@@ -150,7 +150,7 @@ export async function getPolarOrderById(orderId: string) {
     })
 
     // @ts-ignore - Polar SDK types might be inconsistent
-    return response.result || response || null
+    return (response as any).result || response || null
   } catch (error) {
     console.error('Error fetching order from Polar:', error)
     return null

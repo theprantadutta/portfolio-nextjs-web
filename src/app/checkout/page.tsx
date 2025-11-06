@@ -21,14 +21,14 @@ export default async function CheckoutPage() {
 
   // Filter donation products (you can customize the logic to identify donations)
   const donationProducts = products.filter(
-    (p) =>
+    (p: any) =>
       p.name?.toLowerCase().includes('donate') ||
       p.name?.toLowerCase().includes('support')
   )
 
   // Other products are digital products
   const digitalProducts = products.filter(
-    (p) =>
+    (p: any) =>
       !p.name?.toLowerCase().includes('donate') &&
       !p.name?.toLowerCase().includes('support')
   )
@@ -64,7 +64,7 @@ export default async function CheckoutPage() {
             </div>
 
             <div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
-              {donationProducts.map((product) => {
+              {donationProducts.map((product: any) => {
                 const defaultPrice = getDefaultPolarPrice(product)
                 const priceAmount = formatPolarPrice(defaultPrice?.priceAmount)
 
@@ -117,7 +117,7 @@ export default async function CheckoutPage() {
             </div>
 
             <div className='grid gap-8 md:grid-cols-2 lg:grid-cols-3'>
-              {digitalProducts.map((product) => {
+              {digitalProducts.map((product: any) => {
                 const defaultPrice = getDefaultPolarPrice(product)
                 const priceAmount = formatPolarPrice(defaultPrice?.priceAmount)
                 const medias = product.medias || []

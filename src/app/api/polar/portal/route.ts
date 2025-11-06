@@ -13,7 +13,7 @@ export const GET = CustomerPortal({
 
   // Extract customer ID from query parameters
   // You can customize this based on your authentication system
-  getCustomerId: (req: NextRequest) => {
+  getCustomerId: async (req: NextRequest) => {
     const customerId = req.nextUrl.searchParams.get('customerId')
 
     if (!customerId) {
