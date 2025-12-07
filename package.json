@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "clean": "npx rimraf .next",
+    "clean": "bunx rimraf .next",
     "dev": "bun clean && next dev",
     "prebuild": "bun clean",
     "build": "next build",
@@ -31,6 +31,7 @@
     "@vercel/speed-insights": "^1.0.12",
     "babel-plugin-react-compiler": "^19.0.0-beta-40c6c23-20250301",
     "bcryptjs": "^3.0.3",
+    "caniuse-lite": "^1.0.30001759",
     "clsx": "^2.1.1",
     "dotenv": "^17.2.3",
     "drizzle-kit": "^0.31.6",
@@ -54,6 +55,7 @@
     "@types/react": "19.2.6",
     "@types/react-dom": "19.2.3",
     "autoprefixer": "^10.4.19",
+    "baseline-browser-mapping": "^2.9.4",
     "eslint": "^9.25.0",
     "eslint-config-next": "16.0.7",
     "eslint-config-prettier": "^10.1.2",
@@ -73,7 +75,7 @@
     "*": "bun format:fix"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=24"
   },
   "resolutions": {
     "@types/react": "19.2.6",
