@@ -17,7 +17,7 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
 
   // Regular portfolio pages: with header, footer, padding, background effects
   return (
-    <div className='relative pt-28 sm:pt-36'>
+    <div className='relative pt-20 sm:pt-24'>
       {/* Background gradient effects for portfolio pages */}
       <div className='pointer-events-none fixed inset-0 -z-10 hidden lg:block'>
         <div className='absolute right-[10rem] top-[-4rem] h-[24rem] w-[24rem] rounded-full bg-gradient-to-br from-blue-400/15 via-purple-400/15 to-cyan-400/15 opacity-75 blur-2xl' />

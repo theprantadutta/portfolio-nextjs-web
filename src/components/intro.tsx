@@ -17,12 +17,12 @@ export const Intro: React.FC<IIntroProps> = () => {
   return (
     <section
       id='home'
-      className='relative flex min-h-[80vh] scroll-mt-28 flex-col items-center justify-center gap-10 px-4 text-center sm:mb-0'
+      className='relative flex min-h-[70vh] scroll-mt-28 flex-col items-center justify-center gap-8 px-4 text-center sm:mb-0'
     >
       <SectionMarker section='Home' threshold={0.5} />
 
       {/* Background accents */}
-      <div className='pointer-events-none absolute inset-0 -z-10 hidden overflow-hidden md:block'>
+      <div className='pointer-events-none absolute inset-0 -z-10 hidden md:block'>
         <div className='absolute left-1/2 top-1/4 h-[24rem] w-[24rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-blue-400/15 via-purple-400/15 to-pink-400/15 opacity-70 blur-2xl' />
         <div className='absolute right-[12%] top-[32%] h-[16rem] w-[16rem] rounded-full bg-gradient-to-br from-cyan-400/15 to-blue-500/15 opacity-60 blur-xl' />
         <div className='absolute bottom-[18%] left-[18%] h-[18rem] w-[18rem] rounded-full bg-gradient-to-br from-purple-400/15 to-pink-500/15 opacity-60 blur-xl' />
@@ -30,15 +30,15 @@ export const Intro: React.FC<IIntroProps> = () => {
 
       {/* Profile */}
       <div className='flex items-center justify-center'>
-        <div className='relative h-28 w-28'>
+        <div className='relative h-36 w-36'>
           <span className='absolute inset-0 rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 opacity-25 blur-md' />
-          <div className='relative h-28 w-28 overflow-hidden rounded-full border-4 border-white shadow-2xl dark:border-gray-800'>
+          <div className='relative h-36 w-36 overflow-hidden rounded-full border-4 border-white shadow-2xl dark:border-gray-800'>
             <Image
               src={profilePic}
               alt='Pranta Dutta - Full Stack Developer'
               fill
               priority
-              sizes='112px'
+              sizes='144px'
               className='object-cover'
             />
           </div>
@@ -69,7 +69,8 @@ export const Intro: React.FC<IIntroProps> = () => {
           I build production-ready mobile and web experiences with{' '}
           <span className='text-gradient font-semibold'>Flutter</span> and{' '}
           <span className='text-gradient font-semibold'>React Native</span>,
-          focusing on performance, polish, and usability.
+          focusing on performance, polish, usability and reliable production
+          deployments.
         </p>
       </div>
 

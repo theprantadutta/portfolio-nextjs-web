@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { IStrapiImageData } from '@/types/types'
 import { StrapiImage } from '@/shared/StrapiImage'
@@ -9,9 +9,10 @@ import { useModalAnimation } from '@/lib/animation-hooks'
 import {
   FaArrowLeft,
   FaArrowRight,
+  FaChevronLeft,
+  FaChevronRight,
   FaExpand,
   FaTimes,
-  FaDownload,
   FaInfoCircle,
   FaImage,
 } from 'react-icons/fa'
@@ -31,8 +32,42 @@ export const EnhancedGallery = ({
 }: EnhancedGalleryProps) => {
   const [showFullscreen, setShowFullscreen] = useState(false)
   const [showImageInfo, setShowImageInfo] = useState(false)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(false)
+  const thumbnailRef = useRef<HTMLDivElement>(null)
 
   const currentImage = images[selectedIndex]
+
+  // Check if thumbnails can scroll
+  const checkScrollability = useCallback(() => {
+    if (thumbnailRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = thumbnailRef.current
+      setCanScrollLeft(scrollLeft > 0)
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 5)
+    }
+  }, [])
+
+  useEffect(() => {
+    checkScrollability()
+    const container = thumbnailRef.current
+    if (container) {
+      container.addEventListener('scroll', checkScrollability)
+      window.addEventListener('resize', checkScrollability)
+      return () => {
+        container.removeEventListener('scroll', checkScrollability)
+        window.removeEventListener('resize', checkScrollability)
+      }
+    }
+  }, [checkScrollability, images])
+
+  const scrollThumbnails = (direction: 'left' | 'right') => {
+    if (thumbnailRef.current) {
+      thumbnailRef.current.scrollBy({
+        left: direction === 'left' ? -150 : 150,
+        behavior: 'smooth',
+      })
+    }
+  }
 
   // Enhanced modal animation hook
   const { shouldRender, animationPhase } = useModalAnimation(showFullscreen)
@@ -207,52 +242,56 @@ export const EnhancedGallery = ({
         </div>
       </div>
 
-      {/* Enhanced Thumbnail Navigation */}
-      <div className='flex justify-center px-2 sm:px-4'>
+      {/* Thumbnail Navigation with Arrows */}
+      <div className='relative mx-auto max-w-2xl px-12'>
+        {/* Left Arrow */}
+        {canScrollLeft && (
+          <button
+            onClick={() => scrollThumbnails('left')}
+            className='absolute left-0 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-lg transition-all duration-200 hover:scale-110 hover:bg-white dark:bg-gray-800/90 dark:text-gray-200 dark:hover:bg-gray-800'
+          >
+            <FaChevronLeft className='h-4 w-4' />
+          </button>
+        )}
+
+        {/* Right Arrow */}
+        {canScrollRight && (
+          <button
+            onClick={() => scrollThumbnails('right')}
+            className='absolute right-0 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-lg transition-all duration-200 hover:scale-110 hover:bg-white dark:bg-gray-800/90 dark:text-gray-200 dark:hover:bg-gray-800'
+          >
+            <FaChevronRight className='h-4 w-4' />
+          </button>
+        )}
+
+        {/* Thumbnails Container */}
         <div
-          className='flex max-w-full gap-2 overflow-x-auto pb-4 sm:gap-3'
-          style={{ scrollbarWidth: 'thin' }}
+          ref={thumbnailRef}
+          className='flex gap-2 overflow-x-auto py-2'
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            WebkitOverflowScrolling: 'touch',
+          }}
         >
           {images.map((image, index) => (
             <button
               key={image.id}
               onClick={() => onIndexChange(index)}
-              className={`group relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg transition-all duration-300 sm:h-20 sm:w-20 sm:rounded-xl ${
+              className={`relative flex-shrink-0 overflow-hidden rounded-lg transition-all duration-200 ${
                 selectedIndex === index
-                  ? 'scale-90 shadow-lg ring-2 ring-blue-500 ring-offset-2 ring-offset-white/10'
-                  : 'opacity-80 hover:scale-105 hover:opacity-100'
+                  ? 'ring-2 ring-blue-500 ring-offset-2 ring-offset-gray-50 dark:ring-offset-gray-900'
+                  : 'opacity-60 hover:opacity-100'
               }`}
             >
-              <StrapiImage
-                src={getOptimalImageSrc(image, 'thumbnail')}
-                alt={`${projectTitle} thumbnail ${index + 1}`}
-                className='h-full w-full object-cover transition-all duration-300 group-hover:scale-110'
-                width={80}
-                height={80}
-                objectFit='cover'
-              />
-              <div
-                className={`absolute inset-0 rounded-xl transition-all duration-300 ${
-                  selectedIndex === index
-                    ? 'bg-blue-500/20'
-                    : 'bg-black/0 group-hover:bg-black/10'
-                }`}
-              />
-              {/* Enhanced Selection Indicator */}
-              {selectedIndex === index && (
-                <div className='absolute -top-1 left-1/2 -translate-x-1/2'>
-                  <div className='h-2 w-2 animate-pulse rounded-full bg-blue-500'></div>
-                </div>
-              )}
-              {/* Thumbnail Index */}
-              <div
-                className={`absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold transition-all duration-300 ${
-                  selectedIndex === index
-                    ? 'scale-100 bg-blue-500 text-white'
-                    : 'scale-90 bg-black/70 text-white/90'
-                }`}
-              >
-                {index + 1}
+              <div className='h-16 w-16 sm:h-[72px] sm:w-[72px]'>
+                <StrapiImage
+                  src={getOptimalImageSrc(image, 'thumbnail')}
+                  alt={`${projectTitle} thumbnail ${index + 1}`}
+                  className='h-full w-full object-cover'
+                  width={72}
+                  height={72}
+                />
               </div>
             </button>
           ))}
