@@ -45,6 +45,7 @@ export const useAnimationOnScroll = <T extends HTMLElement = HTMLElement>({
 
   useEffect(() => {
     if (shouldReduceMotion || typeof window === 'undefined') {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Immediate visibility for reduced motion preference
       setIsVisible(true)
       hasAnimatedRef.current = true
       return
@@ -193,6 +194,7 @@ export const useModalAnimation = (isOpen: boolean) => {
 
   useEffect(() => {
     if (isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Modal animation state management
       setShouldRender(true)
       setAnimationPhase('entering')
       const timer = window.setTimeout(() => {

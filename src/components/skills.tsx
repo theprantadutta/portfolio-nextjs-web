@@ -170,10 +170,12 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
 
       <div className='content-container'>
         {/* Header */}
+        {/* eslint-disable react-hooks/refs -- Animation hook pattern: ref and className are designed to be used during render */}
         <div
           className={`mb-16 text-center ${sectionAnimation.className}`}
           ref={sectionAnimation.ref}
         >
+          {/* eslint-enable react-hooks/refs */}
           <SectionHeading>Skills & Technologies</SectionHeading>
           <p className='mx-auto mt-4 max-w-2xl text-lg text-gray-600 dark:text-gray-400'>
             Crafting beautiful experiences with modern technologies

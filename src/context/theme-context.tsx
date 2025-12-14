@@ -36,6 +36,7 @@ export const ThemeContextProvider: React.FC<IThemeContextProviderProps> = ({
     const localTheme = window.localStorage.getItem('theme') as Theme | null
 
     if (localTheme) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Hydrating theme from localStorage on mount
       setTheme(localTheme)
 
       if (localTheme === 'dark') {

@@ -53,6 +53,7 @@ export const ProjectModal: React.FC<IProjectModal> = ({ imageUrls, slug }) => {
   }, [showModal])
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- Intentional: reset loading state when slide changes
     setIsLoading(true)
   }, [currentSlide])
 

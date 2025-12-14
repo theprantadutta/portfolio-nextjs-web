@@ -47,10 +47,12 @@ export const Project: React.FC<IProjectProps> = ({
   }
 
   return (
+    /* eslint-disable react-hooks/refs -- Animation hook pattern: ref and className are designed to be used during render */
     <div
       ref={animation.ref as React.RefObject<HTMLDivElement>}
       className={`group mb-10 ${animation.className}`}
     >
+      {/* eslint-enable react-hooks/refs */}
       <div
         onClick={() => router.push(`/projects/${slug}`)}
         className='special-border glass-card relative mx-auto max-w-4xl cursor-pointer overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-500 hover:-translate-y-3 hover:bg-white/10 hover:shadow-2xl dark:border-gray-700/30 dark:bg-gray-900/20 dark:hover:bg-gray-900/30'

@@ -60,6 +60,7 @@ export const Header: React.FC<IHeaderProps> = () => {
 
   const handleNavClick = (sectionName: any) => {
     setActiveSection(sectionName)
+    // eslint-disable-next-line react-hooks/purity -- Date.now() is called in event handler, not during render
     setTimeOfLastClick(Date.now())
     setIsMenuOpen(false)
   }
