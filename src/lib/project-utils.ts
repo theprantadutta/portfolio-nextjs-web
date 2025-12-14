@@ -255,7 +255,22 @@ const assessContentRichness = (
 const generateProjectInsights = (
   project: ProjectDataAttributes
 ): ProjectAnalysis['projectInsights'] => {
-  const completeness = assessContentRichness(project).completenessScore
+  // Completeness based on project status
+  let completeness: number
+  switch (project.projectStatus) {
+    case 'completed':
+      completeness = 100
+      break
+    case 'ongoing':
+      // Random between 90-95 for ongoing projects
+      completeness = 90 + Math.floor(Math.random() * 6)
+      break
+    case 'planned':
+      completeness = 50
+      break
+    default:
+      completeness = 0
+  }
 
   let platformReach = 1
   if (project.googlePlayLink) platformReach += 1
