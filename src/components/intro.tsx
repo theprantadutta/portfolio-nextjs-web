@@ -60,7 +60,7 @@ export const Intro: React.FC<IIntroProps> = () => {
           </span>
           <span className='mt-3 block text-xl font-medium text-gray-600 dark:text-gray-400 sm:text-3xl lg:text-4xl'>
             Full-stack developer with{' '}
-            <span className='text-gradient font-semibold'>3 years</span> of
+            <span className='text-gradient font-semibold'>4 years</span> of
             experience.
           </span>
         </h1>

@@ -6,7 +6,9 @@
       "Bash(yarn lint:*)",
       "Bash(npm run build:*)",
       "Bash(git commit:*)",
-      "Bash(flutter pub get:*)"
+      "Bash(flutter pub get:*)",
+      "Bash(find:*)",
+      "Bash(bun run lint:*)"
     ],
     "deny": [],
     "ask": []
