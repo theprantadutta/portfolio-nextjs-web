@@ -219,15 +219,6 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
         </div>
       </section>
 
-      {/* Enhanced Project Overview Cards */}
-      <section className='px-4 py-8 sm:px-6 lg:px-8'>
-        <div className='mx-auto max-w-7xl'>
-          <div ref={overviewRef} className={getOverviewItemClass(0)}>
-            <ProjectOverviewCards project={project} analysis={analysis} />
-          </div>
-        </div>
-      </section>
-
       {/* Enhanced Screenshot Gallery */}
       {project.imageUrls?.length > 0 && (
         <section className='px-4 py-12 sm:px-6 lg:px-8'>
@@ -454,6 +445,15 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Project Overview Cards - before Key Features */}
+      <section className='px-4 py-8 sm:px-6 lg:px-8'>
+        <div className='mx-auto max-w-7xl'>
+          <div ref={overviewRef} className={getOverviewItemClass(0)}>
+            <ProjectOverviewCards project={project} analysis={analysis} />
           </div>
         </div>
       </section>
