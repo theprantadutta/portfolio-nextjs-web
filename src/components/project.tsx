@@ -4,9 +4,17 @@ import React, { ReactNode } from 'react'
 import { useAnimationOnScroll } from '@/lib/animation-hooks'
 import { ProjectDataAttributes } from '@/types/types'
 import { ProjectModal } from './project-modal'
-import { FaCode, FaMobile, FaDesktop, FaExternalLinkAlt } from 'react-icons/fa'
+import {
+  FaCode,
+  FaMobile,
+  FaDesktop,
+  FaExternalLinkAlt,
+  FaCloud,
+  FaStar,
+} from 'react-icons/fa'
 import { useRouter } from 'next/navigation'
 import { StrapiImage } from '@/shared/StrapiImage'
+import { getPlatformBadgeInfo, getStatusBadgeInfo } from '@/lib/project-utils'
 
 type IProjectProps = {
   children?: ReactNode
@@ -19,31 +27,34 @@ export const Project: React.FC<IProjectProps> = ({
   Tags,
   imageUrls,
   cover,
+  platformType,
+  projectStatus,
+  complexity,
+  isFeatured,
 }) => {
   const router = useRouter()
+  const platformBadge = getPlatformBadgeInfo(platformType)
+  const statusBadge = getStatusBadgeInfo(projectStatus)
 
   const animation = useAnimationOnScroll({
     delay: 200,
     animationClass: 'animate-fade-in-up',
   })
 
+  // Get platform icon based on platformType from Strapi
   const getProjectIcon = () => {
-    const firstTag = Tags[0]?.name?.toLowerCase() || ''
-    if (
-      firstTag.includes('mobile') ||
-      firstTag.includes('android') ||
-      firstTag.includes('ios')
-    ) {
-      return <FaMobile className='h-4 w-4' />
+    switch (platformType) {
+      case 'android':
+      case 'ios':
+      case 'android-and-ios':
+        return <FaMobile className='h-4 w-4' />
+      case 'web':
+        return <FaDesktop className='h-4 w-4' />
+      case 'cloud':
+        return <FaCloud className='h-4 w-4' />
+      default:
+        return <FaCode className='h-4 w-4' />
     }
-    if (
-      firstTag.includes('web') ||
-      firstTag.includes('react') ||
-      firstTag.includes('next')
-    ) {
-      return <FaDesktop className='h-4 w-4' />
-    }
-    return <FaCode className='h-4 w-4' />
   }
 
   return (
@@ -64,18 +75,40 @@ export const Project: React.FC<IProjectProps> = ({
         <div className='grid gap-6 p-6 md:grid-cols-2'>
           {/* Left Column - Text Content */}
           <div className='relative z-10 flex flex-col justify-between space-y-4'>
-            {/* Header with Icon and Category */}
-            <div className='mb-3 flex items-center justify-between'>
-              <div className='special-border glass-card flex items-center gap-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 px-3 py-1'>
+            {/* Header with Platform and Status Badges */}
+            <div className='mb-3 flex flex-wrap items-center gap-2'>
+              {/* Platform Badge */}
+              <div
+                className={`special-border glass-card flex items-center gap-2 bg-gradient-to-r ${platformBadge?.color || 'from-blue-500/20 to-purple-500/20'} px-3 py-1`}
+              >
                 {getProjectIcon()}
-                <span className='text-xs font-medium text-blue-600 dark:text-blue-400'>
-                  {Tags[0]?.name || 'Project'}
+                <span
+                  className={`text-xs font-medium ${platformBadge?.textColor || 'text-blue-600 dark:text-blue-400'}`}
+                >
+                  {platformBadge?.label || 'Project'}
                 </span>
               </div>
+
+              {/* Status Badge */}
               <div
-                className='h-2 w-2 animate-pulse rounded-full bg-green-500'
-                title='Available'
-              />
+                className={`special-border glass-card bg-gradient-to-r ${statusBadge?.color || 'from-gray-500/20 to-gray-600/20'} px-3 py-1`}
+              >
+                <span
+                  className={`text-xs font-medium ${statusBadge?.textColor || 'text-gray-600 dark:text-gray-400'}`}
+                >
+                  {statusBadge?.label || 'Unknown'}
+                </span>
+              </div>
+
+              {/* Featured Star */}
+              {isFeatured && (
+                <div className='special-border glass-card flex items-center gap-1 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 px-2 py-1'>
+                  <FaStar className='h-3 w-3 text-yellow-500' />
+                  <span className='text-xs font-medium text-yellow-600 dark:text-yellow-400'>
+                    Featured
+                  </span>
+                </div>
+              )}
             </div>
 
             {/* Project Title */}
@@ -165,10 +198,22 @@ export const Project: React.FC<IProjectProps> = ({
         {/* Bottom Stats Bar */}
         <div className='border-t border-white/10 bg-white/5 px-5 py-3 dark:border-gray-700/30 dark:bg-gray-900/20'>
           <div className='flex items-center justify-between text-xs text-gray-600 dark:text-gray-400'>
-            <div className='flex items-center gap-3'>
-              <span className='flex items-center gap-1'>
-                <div className='h-2 w-2 rounded-full bg-green-500' />
-                Active
+            <div className='flex items-center gap-4'>
+              {/* Complexity Indicator */}
+              <span className='flex items-center gap-1.5'>
+                <span>Complexity</span>
+                <div className='flex items-center gap-0.5'>
+                  {[...Array(5)].map((_, i) => (
+                    <div
+                      key={i}
+                      className={`h-1.5 w-1.5 rounded-full ${
+                        i < complexity
+                          ? 'bg-blue-500'
+                          : 'bg-gray-300 dark:bg-gray-600'
+                      }`}
+                    />
+                  ))}
+                </div>
               </span>
               <span>{Tags.length} Tech</span>
             </div>

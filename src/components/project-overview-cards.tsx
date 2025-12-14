@@ -1,7 +1,12 @@
 'use client'
 
 import { ProjectDataAttributes } from '@/types/types'
-import { ProjectAnalysis } from '@/lib/project-utils'
+import {
+  ProjectAnalysis,
+  getPlatformBadgeInfo,
+  getStatusBadgeInfo,
+  getDeveloperRoleInfo,
+} from '@/lib/project-utils'
 import {
   FaCode,
   FaMobile,
@@ -12,6 +17,8 @@ import {
   FaStar,
   FaGlobe,
   FaTools,
+  FaCalendarAlt,
+  FaUserCog,
 } from 'react-icons/fa'
 
 interface ProjectOverviewCardsProps {
@@ -23,6 +30,17 @@ export const ProjectOverviewCards = ({
   project,
   analysis,
 }: ProjectOverviewCardsProps) => {
+  const platformBadge = getPlatformBadgeInfo(project.platformType)
+  const statusBadge = getStatusBadgeInfo(project.projectStatus)
+  const developerRole = getDeveloperRoleInfo(project.developerRole)
+
+  // Format date for display
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      month: 'short',
+      year: 'numeric',
+    })
+  }
   return (
     <div className='mb-12 grid gap-6 md:grid-cols-3'>
       {/* Key Metrics Card */}
@@ -74,13 +92,24 @@ export const ProjectOverviewCards = ({
         <div className='space-y-4'>
           <div className='flex items-center justify-between'>
             <span className='text-gray-600 dark:text-gray-400'>Type</span>
-            <span className='font-medium capitalize text-gray-900 dark:text-white'>
-              {analysis.platformType.replace('-', ' ')}
+            <span
+              className={`font-medium ${platformBadge?.textColor || 'text-gray-900 dark:text-white'}`}
+            >
+              {platformBadge?.label}
+            </span>
+          </div>
+
+          <div className='flex items-center justify-between'>
+            <span className='text-gray-600 dark:text-gray-400'>Status</span>
+            <span
+              className={`font-medium ${statusBadge?.textColor || 'text-gray-900 dark:text-white'}`}
+            >
+              {statusBadge?.label}
             </span>
           </div>
 
           <div className='space-y-2'>
-            {analysis.availabilityMetrics.hasSourceCode && (
+            {project.githubLink && (
               <div className='flex items-center gap-2 text-sm'>
                 <FaGithub className='h-4 w-4 text-gray-600 dark:text-gray-400' />
                 <span className='text-green-600 dark:text-green-400'>
@@ -89,7 +118,7 @@ export const ProjectOverviewCards = ({
               </div>
             )}
 
-            {analysis.availabilityMetrics.hasAppStore && (
+            {project.googlePlayLink && (
               <div className='flex items-center gap-2 text-sm'>
                 <FaGooglePlay className='h-4 w-4 text-gray-600 dark:text-gray-400' />
                 <span className='text-green-600 dark:text-green-400'>
@@ -97,14 +126,6 @@ export const ProjectOverviewCards = ({
                 </span>
               </div>
             )}
-
-            <div className='flex items-center gap-2 text-sm'>
-              <FaTools className='h-4 w-4 text-gray-600 dark:text-gray-400' />
-              <span className='text-gray-600 dark:text-gray-400'>
-                Accessibility: {analysis.availabilityMetrics.accessibilityScore}
-                %
-              </span>
-            </div>
           </div>
         </div>
       </div>
@@ -116,12 +137,12 @@ export const ProjectOverviewCards = ({
             <FaStar className='h-5 w-5 text-orange-600 dark:text-orange-400' />
           </div>
           <h3 className='text-lg font-bold text-gray-900 dark:text-white'>
-            Project Status
+            Project Details
           </h3>
         </div>
 
         <div className='space-y-4'>
-          {analysis.featuredProject && (
+          {project.isFeatured && (
             <div className='special-border glass-card bg-gradient-to-r from-yellow-500/10 to-orange-500/10 p-3 text-center'>
               <div className='flex items-center justify-center gap-2'>
                 <FaStar className='h-4 w-4 text-yellow-500' />
@@ -133,18 +154,18 @@ export const ProjectOverviewCards = ({
           )}
 
           <div className='space-y-2'>
+            {/* Technical Complexity - using real data from Strapi */}
             <div className='flex items-center justify-between text-sm'>
               <span className='text-gray-600 dark:text-gray-400'>
-                Content Quality
+                Complexity
               </span>
               <div className='flex items-center gap-1'>
                 {[...Array(5)].map((_, i) => (
                   <div
                     key={i}
                     className={`h-2 w-2 rounded-full ${
-                      i <
-                      Math.ceil(analysis.contentQuality.completenessScore / 20)
-                        ? 'bg-green-500'
+                      i < project.complexity
+                        ? 'bg-blue-500'
                         : 'bg-gray-300 dark:bg-gray-600'
                     }`}
                   />
@@ -152,24 +173,28 @@ export const ProjectOverviewCards = ({
               </div>
             </div>
 
+            {/* Developer Role */}
             <div className='flex items-center justify-between text-sm'>
-              <span className='text-gray-600 dark:text-gray-400'>
-                Tech Complexity
-              </span>
-              <div className='flex items-center gap-1'>
-                {[...Array(5)].map((_, i) => (
-                  <div
-                    key={i}
-                    className={`h-2 w-2 rounded-full ${
-                      i <
-                      Math.ceil(
-                        analysis.projectInsights.technicalComplexity / 2
-                      )
-                        ? 'bg-blue-500'
-                        : 'bg-gray-300 dark:bg-gray-600'
-                    }`}
-                  />
-                ))}
+              <span className='text-gray-600 dark:text-gray-400'>Role</span>
+              <div className='flex items-center gap-2'>
+                <FaUserCog className='h-3 w-3 text-gray-500' />
+                <span className='font-medium text-gray-900 dark:text-white'>
+                  {developerRole}
+                </span>
+              </div>
+            </div>
+
+            {/* Timeline */}
+            <div className='flex items-center justify-between text-sm'>
+              <span className='text-gray-600 dark:text-gray-400'>Timeline</span>
+              <div className='flex items-center gap-2'>
+                <FaCalendarAlt className='h-3 w-3 text-gray-500' />
+                <span className='font-medium text-gray-900 dark:text-white'>
+                  {formatDate(project.startDate)}
+                  {project.endDate
+                    ? ` - ${formatDate(project.endDate)}`
+                    : ' - Present'}
+                </span>
               </div>
             </div>
 

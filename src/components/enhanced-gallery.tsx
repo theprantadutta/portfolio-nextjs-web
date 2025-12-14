@@ -15,17 +15,42 @@ import {
   FaTimes,
   FaInfoCircle,
   FaImage,
+  FaPlay,
+  FaVideo,
 } from 'react-icons/fa'
+
+// Extended media type that can be image or video
+interface MediaItem extends IStrapiImageData {
+  isVideo?: boolean
+  url?: string
+}
 
 interface EnhancedGalleryProps {
   images: IStrapiImageData[]
+  videos?: IStrapiImageData[]
   projectTitle: string
   selectedIndex: number
   onIndexChange: (index: number) => void
 }
 
+// Helper to check if URL is a video
+const isVideoUrl = (url: string): boolean => {
+  const videoExtensions = ['.mp4', '.webm', '.mov', '.avi', '.mkv']
+  return videoExtensions.some((ext) => url.toLowerCase().includes(ext))
+}
+
+// Helper to get video URL from Strapi media
+const getVideoUrl = (media: IStrapiImageData): string => {
+  // Strapi stores video URL directly or in formats
+  if ((media as any).url) return (media as any).url
+  if (media.formats?.large?.url) return media.formats.large.url
+  if (media.formats?.medium?.url) return media.formats.medium.url
+  return ''
+}
+
 export const EnhancedGallery = ({
   images,
+  videos,
   projectTitle,
   selectedIndex,
   onIndexChange,
@@ -36,7 +61,17 @@ export const EnhancedGallery = ({
   const [canScrollRight, setCanScrollRight] = useState(false)
   const thumbnailRef = useRef<HTMLDivElement>(null)
 
-  const currentImage = images[selectedIndex]
+  // Combine images and videos into a single media array
+  // Videos come first, then images
+  const allMedia: MediaItem[] = [
+    ...(videos || []).map((v) => ({ ...v, isVideo: true })),
+    ...images.map((img) => ({ ...img, isVideo: false })),
+  ]
+
+  const currentMedia = allMedia[selectedIndex]
+  const isCurrentVideo = currentMedia?.isVideo || false
+  const videoCount = videos?.length || 0
+  const imageCount = images.length
 
   // Check if thumbnails can scroll
   const checkScrollability = useCallback(() => {
@@ -72,13 +107,18 @@ export const EnhancedGallery = ({
   // Enhanced modal animation hook
   const { shouldRender, animationPhase } = useModalAnimation(showFullscreen)
 
+  // Store media length in a stable ref for callbacks
+  const mediaLength = allMedia.length
+
+   
   const nextImage = useCallback(() => {
-    onIndexChange(selectedIndex === images.length - 1 ? 0 : selectedIndex + 1)
-  }, [selectedIndex, images.length, onIndexChange])
+    onIndexChange(selectedIndex === mediaLength - 1 ? 0 : selectedIndex + 1)
+  }, [selectedIndex, mediaLength, onIndexChange])
 
   const prevImage = useCallback(() => {
-    onIndexChange(selectedIndex === 0 ? images.length - 1 : selectedIndex - 1)
-  }, [selectedIndex, images.length, onIndexChange])
+    onIndexChange(selectedIndex === 0 ? mediaLength - 1 : selectedIndex - 1)
+  }, [selectedIndex, mediaLength, onIndexChange])
+   
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -117,9 +157,9 @@ export const EnhancedGallery = ({
     }
   }, [showFullscreen, handleKeyDown])
 
-  const getImageDimensions = (image: IStrapiImageData) => {
-    const medium = image.formats?.medium
-    const large = image.formats?.large
+  const getMediaDimensions = (media: MediaItem) => {
+    const medium = media.formats?.medium
+    const large = media.formats?.large
     return {
       width: medium?.width || large?.width || 400,
       height: medium?.height || large?.height || 600,
@@ -137,22 +177,37 @@ export const EnhancedGallery = ({
           <div className='flex items-center gap-2'>
             <FaImage className='h-3 w-3 text-blue-500 sm:h-4 sm:w-4' />
             <span className='text-sm font-medium text-gray-900 dark:text-white sm:text-base'>
-              {images.length} Screenshots
+              {imageCount} Screenshots
             </span>
           </div>
+          {videoCount > 0 && (
+            <>
+              <div className='hidden h-4 w-px bg-gray-300 dark:bg-gray-600 sm:block'></div>
+              <div className='flex items-center gap-2'>
+                <FaVideo className='h-3 w-3 text-purple-500 sm:h-4 sm:w-4' />
+                <span className='text-sm font-medium text-gray-900 dark:text-white sm:text-base'>
+                  {videoCount} Video{videoCount > 1 ? 's' : ''}
+                </span>
+              </div>
+            </>
+          )}
           <div className='hidden h-4 w-px bg-gray-300 dark:bg-gray-600 sm:block'></div>
           <div className='flex items-center gap-2'>
             <span className='text-xs text-gray-600 dark:text-gray-400 sm:text-sm'>
-              Current: {selectedIndex + 1}/{images.length}
+              Current: {selectedIndex + 1}/{allMedia.length}
             </span>
           </div>
-          <div className='hidden h-4 w-px bg-gray-300 dark:bg-gray-600 sm:block'></div>
-          <div className='flex items-center gap-2'>
-            <span className='text-xs text-gray-600 dark:text-gray-400 sm:text-sm'>
-              {getImageDimensions(currentImage).width}×
-              {getImageDimensions(currentImage).height}
-            </span>
-          </div>
+          {!isCurrentVideo && (
+            <>
+              <div className='hidden h-4 w-px bg-gray-300 dark:bg-gray-600 sm:block'></div>
+              <div className='flex items-center gap-2'>
+                <span className='text-xs text-gray-600 dark:text-gray-400 sm:text-sm'>
+                  {getMediaDimensions(currentMedia).width}×
+                  {getMediaDimensions(currentMedia).height}
+                </span>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
@@ -166,15 +221,24 @@ export const EnhancedGallery = ({
           {/* Enhanced Glassmorphic Container */}
           <div className='special-border glass-card relative h-full overflow-hidden border border-white/20 bg-white/10 p-4 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/30'>
             <div className='relative h-full w-full overflow-hidden rounded-lg'>
-              <StrapiImage
-                src={getOptimalImageSrc(currentImage, 'gallery')}
-                alt={`${projectTitle} screenshot ${selectedIndex + 1}`}
-                className='h-full w-full object-cover transition-all duration-300'
-                width={280}
-                height={560}
-              />
+              {isCurrentVideo ? (
+                <video
+                  src={getVideoUrl(currentMedia)}
+                  className='h-full w-full object-cover'
+                  controls
+                  playsInline
+                />
+              ) : (
+                <StrapiImage
+                  src={getOptimalImageSrc(currentMedia, 'gallery')}
+                  alt={`${projectTitle} screenshot ${selectedIndex + 1}`}
+                  className='h-full w-full object-cover transition-all duration-300'
+                  width={280}
+                  height={560}
+                />
+              )}
 
-              {/* Image Overlay Actions */}
+              {/* Media Overlay Actions */}
               <div className='absolute right-2 top-2 flex gap-2'>
                 <button
                   onClick={() => setShowFullscreen(true)}
@@ -183,29 +247,41 @@ export const EnhancedGallery = ({
                 >
                   <FaExpand className='h-4 w-4' />
                 </button>
-                <button
-                  onClick={() => setShowImageInfo(!showImageInfo)}
-                  className='special-border glass-card p-2 text-white/90 transition-all duration-300 hover:bg-white/20'
-                  title='Image Info'
-                >
-                  <FaInfoCircle className='h-4 w-4' />
-                </button>
+                {!isCurrentVideo && (
+                  <button
+                    onClick={() => setShowImageInfo(!showImageInfo)}
+                    className='special-border glass-card p-2 text-white/90 transition-all duration-300 hover:bg-white/20'
+                    title='Image Info'
+                  >
+                    <FaInfoCircle className='h-4 w-4' />
+                  </button>
+                )}
               </div>
 
+              {/* Video Badge */}
+              {isCurrentVideo && (
+                <div className='absolute left-2 top-2'>
+                  <div className='special-border glass-card flex items-center gap-1 bg-purple-500/80 px-2 py-1 text-white'>
+                    <FaVideo className='h-3 w-3' />
+                    <span className='text-xs font-medium'>Video</span>
+                  </div>
+                </div>
+              )}
+
               {/* Image Info Overlay */}
-              {showImageInfo && (
+              {showImageInfo && !isCurrentVideo && (
                 <div className='absolute bottom-0 left-0 right-0 bg-black/80 p-3 text-white backdrop-blur-sm'>
                   <div className='space-y-1 text-xs'>
                     <div>
-                      Dimensions: {getImageDimensions(currentImage).width} ×{' '}
-                      {getImageDimensions(currentImage).height}
+                      Dimensions: {getMediaDimensions(currentMedia).width} ×{' '}
+                      {getMediaDimensions(currentMedia).height}
                     </div>
                     <div>
                       Aspect Ratio:{' '}
-                      {getImageDimensions(currentImage).aspectRatio.toFixed(2)}
+                      {getMediaDimensions(currentMedia).aspectRatio.toFixed(2)}
                     </div>
                     <div>
-                      Image {selectedIndex + 1} of {images.length}
+                      Item {selectedIndex + 1} of {allMedia.length}
                     </div>
                   </div>
                 </div>
@@ -214,19 +290,19 @@ export const EnhancedGallery = ({
           </div>
 
           {/* Enhanced Navigation Buttons */}
-          {images.length > 1 && (
+          {allMedia.length > 1 && (
             <>
               <button
                 onClick={prevImage}
                 className='special-border glass-card absolute -left-4 top-1/2 z-20 -translate-y-1/2 p-2 transition-all duration-300 hover:scale-110 hover:bg-white/30 dark:hover:bg-gray-800/50 sm:-left-6 sm:p-3'
-                title='Previous Image'
+                title='Previous'
               >
                 <FaArrowLeft className='h-4 w-4 sm:h-5 sm:w-5' />
               </button>
               <button
                 onClick={nextImage}
                 className='special-border glass-card absolute -right-4 top-1/2 z-20 -translate-y-1/2 p-2 transition-all duration-300 hover:scale-110 hover:bg-white/30 dark:hover:bg-gray-800/50 sm:-right-6 sm:p-3'
-                title='Next Image'
+                title='Next'
               >
                 <FaArrowRight className='h-4 w-4 sm:h-5 sm:w-5' />
               </button>
@@ -236,7 +312,7 @@ export const EnhancedGallery = ({
           {/* Enhanced Counter */}
           <div className='special-border glass-card absolute bottom-2 left-1/2 z-20 -translate-x-1/2 bg-black/50 px-3 py-1 backdrop-blur-md sm:bottom-4 sm:px-4 sm:py-2'>
             <span className='text-xs font-medium text-white sm:text-sm'>
-              {selectedIndex + 1} / {images.length}
+              {selectedIndex + 1} / {allMedia.length}
             </span>
           </div>
         </div>
@@ -274,9 +350,9 @@ export const EnhancedGallery = ({
             WebkitOverflowScrolling: 'touch',
           }}
         >
-          {images.map((image, index) => (
+          {allMedia.map((media, index) => (
             <button
-              key={image.id}
+              key={media.id}
               onClick={() => onIndexChange(index)}
               className={`relative flex-shrink-0 overflow-hidden rounded-lg transition-all duration-200 ${
                 selectedIndex === index
@@ -285,14 +361,28 @@ export const EnhancedGallery = ({
               }`}
             >
               <div className='h-16 w-16 sm:h-[72px] sm:w-[72px]'>
-                <StrapiImage
-                  src={getOptimalImageSrc(image, 'thumbnail')}
-                  alt={`${projectTitle} thumbnail ${index + 1}`}
-                  className='h-full w-full object-cover'
-                  width={72}
-                  height={72}
-                />
+                {media.isVideo ? (
+                  <div className='flex h-full w-full items-center justify-center bg-gray-800'>
+                    <FaPlay className='h-4 w-4 text-white' />
+                  </div>
+                ) : (
+                  <StrapiImage
+                    src={getOptimalImageSrc(media, 'thumbnail')}
+                    alt={`${projectTitle} thumbnail ${index + 1}`}
+                    className='h-full w-full object-cover'
+                    width={72}
+                    height={72}
+                  />
+                )}
               </div>
+              {/* Video indicator overlay */}
+              {media.isVideo && (
+                <div className='absolute bottom-0 left-0 right-0 bg-purple-500/80 py-0.5 text-center'>
+                  <span className='text-[8px] font-medium text-white'>
+                    VIDEO
+                  </span>
+                </div>
+              )}
             </button>
           ))}
         </div>
@@ -317,24 +407,36 @@ export const EnhancedGallery = ({
               }`}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Fullscreen Image */}
-              <StrapiImage
-                src={getOptimalImageSrc(currentImage, 'hero')}
-                alt={`${projectTitle} screenshot ${selectedIndex + 1}`}
-                className='max-h-[90vh] max-w-[90vw] object-contain'
-                width={getImageDimensions(currentImage).width}
-                height={getImageDimensions(currentImage).height}
-              />
+              {/* Fullscreen Media */}
+              {isCurrentVideo ? (
+                <video
+                  src={getVideoUrl(currentMedia)}
+                  className='max-h-[90vh] max-w-[90vw] object-contain'
+                  controls
+                  autoPlay
+                  playsInline
+                />
+              ) : (
+                <StrapiImage
+                  src={getOptimalImageSrc(currentMedia, 'hero')}
+                  alt={`${projectTitle} screenshot ${selectedIndex + 1}`}
+                  className='max-h-[90vh] max-w-[90vw] object-contain'
+                  width={getMediaDimensions(currentMedia).width}
+                  height={getMediaDimensions(currentMedia).height}
+                />
+              )}
 
               {/* Fullscreen Controls */}
               <div className='absolute right-4 top-4 flex gap-2'>
-                <button
-                  onClick={() => setShowImageInfo(!showImageInfo)}
-                  className='special-border glass-card p-3 text-white transition-all duration-300 hover:bg-white/20'
-                  title='Toggle Info'
-                >
-                  <FaInfoCircle className='h-5 w-5' />
-                </button>
+                {!isCurrentVideo && (
+                  <button
+                    onClick={() => setShowImageInfo(!showImageInfo)}
+                    className='special-border glass-card p-3 text-white transition-all duration-300 hover:bg-white/20'
+                    title='Toggle Info'
+                  >
+                    <FaInfoCircle className='h-5 w-5' />
+                  </button>
+                )}
                 <button
                   onClick={() => setShowFullscreen(false)}
                   className='special-border glass-card p-3 text-white transition-all duration-300 hover:bg-white/20'
@@ -345,40 +447,40 @@ export const EnhancedGallery = ({
               </div>
 
               {/* Fullscreen Navigation */}
-              {images.length > 1 && (
+              {allMedia.length > 1 && (
                 <>
                   <button
                     onClick={prevImage}
                     className='special-border glass-card absolute left-4 top-1/2 -translate-y-1/2 p-4 text-white transition-all duration-300 hover:bg-white/20'
-                    title='Previous Image (←)'
+                    title='Previous (←)'
                   >
                     <FaArrowLeft className='h-6 w-6' />
                   </button>
                   <button
                     onClick={nextImage}
                     className='special-border glass-card absolute right-4 top-1/2 -translate-y-1/2 p-4 text-white transition-all duration-300 hover:bg-white/20'
-                    title='Next Image (→)'
+                    title='Next (→)'
                   >
                     <FaArrowRight className='h-6 w-6' />
                   </button>
                 </>
               )}
 
-              {/* Fullscreen Info Panel */}
-              {showImageInfo && (
+              {/* Fullscreen Info Panel (images only) */}
+              {showImageInfo && !isCurrentVideo && (
                 <div className='absolute bottom-4 left-4 right-4 rounded-lg bg-black/80 p-4 text-white backdrop-blur-sm'>
                   <div className='grid grid-cols-2 gap-4 text-sm md:grid-cols-4'>
                     <div>
                       <div className='font-medium'>Dimensions</div>
                       <div className='text-gray-300'>
-                        {getImageDimensions(currentImage).width} ×{' '}
-                        {getImageDimensions(currentImage).height}
+                        {getMediaDimensions(currentMedia).width} ×{' '}
+                        {getMediaDimensions(currentMedia).height}
                       </div>
                     </div>
                     <div>
                       <div className='font-medium'>Aspect Ratio</div>
                       <div className='text-gray-300'>
-                        {getImageDimensions(currentImage).aspectRatio.toFixed(
+                        {getMediaDimensions(currentMedia).aspectRatio.toFixed(
                           2
                         )}
                       </div>
@@ -386,7 +488,7 @@ export const EnhancedGallery = ({
                     <div>
                       <div className='font-medium'>Position</div>
                       <div className='text-gray-300'>
-                        {selectedIndex + 1} of {images.length}
+                        {selectedIndex + 1} of {allMedia.length}
                       </div>
                     </div>
                     <div>
@@ -399,7 +501,7 @@ export const EnhancedGallery = ({
 
               {/* Fullscreen Counter */}
               <div className='special-border glass-card absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 px-4 py-2 text-white backdrop-blur-md'>
-                {selectedIndex + 1} / {images.length}
+                {selectedIndex + 1} / {allMedia.length}
               </div>
             </div>
           </div>,

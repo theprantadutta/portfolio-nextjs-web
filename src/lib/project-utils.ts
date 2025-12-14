@@ -1,7 +1,102 @@
-import { ProjectDataAttributes } from '@/types/types'
+import { ProjectDataAttributes, PlatformType, FeatureFlag } from '@/types/types'
+import {
+  FaCode,
+  FaMobile,
+  FaRocket,
+  FaLightbulb,
+  FaTools,
+  FaHeart,
+  FaBolt,
+  FaLock,
+  FaPalette,
+  FaGlobe,
+} from 'react-icons/fa'
+import React from 'react'
+
+// Feature flag to full feature data mapping
+export interface FeatureData {
+  icon: React.ReactNode
+  title: string
+  description: string
+  category:
+    | 'design'
+    | 'performance'
+    | 'security'
+    | 'compatibility'
+    | 'deployment'
+    | 'documentation'
+    | 'development'
+}
+
+export const FEATURE_FLAG_MAP: Record<FeatureFlag, FeatureData> = {
+  performant: {
+    icon: React.createElement(FaBolt, { className: 'h-6 w-6' }),
+    title: 'High Performance',
+    description:
+      'Fast loading times and smooth animations for an excellent user experience.',
+    category: 'performance',
+  },
+  'mobile-first': {
+    icon: React.createElement(FaMobile, { className: 'h-6 w-6' }),
+    title: 'Mobile-First Design',
+    description:
+      'Optimized for mobile devices with intuitive touch interactions and responsive layouts.',
+    category: 'design',
+  },
+  'cross-platform': {
+    icon: React.createElement(FaGlobe, { className: 'h-6 w-6' }),
+    title: 'Cross-Platform',
+    description: 'Works seamlessly across different browsers and devices.',
+    category: 'compatibility',
+  },
+  'open-source': {
+    icon: React.createElement(FaCode, { className: 'h-6 w-6' }),
+    title: 'Open Source',
+    description: 'Source code is available for learning and contribution.',
+    category: 'development',
+  },
+  'production-ready': {
+    icon: React.createElement(FaRocket, { className: 'h-6 w-6' }),
+    title: 'Production Ready',
+    description: 'Deployed and available in app stores for real users.',
+    category: 'deployment',
+  },
+  'well-documented': {
+    icon: React.createElement(FaLightbulb, { className: 'h-6 w-6' }),
+    title: 'Well Documented',
+    description: 'Comprehensive documentation and detailed project insights.',
+    category: 'documentation',
+  },
+  secure: {
+    icon: React.createElement(FaLock, { className: 'h-6 w-6' }),
+    title: 'Reliable & Secure',
+    description:
+      'Built with security best practices and reliable architecture.',
+    category: 'security',
+  },
+  'modern-ui': {
+    icon: React.createElement(FaPalette, { className: 'h-6 w-6' }),
+    title: 'Modern UI/UX',
+    description:
+      'Contemporary user interface with attention to design details.',
+    category: 'design',
+  },
+  'user-centered': {
+    icon: React.createElement(FaHeart, { className: 'h-6 w-6' }),
+    title: 'User-Centered',
+    description: 'Designed with user experience and accessibility in mind.',
+    category: 'design',
+  },
+  'modern-dev': {
+    icon: React.createElement(FaTools, { className: 'h-6 w-6' }),
+    title: 'Modern Development',
+    description: 'Leverages latest development tools and methodologies.',
+    category: 'development',
+  },
+}
 
 export interface ProjectAnalysis {
-  platformType: 'mobile-app' | 'web-app' | 'library' | 'tool'
+  platformType: PlatformType
   technologyStack: {
     frontend: string[]
     backend: string[]
@@ -32,8 +127,8 @@ export interface ProjectAnalysis {
 export const analyzeProject = (
   project: ProjectDataAttributes
 ): ProjectAnalysis => {
-  // Detect platform type
-  const platformType = detectPlatformType(project)
+  // Use real platformType from Strapi
+  const platformType = project.platformType
 
   // Categorize technology stack
   const technologyStack = categorizeTags(project.Tags || [])
@@ -44,10 +139,10 @@ export const analyzeProject = (
   // Assess content quality
   const contentQuality = assessContentRichness(project)
 
-  // Determine if featured project
-  const featuredProject = project.sortBy <= 3
+  // Use real isFeatured from Strapi
+  const featuredProject = project.isFeatured
 
-  // Generate project insights
+  // Generate project insights using real data
   const projectInsights = generateProjectInsights(project)
 
   return {
@@ -58,43 +153,6 @@ export const analyzeProject = (
     featuredProject,
     projectInsights,
   }
-}
-
-const detectPlatformType = (
-  project: ProjectDataAttributes
-): ProjectAnalysis['platformType'] => {
-  const tags = project.Tags?.map((tag) => tag.name.toLowerCase()) || []
-
-  if (
-    project.googlePlayLink ||
-    tags.some((tag) =>
-      ['flutter', 'react native', 'android', 'ios', 'mobile', 'app'].includes(
-        tag
-      )
-    )
-  ) {
-    return 'mobile-app'
-  }
-
-  if (
-    tags.some((tag) =>
-      ['react', 'vue', 'angular', 'next.js', 'nuxt', 'web', 'website'].includes(
-        tag
-      )
-    )
-  ) {
-    return 'web-app'
-  }
-
-  if (
-    tags.some((tag) =>
-      ['library', 'package', 'npm', 'sdk', 'api'].includes(tag)
-    )
-  ) {
-    return 'library'
-  }
-
-  return 'tool'
 }
 
 const categorizeTags = (
@@ -203,7 +261,8 @@ const generateProjectInsights = (
   if (project.googlePlayLink) platformReach += 1
   if (project.githubLink) platformReach += 1
 
-  const technicalComplexity = Math.min(project.Tags?.length || 0, 10)
+  // Use real complexity from Strapi (1-5 scale, multiply by 2 for 1-10 scale)
+  const technicalComplexity = project.complexity * 2
   const visualRichness = project.imageUrls?.length || 0
 
   return {
@@ -214,33 +273,84 @@ const generateProjectInsights = (
   }
 }
 
-export const getPlatformBadgeInfo = (analysis: ProjectAnalysis) => {
-  const { platformType } = analysis
-
-  const badges = {
-    'mobile-app': {
+// Platform badge info based on real platformType from Strapi
+export const getPlatformBadgeInfo = (platformType: PlatformType) => {
+  const badges: Record<
+    PlatformType,
+    { label: string; color: string; textColor: string }
+  > = {
+    android: {
+      label: 'Android App',
+      color: 'from-green-500/20 to-emerald-500/20',
+      textColor: 'text-green-600 dark:text-green-400',
+    },
+    ios: {
+      label: 'iOS App',
+      color: 'from-gray-500/20 to-slate-500/20',
+      textColor: 'text-gray-600 dark:text-gray-400',
+    },
+    'android-and-ios': {
       label: 'Mobile App',
       color: 'from-blue-500/20 to-purple-500/20',
       textColor: 'text-blue-600 dark:text-blue-400',
     },
-    'web-app': {
+    web: {
       label: 'Web Application',
-      color: 'from-green-500/20 to-teal-500/20',
-      textColor: 'text-green-600 dark:text-green-400',
+      color: 'from-cyan-500/20 to-teal-500/20',
+      textColor: 'text-cyan-600 dark:text-cyan-400',
     },
-    library: {
-      label: 'Library/Package',
-      color: 'from-orange-500/20 to-red-500/20',
+    cloud: {
+      label: 'Cloud Service',
+      color: 'from-orange-500/20 to-amber-500/20',
       textColor: 'text-orange-600 dark:text-orange-400',
-    },
-    tool: {
-      label: 'Development Tool',
-      color: 'from-purple-500/20 to-pink-500/20',
-      textColor: 'text-purple-600 dark:text-purple-400',
     },
   }
 
   return badges[platformType]
+}
+
+// Project status badge info
+export const getStatusBadgeInfo = (
+  status: ProjectDataAttributes['projectStatus']
+) => {
+  const badges: Record<
+    ProjectDataAttributes['projectStatus'],
+    { label: string; color: string; textColor: string }
+  > = {
+    planned: {
+      label: 'Planned',
+      color: 'from-yellow-500/20 to-amber-500/20',
+      textColor: 'text-yellow-600 dark:text-yellow-400',
+    },
+    ongoing: {
+      label: 'In Progress',
+      color: 'from-blue-500/20 to-cyan-500/20',
+      textColor: 'text-blue-600 dark:text-blue-400',
+    },
+    completed: {
+      label: 'Completed',
+      color: 'from-green-500/20 to-emerald-500/20',
+      textColor: 'text-green-600 dark:text-green-400',
+    },
+  }
+
+  return badges[status]
+}
+
+// Developer role display info
+export const getDeveloperRoleInfo = (
+  role: ProjectDataAttributes['developerRole']
+) => {
+  const roles: Record<ProjectDataAttributes['developerRole'], string> = {
+    solo: 'Solo Developer',
+    'small-team': 'Small Team',
+    'cross-functional': 'Cross-functional Team',
+    'feature-ownership': 'Feature Owner',
+    freelance: 'Freelance Project',
+    'open-source': 'Open Source Contributor',
+  }
+
+  return roles[role]
 }
 
 export const getOptimalImageSrc = (
@@ -259,4 +369,11 @@ export const getOptimalImageSrc = (
     default:
       return image.formats.medium?.url || ''
   }
+}
+
+// Helper to get features from feature flags
+export const getProjectFeatures = (
+  featureFlags: { id: number; flag: FeatureFlag }[]
+): FeatureData[] => {
+  return featureFlags.map((f) => FEATURE_FLAG_MAP[f.flag]).filter(Boolean)
 }

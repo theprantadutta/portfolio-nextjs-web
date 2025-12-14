@@ -14,6 +14,35 @@ export type SkillDataAttributes = {
   isFavourite: boolean
 }
 
+export type PlatformType =
+  | 'android'
+  | 'ios'
+  | 'android-and-ios'
+  | 'web'
+  | 'cloud'
+
+export type ProjectStatus = 'planned' | 'ongoing' | 'completed'
+
+export type DeveloperRole =
+  | 'solo'
+  | 'small-team'
+  | 'cross-functional'
+  | 'feature-ownership'
+  | 'freelance'
+  | 'open-source'
+
+export type FeatureFlag =
+  | 'performant'
+  | 'mobile-first'
+  | 'cross-platform'
+  | 'open-source'
+  | 'production-ready'
+  | 'well-documented'
+  | 'secure'
+  | 'modern-ui'
+  | 'user-centered'
+  | 'modern-dev'
+
 export type ProjectDataAttributes = {
   id: number
   documentId: string
@@ -30,6 +59,20 @@ export type ProjectDataAttributes = {
   imageUrls: IStrapiImageData[]
   sortBy: number
   slug: string
+  // New fields from Strapi
+  isFeatured: boolean
+  platformType: PlatformType
+  projectStatus: ProjectStatus
+  complexity: number
+  startDate: string
+  endDate?: string
+  accentColor?: string
+  developerRole: DeveloperRole
+  video?: IStrapiImageData[]
+  features: {
+    id: number
+    flag: FeatureFlag
+  }[]
 }
 
 export interface IStrapiImageData {

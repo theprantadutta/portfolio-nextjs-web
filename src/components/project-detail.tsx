@@ -21,7 +21,12 @@ import {
   useStaggeredAnimation,
 } from '@/lib/animation-hooks'
 import { StrapiImage } from '@/shared/StrapiImage'
-import { analyzeProject, getPlatformBadgeInfo } from '@/lib/project-utils'
+import {
+  analyzeProject,
+  getPlatformBadgeInfo,
+  getStatusBadgeInfo,
+  getDeveloperRoleInfo,
+} from '@/lib/project-utils'
 
 const BlocksRenderer = dynamic(
   () =>
@@ -60,7 +65,9 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
 
   // Analyze project data for smart content generation
   const analysis = analyzeProject(project)
-  const platformBadge = getPlatformBadgeInfo(analysis)
+  const platformBadge = getPlatformBadgeInfo(project.platformType)
+  const statusBadge = getStatusBadgeInfo(project.projectStatus)
+  const developerRole = getDeveloperRoleInfo(project.developerRole)
   const { ref: heroRef, className: heroAnimation } = useAnimationOnScroll({
     animationClass: 'animate-fade-in-up',
     delay: 100,
@@ -134,19 +141,20 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                 {platformBadge?.label}
               </span>
 
+              {/* Project Status Badge */}
+              <span
+                className={`special-border glass-card bg-gradient-to-r ${statusBadge?.color} px-4 py-2 text-sm font-medium ${statusBadge?.textColor}`}
+              >
+                {statusBadge?.label}
+              </span>
+
               {/* Featured Project Badge */}
-              {analysis.featuredProject && (
+              {project.isFeatured && (
                 <span className='special-border glass-card flex items-center gap-2 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 px-4 py-2 text-sm font-medium text-yellow-600 dark:text-yellow-400'>
                   <FaStar className='h-4 w-4' />
-                  Featured Project
+                  Featured
                 </span>
               )}
-
-              {/* Employment Focus Badge per user preference */}
-              {/* <span className='special-border glass-card bg-gradient-to-r from-green-500/20 to-teal-500/20 px-4 py-2 text-sm font-medium text-green-600 dark:text-green-400 flex items-center gap-2'>
-                <FaHeart className='h-4 w-4' />
-                Employment Ready
-              </span> */}
             </div>
 
             {/* Project Title */}
@@ -172,7 +180,11 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
               </div>
               <div className='flex items-center gap-2'>
                 <div className='h-2 w-2 rounded-full bg-purple-500'></div>
-                <span>{analysis.projectInsights.completeness}% Complete</span>
+                <span>Complexity: {project.complexity}/5</span>
+              </div>
+              <div className='flex items-center gap-2'>
+                <div className='h-2 w-2 rounded-full bg-orange-500'></div>
+                <span>{developerRole}</span>
               </div>
             </div>
 
@@ -231,6 +243,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
 
             <EnhancedGallery
               images={project.imageUrls}
+              videos={project.video}
               projectTitle={project.title}
               selectedIndex={selectedImageIndex}
               onIndexChange={setSelectedImageIndex}
@@ -269,14 +282,16 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                     <p className='leading-relaxed text-gray-600 dark:text-gray-400'>
                       Built with attention to detail, this application
                       demonstrates best practices in{' '}
-                      {analysis.platformType === 'mobile-app'
+                      {['android', 'ios', 'android-and-ios'].includes(
+                        project.platformType
+                      )
                         ? 'mobile'
                         : 'web'}{' '}
                       development, responsive design, and user interface
                       optimization. The project emphasizes employment-ready
                       skills and industry best practices.
                     </p>
-                    {analysis.featuredProject && (
+                    {project.isFeatured && (
                       <p className='leading-relaxed text-gray-600 dark:text-gray-400'>
                         As a featured project, this work represents some of the
                         highest quality development in the portfolio,
@@ -446,7 +461,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
       {/* Features Showcase Section */}
       <section className='px-4 py-16 sm:px-6 lg:px-8'>
         <div className='mx-auto max-w-7xl'>
-          <FeaturesShowcase project={project} analysis={analysis} />
+          <FeaturesShowcase project={project} />
         </div>
       </section>
     </div>
