@@ -129,7 +129,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
       {/* Enhanced Hero Section */}
       <section
         ref={heroRef}
-        className={`relative px-4 pb-8 pt-3 sm:px-6 lg:px-8 ${heroAnimation}`}
+        className={`relative px-4 pb-8 pt-10 sm:px-6 sm:pt-16 lg:px-8 ${heroAnimation}`}
       >
         <div className='mx-auto max-w-7xl'>
           <div className='mb-8 text-center'>
