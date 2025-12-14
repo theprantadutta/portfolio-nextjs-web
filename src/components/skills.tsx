@@ -64,49 +64,6 @@ const getSkillIcon = (skillName: string) => {
   return FaCode
 }
 
-const getSkillLevel = (skillName: string) => {
-  const name = skillName.toLowerCase()
-  if (
-    [
-      'next.js',
-      'flutter',
-      'dart',
-      'react',
-      'react native',
-      'typescript',
-      'javascript',
-      'docker',
-      'git',
-      'microservices',
-    ].some((tech) => name.includes(tech))
-  )
-    return 5
-  if (
-    [
-      'node.js',
-      'python',
-      'tailwind',
-      'asp.net core',
-      'firebase',
-      'postgresql',
-    ].some((tech) => name.includes(tech))
-  )
-    return 4
-  if (
-    [
-      'java',
-      'mongodb',
-      'postgresql',
-      'figma',
-      'golang',
-      'rust',
-      'google cloud platform',
-      'sql server',
-    ].some((tech) => name.includes(tech))
-  )
-    return 3
-  return 3
-}
 
 export const Skills: React.FC<ISkillProps> = ({ skills }) => {
   const { ref } = useSectionInView('Skills', 0.1)
@@ -256,8 +213,6 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
             <div className='mx-auto flex max-w-4xl flex-wrap justify-center gap-4'>
               {skills.data.slice(0, 19).map((skill, index) => {
                 const Icon = getSkillIcon(skill.title)
-                const level = getSkillLevel(skill.title)
-                const isFlutter = skill.title.toLowerCase().includes('flutter')
 
                 return (
                   <div
@@ -275,7 +230,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
                     <div className='relative h-20 w-24'>
                       <div
                         className={`absolute inset-0 bg-gradient-to-br ${
-                          isFlutter
+                          skill.isFavourite
                             ? 'from-blue-400 to-cyan-400 shadow-blue-400/50'
                             : 'from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800'
                         } clip-hexagon transition-all duration-300 group-hover:shadow-2xl ${
@@ -289,14 +244,14 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
                       <div className='absolute inset-0 flex flex-col items-center justify-center p-2 text-center'>
                         <Icon
                           className={`mb-1 h-6 w-6 ${
-                            isFlutter
+                            skill.isFavourite
                               ? 'text-white'
                               : 'text-gray-700 dark:text-gray-300'
                           }`}
                         />
                         <span
                           className={`text-xs font-medium leading-tight ${
-                            isFlutter
+                            skill.isFavourite
                               ? 'text-white'
                               : 'text-gray-700 dark:text-gray-300'
                           }`}
@@ -305,7 +260,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
                         </span>
 
                         {/* Favorite Badge */}
-                        {isFlutter && (
+                        {skill.isFavourite && (
                           <FaHeart className='absolute -right-1 -top-1 h-3 w-3 animate-pulse text-red-500' />
                         )}
                       </div>
@@ -316,8 +271,8 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
                           <div
                             key={dot}
                             className={`h-1.5 w-1.5 rounded-full transition-all duration-300 ${
-                              dot <= level
-                                ? isFlutter
+                              dot <= skill.rating
+                                ? skill.isFavourite
                                   ? 'bg-blue-400'
                                   : 'bg-gray-400 dark:bg-gray-600'
                                 : 'bg-gray-200 dark:bg-gray-800'
@@ -346,16 +301,12 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
                 <div className='grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
                   {category.skills.map((skill, index) => {
                     const Icon = getSkillIcon(skill.title)
-                    const level = getSkillLevel(skill.title)
-                    const isFlutter = skill.title
-                      .toLowerCase()
-                      .includes('flutter')
 
                     return (
                       <div
                         key={skill.id}
                         className={`special-border glass-card group relative cursor-pointer p-4 text-center transition-all duration-300 hover:-translate-y-2 hover:scale-105 ${
-                          isFlutter
+                          skill.isFavourite
                             ? 'border-blue-400/50 bg-gradient-to-br from-blue-500/20 to-cyan-500/20'
                             : 'border-white/10 bg-white/5 dark:bg-gray-900/20'
                         }`}
@@ -363,7 +314,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
                       >
                         <Icon
                           className={`mx-auto mb-3 h-8 w-8 ${
-                            isFlutter
+                            skill.isFavourite
                               ? 'text-blue-400'
                               : 'text-gray-600 dark:text-gray-400'
                           }`}
@@ -376,20 +327,20 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
                         <div className='mb-2 h-1.5 w-full rounded-full bg-gray-200 dark:bg-gray-700'>
                           <div
                             className={`h-1.5 rounded-full transition-all duration-1000 ${
-                              isFlutter
+                              skill.isFavourite
                                 ? 'bg-gradient-to-r from-blue-400 to-cyan-400'
                                 : `bg-gradient-to-r ${category.color}`
                             }`}
-                            style={{ width: `${(level / 5) * 100}%` }}
+                            style={{ width: `${(skill.rating / 5) * 100}%` }}
                           />
                         </div>
 
                         <span className='text-xs text-gray-500'>
-                          {level}/5 level
+                          {skill.rating}/5 level
                         </span>
 
                         {/* Favorite Badge */}
-                        {isFlutter && (
+                        {skill.isFavourite && (
                           <div className='absolute -right-2 -top-2 rounded-full bg-red-500 p-1'>
                             <FaHeart className='h-3 w-3 text-white' />
                           </div>
@@ -414,7 +365,8 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
             },
             {
               label: 'Favorite',
-              value: 'Flutter',
+              value:
+                skills.data.find((s) => s.isFavourite)?.title || 'Flutter',
               icon: FaHeart,
               color: 'red',
             },

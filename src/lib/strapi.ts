@@ -148,6 +148,8 @@ export const getAllSkills = async () => {
       sort: 'title:asc',
       'fields[0]': 'id',
       'fields[1]': 'title',
+      'fields[2]': 'rating',
+      'fields[3]': 'isFavourite',
     },
     tags: ['skills'],
   })

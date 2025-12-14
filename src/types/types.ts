@@ -10,6 +10,8 @@ export type ExperienceDataAttributes = {
 export type SkillDataAttributes = {
   id: number
   title: string
+  rating: number
+  isFavourite: boolean
 }
 
 export type ProjectDataAttributes = {
