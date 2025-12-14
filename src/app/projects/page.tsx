@@ -7,7 +7,7 @@ import { NextPage } from 'next'
 const ProjectsPage: NextPage = async () => {
   const projects = await getAllProjects()
   return (
-    <main className='flex scroll-mt-36 flex-col items-center px-4'>
+    <main className='flex scroll-mt-36 flex-col items-center px-4 pt-4 sm:pt-8'>
       <Projects showAllProjects={true} projects={projects} />
     </main>
   )
