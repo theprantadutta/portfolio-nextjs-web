@@ -64,7 +64,6 @@ const getSkillIcon = (skillName: string) => {
   return FaCode
 }
 
-
 export const Skills: React.FC<ISkillProps> = ({ skills }) => {
   const { ref } = useSectionInView('Skills', 0.1)
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null)
@@ -367,14 +366,13 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
             },
             {
               label: 'Favorite',
-              value:
-                skills.data.find((s) => s.isFavourite)?.title || 'Flutter',
+              value: 'Flutter',
               icon: FaHeart,
               color: 'red',
             },
             {
               label: 'Years Exp',
-              value: '5+',
+              value: '4+',
               icon: FaRocket,
               color: 'purple',
             },
