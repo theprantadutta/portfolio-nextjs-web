@@ -64,10 +64,7 @@ export const Project: React.FC<IProjectProps> = ({
       className={`group mb-10 ${animation.className}`}
     >
       {/* eslint-enable react-hooks/refs */}
-      <div
-        onClick={() => router.push(`/projects/${slug}`)}
-        className='special-border glass-card relative mx-auto max-w-4xl cursor-pointer overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-500 hover:-translate-y-3 hover:bg-white/10 hover:shadow-2xl dark:border-gray-700/30 dark:bg-gray-900/20 dark:hover:bg-gray-900/30'
-      >
+      <div className='special-border glass-card relative mx-auto max-w-4xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-500 hover:-translate-y-3 hover:bg-white/10 hover:shadow-2xl dark:border-gray-700/30 dark:bg-gray-900/20 dark:hover:bg-gray-900/30'>
         {/* Enhanced gradient overlay */}
         <div className='absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
 
@@ -145,7 +142,10 @@ export const Project: React.FC<IProjectProps> = ({
           </div>
 
           {/* Right Column - Project Image */}
-          <div className='group/image relative'>
+          <div
+            className='group/image relative cursor-pointer'
+            onClick={() => router.push(`/projects/${slug}`)}
+          >
             <div className='special-border relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900'>
               {/* Background Pattern */}
               <div className='absolute inset-0 opacity-10'>

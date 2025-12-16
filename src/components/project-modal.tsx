@@ -76,7 +76,7 @@ export const ProjectModal: React.FC<IProjectModal> = ({ imageUrls, slug }) => {
 
   return (
     <>
-      <div className='mt-5 flex flex-col justify-center gap-2 sm:flex-row'>
+      <div className='project-action-buttons mt-5 flex flex-col justify-center gap-2 sm:flex-row'>
         <Link
           className='btn-primary special-border px-6 py-2 text-center text-sm font-medium'
           type='button'
