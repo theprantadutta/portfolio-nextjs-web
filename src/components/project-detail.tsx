@@ -333,56 +333,60 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
           <div className='grid gap-6 md:grid-cols-2'>
             {/* Project Links - Only show if there are links */}
             {(project.githubLink || project.googlePlayLink) && (
-              <div className={`space-y-4 ${getContentItemClass(2)}`}>
-                <h3 className='text-xl font-bold text-gray-900 dark:text-white'>
+              <div
+                className={`special-border glass-card bg-gradient-to-br from-gray-500/5 to-slate-500/5 p-6 ${getContentItemClass(2)}`}
+              >
+                <h3 className='mb-4 text-lg font-bold text-gray-900 dark:text-white'>
                   Project Access
                 </h3>
-                {project.githubLink && (
-                  <a
-                    href={project.githubLink}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='special-border glass-card group block w-full bg-gradient-to-r from-gray-500/5 to-gray-600/5 p-4 transition-all duration-300 hover:from-gray-500/10 hover:to-gray-600/10'
-                  >
-                    <div className='flex items-center justify-between'>
-                      <div className='flex items-center gap-3'>
-                        <FaGithub className='h-5 w-5 text-gray-700 dark:text-gray-300' />
-                        <div>
-                          <div className='font-medium text-gray-900 dark:text-white'>
-                            Source Code Repository
-                          </div>
-                          <div className='text-sm text-gray-600 dark:text-gray-400'>
-                            View implementation details
-                          </div>
-                        </div>
-                      </div>
-                      <FaExternalLinkAlt className='h-4 w-4 text-gray-500 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1' />
-                    </div>
-                  </a>
-                )}
-                {project.googlePlayLink && (
-                  <a
-                    href={project.googlePlayLink}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='special-border glass-card group block w-full bg-gradient-to-r from-green-500/5 to-teal-500/5 p-4 transition-all duration-300 hover:from-green-500/10 hover:to-teal-500/10'
-                  >
-                    <div className='flex items-center justify-between'>
-                      <div className='flex items-center gap-3'>
-                        <FaGooglePlay className='h-5 w-5 text-green-600 dark:text-green-400' />
-                        <div>
-                          <div className='font-medium text-gray-900 dark:text-white'>
-                            Download Application
-                          </div>
-                          <div className='text-sm text-gray-600 dark:text-gray-400'>
-                            Available on Google Play Store
+                <div className='space-y-3'>
+                  {project.githubLink && (
+                    <a
+                      href={project.githubLink}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='special-border glass-card group block w-full bg-gradient-to-r from-gray-500/5 to-gray-600/5 p-4 transition-all duration-300 hover:from-gray-500/10 hover:to-gray-600/10'
+                    >
+                      <div className='flex items-center justify-between'>
+                        <div className='flex items-center gap-3'>
+                          <FaGithub className='h-5 w-5 text-gray-700 dark:text-gray-300' />
+                          <div>
+                            <div className='font-medium text-gray-900 dark:text-white'>
+                              Source Code Repository
+                            </div>
+                            <div className='text-sm text-gray-600 dark:text-gray-400'>
+                              View implementation details
+                            </div>
                           </div>
                         </div>
+                        <FaExternalLinkAlt className='h-4 w-4 text-gray-500 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1' />
                       </div>
-                      <FaExternalLinkAlt className='h-4 w-4 text-gray-500 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1' />
-                    </div>
-                  </a>
-                )}
+                    </a>
+                  )}
+                  {project.googlePlayLink && (
+                    <a
+                      href={project.googlePlayLink}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='special-border glass-card group block w-full bg-gradient-to-r from-green-500/5 to-teal-500/5 p-4 transition-all duration-300 hover:from-green-500/10 hover:to-teal-500/10'
+                    >
+                      <div className='flex items-center justify-between'>
+                        <div className='flex items-center gap-3'>
+                          <FaGooglePlay className='h-5 w-5 text-green-600 dark:text-green-400' />
+                          <div>
+                            <div className='font-medium text-gray-900 dark:text-white'>
+                              Download Application
+                            </div>
+                            <div className='text-sm text-gray-600 dark:text-gray-400'>
+                              Available on Google Play Store
+                            </div>
+                          </div>
+                        </div>
+                        <FaExternalLinkAlt className='h-4 w-4 text-gray-500 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1' />
+                      </div>
+                    </a>
+                  )}
+                </div>
               </div>
             )}
 
