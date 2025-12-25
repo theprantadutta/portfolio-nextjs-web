@@ -93,6 +93,10 @@ const coreTechnologies = [
     title: 'Backend',
     items: ['ASP.NET Core', 'Node.js', 'System Design'],
   },
+  {
+    title: 'Cloud & DevOps',
+    items: ['Docker', 'Kubernetes', 'Google Cloud'],
+  },
 ]
 
 const achievements = [
@@ -113,6 +117,18 @@ const achievements = [
     title: 'Performance Tuning',
     subtitle: 'Mobile & Web',
     accent: 'from-orange-400 to-red-500',
+  },
+  {
+    icon: '🖥️',
+    title: 'Self-Hosted Infrastructure',
+    subtitle: 'Ubuntu Server Stack',
+    accent: 'from-cyan-400 to-blue-500',
+  },
+  {
+    icon: '🚀',
+    title: '20+ Projects Completed',
+    subtitle: 'Web, Mobile & Cloud',
+    accent: 'from-violet-400 to-fuchsia-500',
   },
 ]
 
@@ -152,7 +168,7 @@ export const About: React.FC<IAboutProps> = () => {
               <h3 className='text-gradient mb-4 text-xl font-semibold'>
                 Core Technologies
               </h3>
-              <div className='grid grid-cols-2 gap-4 text-sm text-gray-700 dark:text-gray-300'>
+              <div className='grid grid-cols-2 gap-4 text-sm text-gray-700 dark:text-gray-300 sm:grid-cols-3'>
                 {coreTechnologies.map((section) => (
                   <div key={section.title} className='space-y-2'>
                     <h4 className='font-medium text-gray-800 dark:text-gray-200'>
