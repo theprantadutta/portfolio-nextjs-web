@@ -244,110 +244,105 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
       )}
 
       {/* Enhanced Content Sections */}
-      <section className='px-4 py-16 sm:px-6 lg:px-8'>
-        <div className='mx-auto max-w-4xl'>
-          <div ref={contentRef} className='grid gap-8 md:grid-cols-2 lg:gap-12'>
-            {/* Project Description */}
-            <div className={`space-y-6 ${getContentItemClass(0)}`}>
-              <div className='mb-6 flex items-center gap-3'>
-                <div className='special-border glass-card bg-gradient-to-r from-blue-500/20 to-purple-500/20 p-2'>
-                  <FaCode className='h-5 w-5 text-blue-600 dark:text-blue-400' />
+      <section ref={contentRef} className='px-4 py-16 sm:px-6 lg:px-8'>
+        <div className='mx-auto max-w-5xl space-y-8'>
+          {/* Technology Stack - Full Width */}
+          {enhancedTags.length > 0 && (
+            <div
+              className={`special-border glass-card p-6 ${getContentItemClass(0)}`}
+            >
+              <div className='mb-5 flex items-center gap-3'>
+                <div className='special-border glass-card bg-gradient-to-r from-green-500/20 to-teal-500/20 p-2'>
+                  <FaMobile className='h-5 w-5 text-green-600 dark:text-green-400' />
                 </div>
-                <h2 className='text-2xl font-bold text-gray-900 dark:text-white md:text-3xl'>
-                  About This Project
+                <h2 className='text-2xl font-bold text-gray-900 dark:text-white'>
+                  Technology Stack
                 </h2>
               </div>
-
-              <div className='prose prose-lg prose-gray max-w-none dark:prose-invert'>
-                {project.longDescription &&
-                project.longDescription.length > 0 ? (
-                  <div className='space-y-4'>
-                    <BlocksRenderer content={project.longDescription} />
-                  </div>
-                ) : (
-                  <div className='space-y-4'>
-                    <p className='leading-relaxed text-gray-700 dark:text-gray-300'>
-                      {project.description ||
-                        'This project showcases modern development with a focus on user experience and clean design patterns.'}
-                    </p>
-                    <p className='leading-relaxed text-gray-600 dark:text-gray-400'>
-                      Built with attention to detail, this application
-                      demonstrates best practices in{' '}
-                      {['android', 'ios', 'android-and-ios'].includes(
-                        project.platformType
-                      )
-                        ? 'mobile'
-                        : 'web'}{' '}
-                      development, responsive design, and user interface
-                      optimization. The project emphasizes employment-ready
-                      skills and industry best practices.
-                    </p>
-                    {project.isFeatured && (
-                      <p className='leading-relaxed text-gray-600 dark:text-gray-400'>
-                        As a featured project, this work represents some of the
-                        highest quality development in the portfolio,
-                        demonstrating advanced technical skills and professional
-                        development practices.
-                      </p>
+              <div className='flex flex-wrap gap-2'>
+                {enhancedTags.map((tag) => (
+                  <span
+                    key={tag.id}
+                    className={`special-border glass-card px-3 py-2 text-sm font-medium transition-transform duration-200 hover:scale-105 ${
+                      tag.isFavorite
+                        ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-700 ring-2 ring-blue-500/30 dark:text-blue-300'
+                        : 'bg-gradient-to-r from-gray-500/10 to-gray-600/10 text-gray-700 dark:text-gray-300'
+                    }`}
+                  >
+                    {tag.isFavorite && (
+                      <FaHeart className='mr-1 inline h-3 w-3' />
                     )}
-                  </div>
-                )}
+                    {tag.name}
+                    {tag.isFavorite && <span className='ml-1 text-xs'>★</span>}
+                  </span>
+                ))}
               </div>
+              {enhancedTags.some((tag) => tag.isFavorite) && (
+                <p className='mt-4 text-sm text-blue-600 dark:text-blue-400'>
+                  ★ Flutter is highlighted as the preferred technology for
+                  mobile development
+                </p>
+              )}
             </div>
+          )}
 
-            {/* Enhanced Technical Details */}
-            <div className='space-y-8'>
-              {/* Enhanced Tech Stack with Flutter Highlighting */}
-              {enhancedTags.length > 0 && (
-                <div className={getContentItemClass(1)}>
-                  <div className='mb-4 flex items-center gap-3'>
-                    <div className='special-border glass-card bg-gradient-to-r from-green-500/20 to-teal-500/20 p-2'>
-                      <FaMobile className='h-5 w-5 text-green-600 dark:text-green-400' />
-                    </div>
-                    <h3 className='text-xl font-bold text-gray-900 dark:text-white'>
-                      Technology Stack
-                    </h3>
-                  </div>
-                  <div className='flex flex-wrap gap-2'>
-                    {enhancedTags.map((tag) => (
-                      <span
-                        key={tag.id}
-                        className={`special-border glass-card px-3 py-2 text-sm font-medium transition-transform duration-200 hover:scale-105 ${
-                          tag.isFavorite
-                            ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-700 ring-2 ring-blue-500/30 dark:text-blue-300'
-                            : 'bg-gradient-to-r from-gray-500/10 to-gray-600/10 text-gray-700 dark:text-gray-300'
-                        }`}
-                      >
-                        {tag.isFavorite && (
-                          <FaHeart className='mr-1 inline h-3 w-3' />
-                        )}
-                        {tag.name}
-                        {tag.isFavorite && (
-                          <span className='ml-1 text-xs'>★</span>
-                        )}
-                      </span>
-                    ))}
-                  </div>
-                  {enhancedTags.some((tag) => tag.isFavorite) && (
-                    <p className='mt-3 text-sm text-blue-600 dark:text-blue-400'>
-                      ★ Flutter is highlighted as the preferred technology for
-                      mobile development
+          {/* About This Project - Full Width */}
+          <div
+            className={`special-border glass-card p-6 ${getContentItemClass(1)}`}
+          >
+            <div className='mb-5 flex items-center gap-3'>
+              <div className='special-border glass-card bg-gradient-to-r from-blue-500/20 to-purple-500/20 p-2'>
+                <FaCode className='h-5 w-5 text-blue-600 dark:text-blue-400' />
+              </div>
+              <h2 className='text-2xl font-bold text-gray-900 dark:text-white'>
+                About This Project
+              </h2>
+            </div>
+            <div className='prose prose-lg prose-gray max-w-none dark:prose-invert'>
+              {project.longDescription && project.longDescription.length > 0 ? (
+                <BlocksRenderer content={project.longDescription} />
+              ) : (
+                <div className='space-y-4'>
+                  <p className='leading-relaxed text-gray-700 dark:text-gray-300'>
+                    {project.description ||
+                      'This project showcases modern development with a focus on user experience and clean design patterns.'}
+                  </p>
+                  <p className='leading-relaxed text-gray-600 dark:text-gray-400'>
+                    Built with attention to detail, this application
+                    demonstrates best practices in{' '}
+                    {['android', 'ios', 'android-and-ios'].includes(
+                      project.platformType
+                    )
+                      ? 'mobile'
+                      : 'web'}{' '}
+                    development, responsive design, and user interface
+                    optimization.
+                  </p>
+                  {project.isFeatured && (
+                    <p className='leading-relaxed text-gray-600 dark:text-gray-400'>
+                      As a featured project, this work represents some of the
+                      highest quality development in the portfolio.
                     </p>
                   )}
                 </div>
-              )}{' '}
-              {/* Enhanced Project Links */}
+              )}
+            </div>
+          </div>
+
+          {/* Project Access & Analytics - Side by Side */}
+          <div className='grid gap-6 md:grid-cols-2'>
+            {/* Project Links - Only show if there are links */}
+            {(project.githubLink || project.googlePlayLink) && (
               <div className={`space-y-4 ${getContentItemClass(2)}`}>
-                <h3 className='mb-4 text-xl font-bold text-gray-900 dark:text-white'>
+                <h3 className='text-xl font-bold text-gray-900 dark:text-white'>
                   Project Access
                 </h3>
-
                 {project.githubLink && (
                   <a
                     href={project.githubLink}
                     target='_blank'
                     rel='noopener noreferrer'
-                    className='special-border glass-card group block w-full bg-gradient-to-r from-gray-500/5 to-gray-600/5 p-4 transition-all duration-300 hover:bg-gradient-to-r hover:from-gray-500/10 hover:to-gray-600/10'
+                    className='special-border glass-card group block w-full bg-gradient-to-r from-gray-500/5 to-gray-600/5 p-4 transition-all duration-300 hover:from-gray-500/10 hover:to-gray-600/10'
                   >
                     <div className='flex items-center justify-between'>
                       <div className='flex items-center gap-3'>
@@ -357,7 +352,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                             Source Code Repository
                           </div>
                           <div className='text-sm text-gray-600 dark:text-gray-400'>
-                            View implementation details and contribute
+                            View implementation details
                           </div>
                         </div>
                       </div>
@@ -365,13 +360,12 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                     </div>
                   </a>
                 )}
-
                 {project.googlePlayLink && (
                   <a
                     href={project.googlePlayLink}
                     target='_blank'
                     rel='noopener noreferrer'
-                    className='special-border glass-card group block w-full bg-gradient-to-r from-green-500/5 to-teal-500/5 p-4 transition-all duration-300 hover:bg-gradient-to-r hover:from-green-500/10 hover:to-teal-500/10'
+                    className='special-border glass-card group block w-full bg-gradient-to-r from-green-500/5 to-teal-500/5 p-4 transition-all duration-300 hover:from-green-500/10 hover:to-teal-500/10'
                   >
                     <div className='flex items-center justify-between'>
                       <div className='flex items-center gap-3'>
@@ -390,59 +384,60 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                   </a>
                 )}
               </div>
-              {/* Enhanced Project Insights */}
-              <div
-                className={`special-border glass-card bg-gradient-to-br from-blue-500/5 to-purple-500/5 p-6 ${getContentItemClass(3)}`}
-              >
-                <h3 className='mb-4 text-lg font-bold text-gray-900 dark:text-white'>
-                  Project Analytics
-                </h3>
-                <div className='space-y-3'>
-                  <div className='flex items-center justify-between'>
-                    <span className='text-gray-600 dark:text-gray-400'>
-                      Completeness Score
-                    </span>
-                    <span className='font-medium text-gray-900 dark:text-white'>
-                      {analysis.projectInsights.completeness}%
-                    </span>
-                  </div>
-                  <div className='flex items-center justify-between'>
-                    <span className='text-gray-600 dark:text-gray-400'>
-                      Technical Complexity
-                    </span>
-                    <span className='font-medium text-gray-900 dark:text-white'>
-                      {analysis.projectInsights.technicalComplexity}/10
-                    </span>
-                  </div>
-                  <div className='flex items-center justify-between'>
-                    <span className='text-gray-600 dark:text-gray-400'>
-                      Platform Reach
-                    </span>
-                    <span className='font-medium text-gray-900 dark:text-white'>
-                      {analysis.projectInsights.platformReach} Platform
-                      {analysis.projectInsights.platformReach !== 1 ? 's' : ''}
-                    </span>
-                  </div>
-                  <div className='flex items-center justify-between'>
-                    <span className='text-gray-600 dark:text-gray-400'>
-                      Visual Documentation
-                    </span>
-                    <span className='font-medium text-gray-900 dark:text-white'>
-                      {analysis.projectInsights.visualRichness} Asset
-                      {analysis.projectInsights.visualRichness !== 1 ? 's' : ''}
-                    </span>
-                  </div>
-                  {analysis.availabilityMetrics.accessibilityScore && (
-                    <div className='flex items-center justify-between'>
-                      <span className='text-gray-600 dark:text-gray-400'>
-                        Accessibility
-                      </span>
-                      <span className='font-medium text-gray-900 dark:text-white'>
-                        {analysis.availabilityMetrics.accessibilityScore}%
-                      </span>
-                    </div>
-                  )}
+            )}
+
+            {/* Project Analytics */}
+            <div
+              className={`special-border glass-card bg-gradient-to-br from-blue-500/5 to-purple-500/5 p-6 ${getContentItemClass(3)}`}
+            >
+              <h3 className='mb-4 text-lg font-bold text-gray-900 dark:text-white'>
+                Project Analytics
+              </h3>
+              <div className='space-y-3'>
+                <div className='flex items-center justify-between'>
+                  <span className='text-gray-600 dark:text-gray-400'>
+                    Completeness Score
+                  </span>
+                  <span className='font-medium text-gray-900 dark:text-white'>
+                    {analysis.projectInsights.completeness}%
+                  </span>
                 </div>
+                <div className='flex items-center justify-between'>
+                  <span className='text-gray-600 dark:text-gray-400'>
+                    Technical Complexity
+                  </span>
+                  <span className='font-medium text-gray-900 dark:text-white'>
+                    {analysis.projectInsights.technicalComplexity}/10
+                  </span>
+                </div>
+                <div className='flex items-center justify-between'>
+                  <span className='text-gray-600 dark:text-gray-400'>
+                    Platform Reach
+                  </span>
+                  <span className='font-medium text-gray-900 dark:text-white'>
+                    {analysis.projectInsights.platformReach} Platform
+                    {analysis.projectInsights.platformReach !== 1 ? 's' : ''}
+                  </span>
+                </div>
+                <div className='flex items-center justify-between'>
+                  <span className='text-gray-600 dark:text-gray-400'>
+                    Visual Documentation
+                  </span>
+                  <span className='font-medium text-gray-900 dark:text-white'>
+                    {analysis.projectInsights.visualRichness} Asset
+                    {analysis.projectInsights.visualRichness !== 1 ? 's' : ''}
+                  </span>
+                </div>
+                {analysis.availabilityMetrics.accessibilityScore && (
+                  <div className='flex items-center justify-between'>
+                    <span className='text-gray-600 dark:text-gray-400'>
+                      Accessibility
+                    </span>
+                    <span className='font-medium text-gray-900 dark:text-white'>
+                      {analysis.availabilityMetrics.accessibilityScore}%
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
