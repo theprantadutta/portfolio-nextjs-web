@@ -107,6 +107,7 @@ export const Intro: React.FC<IIntroProps> = () => {
           href={LINKED_IN_LINK}
           target='_blank'
           rel='noopener noreferrer'
+          aria-label='Visit my LinkedIn profile'
         >
           <BsLinkedin className='h-5 w-5 transition-transform duration-300 group-hover:scale-110' />
           <span className='absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 opacity-0 blur-sm transition-opacity duration-300 group-hover:opacity-100' />
@@ -117,6 +118,7 @@ export const Intro: React.FC<IIntroProps> = () => {
           href={GITHUB_LINK}
           target='_blank'
           rel='noopener noreferrer'
+          aria-label='Visit my GitHub profile'
         >
           <FaGithubSquare className='h-5 w-5 transition-transform duration-300 group-hover:scale-110' />
           <span className='absolute inset-0 rounded-2xl bg-gradient-to-br from-gray-500/20 to-gray-700/20 opacity-0 blur-sm transition-opacity duration-300 group-hover:opacity-100' />

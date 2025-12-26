@@ -15,6 +15,9 @@ export const ThemeSwitch: React.FC<IThemeSwitchProps> = () => {
     <button
       className='special-border glass-card group fixed bottom-5 right-5 z-[998] flex h-[3.5rem] w-[3.5rem] items-center justify-center border-white/30 bg-white/20 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:scale-110 hover:shadow-blue-500/25 active:scale-95 dark:border-white/20 dark:bg-gray-900/40'
       onClick={toggleTheme}
+      aria-label={
+        theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'
+      }
     >
       {/* Background gradient overlay */}
       <div className='special-border absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-cyan-500/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100' />

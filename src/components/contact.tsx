@@ -24,7 +24,7 @@ export const Contact: React.FC<IContactProps> = () => {
           Looking for a developer? Let&apos;s build something great together.
         </p>
 
-        <div className='mt-8 space-y-6 text-gray-700 dark:text-white/80'>
+        <div className='mt-8 space-y-6 text-gray-700 dark:text-gray-200'>
           <p>
             Reach me directly at{' '}
             <a

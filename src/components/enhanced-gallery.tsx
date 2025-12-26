@@ -110,7 +110,6 @@ export const EnhancedGallery = ({
   // Store media length in a stable ref for callbacks
   const mediaLength = allMedia.length
 
-   
   const nextImage = useCallback(() => {
     onIndexChange(selectedIndex === mediaLength - 1 ? 0 : selectedIndex + 1)
   }, [selectedIndex, mediaLength, onIndexChange])
@@ -118,7 +117,6 @@ export const EnhancedGallery = ({
   const prevImage = useCallback(() => {
     onIndexChange(selectedIndex === 0 ? mediaLength - 1 : selectedIndex - 1)
   }, [selectedIndex, mediaLength, onIndexChange])
-   
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -243,7 +241,7 @@ export const EnhancedGallery = ({
                 <button
                   onClick={() => setShowFullscreen(true)}
                   className='special-border glass-card p-2 text-white/90 transition-all duration-300 hover:bg-white/20'
-                  title='View Fullscreen'
+                  aria-label='View fullscreen'
                 >
                   <FaExpand className='h-4 w-4' />
                 </button>
@@ -251,7 +249,9 @@ export const EnhancedGallery = ({
                   <button
                     onClick={() => setShowImageInfo(!showImageInfo)}
                     className='special-border glass-card p-2 text-white/90 transition-all duration-300 hover:bg-white/20'
-                    title='Image Info'
+                    aria-label={
+                      showImageInfo ? 'Hide image info' : 'Show image info'
+                    }
                   >
                     <FaInfoCircle className='h-4 w-4' />
                   </button>
@@ -295,14 +295,14 @@ export const EnhancedGallery = ({
               <button
                 onClick={prevImage}
                 className='special-border glass-card absolute -left-4 top-1/2 z-20 -translate-y-1/2 p-2 transition-all duration-300 hover:scale-110 hover:bg-white/30 dark:hover:bg-gray-800/50 sm:-left-6 sm:p-3'
-                title='Previous'
+                aria-label='Previous image'
               >
                 <FaArrowLeft className='h-4 w-4 sm:h-5 sm:w-5' />
               </button>
               <button
                 onClick={nextImage}
                 className='special-border glass-card absolute -right-4 top-1/2 z-20 -translate-y-1/2 p-2 transition-all duration-300 hover:scale-110 hover:bg-white/30 dark:hover:bg-gray-800/50 sm:-right-6 sm:p-3'
-                title='Next'
+                aria-label='Next image'
               >
                 <FaArrowRight className='h-4 w-4 sm:h-5 sm:w-5' />
               </button>
@@ -325,6 +325,7 @@ export const EnhancedGallery = ({
           <button
             onClick={() => scrollThumbnails('left')}
             className='absolute left-0 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-lg transition-all duration-200 hover:scale-110 hover:bg-white dark:bg-gray-800/90 dark:text-gray-200 dark:hover:bg-gray-800'
+            aria-label='Scroll thumbnails left'
           >
             <FaChevronLeft className='h-4 w-4' />
           </button>
@@ -335,6 +336,7 @@ export const EnhancedGallery = ({
           <button
             onClick={() => scrollThumbnails('right')}
             className='absolute right-0 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-lg transition-all duration-200 hover:scale-110 hover:bg-white dark:bg-gray-800/90 dark:text-gray-200 dark:hover:bg-gray-800'
+            aria-label='Scroll thumbnails right'
           >
             <FaChevronRight className='h-4 w-4' />
           </button>
@@ -354,6 +356,7 @@ export const EnhancedGallery = ({
             <button
               key={media.id}
               onClick={() => onIndexChange(index)}
+              aria-label={`View ${media.isVideo ? 'video' : 'image'} ${index + 1} of ${allMedia.length}`}
               className={`relative flex-shrink-0 overflow-hidden rounded-lg transition-all duration-200 ${
                 selectedIndex === index
                   ? 'ring-2 ring-blue-500 ring-offset-2 ring-offset-gray-50 dark:ring-offset-gray-900'
@@ -432,7 +435,9 @@ export const EnhancedGallery = ({
                   <button
                     onClick={() => setShowImageInfo(!showImageInfo)}
                     className='special-border glass-card p-3 text-white transition-all duration-300 hover:bg-white/20'
-                    title='Toggle Info'
+                    aria-label={
+                      showImageInfo ? 'Hide image info' : 'Show image info'
+                    }
                   >
                     <FaInfoCircle className='h-5 w-5' />
                   </button>
@@ -440,7 +445,7 @@ export const EnhancedGallery = ({
                 <button
                   onClick={() => setShowFullscreen(false)}
                   className='special-border glass-card p-3 text-white transition-all duration-300 hover:bg-white/20'
-                  title='Close Fullscreen'
+                  aria-label='Close fullscreen'
                 >
                   <FaTimes className='h-5 w-5' />
                 </button>
@@ -452,14 +457,14 @@ export const EnhancedGallery = ({
                   <button
                     onClick={prevImage}
                     className='special-border glass-card absolute left-4 top-1/2 -translate-y-1/2 p-4 text-white transition-all duration-300 hover:bg-white/20'
-                    title='Previous (←)'
+                    aria-label='Previous image'
                   >
                     <FaArrowLeft className='h-6 w-6' />
                   </button>
                   <button
                     onClick={nextImage}
                     className='special-border glass-card absolute right-4 top-1/2 -translate-y-1/2 p-4 text-white transition-all duration-300 hover:bg-white/20'
-                    title='Next (→)'
+                    aria-label='Next image'
                   >
                     <FaArrowRight className='h-6 w-6' />
                   </button>

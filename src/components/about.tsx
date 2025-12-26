@@ -146,9 +146,6 @@ export const About: React.FC<IAboutProps> = () => {
       <div className='content-container'>
         <div className='mb-16 text-center'>
           <SectionHeading>About Me</SectionHeading>
-          <p className='mx-auto mt-4 max-w-2xl text-lg text-gray-600 dark:text-gray-400'>
-            A quick look at the journey, passions, and craft behind my work.
-          </p>
         </div>
 
         <div className='grid items-start gap-12 lg:grid-cols-2 lg:gap-16'>

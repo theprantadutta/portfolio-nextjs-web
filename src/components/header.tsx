@@ -126,6 +126,10 @@ export const Header: React.FC<IHeaderProps> = () => {
       <div className='fixed right-4 top-4 z-[1001] sm:hidden'>
         <button
           onClick={toggleMenu}
+          aria-label={
+            isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'
+          }
+          aria-expanded={isMenuOpen}
           className={`special-border glass-card relative h-12 w-12 transform border-white/30 bg-white/20 shadow-lg backdrop-blur-xl transition-all duration-300 hover:scale-110 active:scale-95 dark:border-white/20 dark:bg-gray-900/40 ${isMenuOpen ? 'bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-red-500/25' : 'text-gray-700 dark:text-gray-300'} `}
         >
           <div className='flex h-full w-full items-center justify-center'>

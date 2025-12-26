@@ -7,7 +7,7 @@ interface IFooterProps {
 
 export const Footer: React.FC<IFooterProps> = () => {
   return (
-    <footer className='mb-10 px-4 text-center text-gray-500'>
+    <footer className='mb-10 px-4 text-center text-gray-600 dark:text-gray-400'>
       <Copyright />
       <p className='text-xs font-semibold'>
         Built with Next.js, Tailwind CSS, Strapi and{' '}
