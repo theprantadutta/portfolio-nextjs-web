@@ -65,12 +65,25 @@ export const Intro: React.FC<IIntroProps> = () => {
           </span>
         </h1>
 
-        <p className='mx-auto max-w-2xl text-lg leading-relaxed text-gray-600 dark:text-gray-400 sm:text-xl'>
+        {/* <p className='mx-auto max-w-2xl text-lg leading-relaxed text-gray-600 dark:text-gray-400 sm:text-xl'>
           I build production-ready mobile and web experiences with{' '}
           <span className='text-gradient font-semibold'>Flutter</span> and{' '}
           <span className='text-gradient font-semibold'>React Native</span>,
           focusing on performance, polish, usability and reliable production
           deployments.
+        </p> */}
+        <p className='mx-auto max-w-2xl text-lg leading-relaxed text-gray-600 dark:text-gray-400 sm:text-xl'>
+          I build mobile apps, backend APIs, and the infrastructure that
+          connects them. 4 years shipping production systems in{' '}
+          <span className='text-gradient font-semibold'>Flutter</span>,{' '}
+          <span className='text-gradient font-semibold'>React Native</span>,{' '}
+          <span className='text-gradient font-semibold'>Go</span>, and{' '}
+          <span className='text-gradient font-semibold'>.NET</span> — plus a
+          growing obsession with{' '}
+          <span className='text-gradient font-semibold'>
+            AI/LLM integrations
+          </span>
+          .
         </p>
       </div>
 

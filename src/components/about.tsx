@@ -7,45 +7,139 @@ interface IAboutProps {
   children?: ReactNode
 }
 
+// const paragraphs = [
+//   {
+//     id: 'journey',
+//     copy: (
+//       <>
+//         I graduated with a{' '}
+//         <span className='text-gradient font-semibold'>Computer Science</span>{' '}
+//         degree and grew into a{' '}
+//         <span className='text-gradient-accent font-medium'>
+//           self-taught programmer
+//         </span>
+//         . My happy place is{' '}
+//         <span className='font-medium underline decoration-blue-500'>
+//           full-stack web and mobile development
+//         </span>
+//         , with a special love for{' '}
+//         <span className='mono rounded bg-gradient-to-r from-blue-100 to-purple-100 px-2 py-1 text-sm font-semibold dark:from-blue-900/30 dark:to-purple-900/30'>
+//           React Native &amp; Flutter
+//         </span>
+//         .
+//       </>
+//     ),
+//   },
+//   {
+//     id: 'passion',
+//     copy: (
+//       <>
+//         Programming is more than a job — it&apos;s a{' '}
+//         <span className='text-gradient font-semibold'>passion</span>. I enjoy
+//         exploring{' '}
+//         <span className='text-gradient-accent font-medium'>
+//           new technologies
+//         </span>{' '}
+//         and finding elegant solutions to complex problems. Debugging is my
+//         puzzle, and shipping polished experiences is my{' '}
+//         <span className='font-medium underline decoration-purple-500'>
+//           reward
+//         </span>
+//         .
+//       </>
+//     ),
+//   },
+//   {
+//     id: 'systems',
+//     copy: (
+//       <>
+//         I have hands-on experience with{' '}
+//         <span className='text-gradient font-semibold'>System Design</span> and
+//         cloud infrastructure. I’ve built a resilient{' '}
+//         <span className='mono rounded bg-gradient-to-r from-green-100 to-blue-100 px-2 py-1 text-sm font-medium dark:from-green-900/30 dark:to-blue-900/30'>
+//           Ubuntu server
+//         </span>{' '}
+//         stack featuring{' '}
+//         <span className='font-medium underline decoration-green-500'>
+//           GitLab, Docker, CI/CD, Prometheus, and Grafana
+//         </span>{' '}
+//         with full monitoring and backup strategies.
+//       </>
+//     ),
+//   },
+//   {
+//     id: 'apps',
+//     copy: (
+//       <>
+//         I’ve shipped multiple{' '}
+//         <span className='text-gradient-accent font-semibold'>
+//           Google Play Store apps
+//         </span>
+//         , built with{' '}
+//         <span className='font-medium'>Flutter and React Native</span>. Each one
+//         highlights my attention to detail, balanced UI/UX, and drive for
+//         performance-focused engineering.
+//       </>
+//     ),
+//   },
+// ]
+
 const paragraphs = [
   {
     id: 'journey',
     copy: (
       <>
-        I graduated with a{' '}
-        <span className='text-gradient font-semibold'>Computer Science</span>{' '}
-        degree and grew into a{' '}
+        I&apos;m a{' '}
+        <span className='text-gradient font-semibold'>full-stack engineer</span>{' '}
+        with 4 years of experience building{' '}
         <span className='text-gradient-accent font-medium'>
-          self-taught programmer
+          mobile apps, backend APIs, and infrastructure
         </span>
-        . My happy place is{' '}
-        <span className='font-medium underline decoration-blue-500'>
-          full-stack web and mobile development
-        </span>
-        , with a special love for{' '}
+        . My core stack is{' '}
         <span className='mono rounded bg-gradient-to-r from-blue-100 to-purple-100 px-2 py-1 text-sm font-semibold dark:from-blue-900/30 dark:to-purple-900/30'>
-          React Native &amp; Flutter
+          Flutter, React Native, Go &amp; .NET
         </span>
         .
       </>
     ),
   },
   {
-    id: 'passion',
+    id: 'impact',
     copy: (
       <>
-        Programming is more than a job — it&apos;s a{' '}
-        <span className='text-gradient font-semibold'>passion</span>. I enjoy
-        exploring{' '}
-        <span className='text-gradient-accent font-medium'>
-          new technologies
+        I&apos;ve built systems that{' '}
+        <span className='text-gradient font-semibold'>
+          actually move numbers
         </span>{' '}
-        and finding elegant solutions to complex problems. Debugging is my
-        puzzle, and shipping polished experiences is my{' '}
+        — an NFC-based distribution app that{' '}
+        <span className='font-medium underline decoration-green-500'>
+          reduced fraud by 99.99%
+        </span>
+        , an HRMS that{' '}
+        <span className='font-medium underline decoration-blue-500'>
+          cut processing time by 40%
+        </span>
+        , and a QC system that{' '}
         <span className='font-medium underline decoration-purple-500'>
-          reward
+          eliminated 80% of reporting delays
         </span>
         .
+      </>
+    ),
+  },
+  {
+    id: 'ai',
+    copy: (
+      <>
+        Currently deep into{' '}
+        <span className='text-gradient-accent font-semibold'>
+          AI/LLM integrations
+        </span>
+        . I&apos;ve built production assistants using{' '}
+        <span className='mono rounded bg-gradient-to-r from-purple-100 to-pink-100 px-2 py-1 text-sm font-medium dark:from-purple-900/30 dark:to-pink-900/30'>
+          MCP servers, Gemini, OpenAI &amp; Claude
+        </span>{' '}
+        that answer queries dynamically from live database APIs.
       </>
     ),
   },
@@ -53,17 +147,17 @@ const paragraphs = [
     id: 'systems',
     copy: (
       <>
-        I have hands-on experience with{' '}
-        <span className='text-gradient font-semibold'>System Design</span> and
-        cloud infrastructure. I’ve built a resilient{' '}
+        I handle my own{' '}
+        <span className='text-gradient font-semibold'>DevOps</span>. Currently
+        running production workloads on{' '}
         <span className='mono rounded bg-gradient-to-r from-green-100 to-blue-100 px-2 py-1 text-sm font-medium dark:from-green-900/30 dark:to-blue-900/30'>
-          Ubuntu server
+          Hetzner VPS
         </span>{' '}
-        stack featuring{' '}
+        with{' '}
         <span className='font-medium underline decoration-green-500'>
-          GitLab, Docker, CI/CD, Prometheus, and Grafana
-        </span>{' '}
-        with full monitoring and backup strategies.
+          Docker, Traefik, GitLab CI/CD, and automated backups
+        </span>
+        .
       </>
     ),
   },
@@ -71,14 +165,17 @@ const paragraphs = [
     id: 'apps',
     copy: (
       <>
-        I’ve shipped multiple{' '}
+        I&apos;ve shipped{' '}
         <span className='text-gradient-accent font-semibold'>
-          Google Play Store apps
+          10+ production apps
+        </span>{' '}
+        — including several on the{' '}
+        <span className='font-medium'>Google Play Store</span>. When I&apos;m
+        not building enterprise systems, I&apos;m making{' '}
+        <span className='font-medium underline decoration-purple-500'>
+          games, open-source libraries, and side projects
         </span>
-        , built with{' '}
-        <span className='font-medium'>Flutter and React Native</span>. Each one
-        highlights my attention to detail, balanced UI/UX, and drive for
-        performance-focused engineering.
+        .
       </>
     ),
   },
