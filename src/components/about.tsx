@@ -167,7 +167,7 @@ const paragraphs = [
       <>
         I&apos;ve shipped{' '}
         <span className='text-gradient-accent font-semibold'>
-          10+ production apps
+          20+ production apps
         </span>{' '}
         — including several on the{' '}
         <span className='font-medium'>Google Play Store</span>. When I&apos;m
