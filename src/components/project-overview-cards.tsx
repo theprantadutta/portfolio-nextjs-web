@@ -44,10 +44,10 @@ export const ProjectOverviewCards = ({
   return (
     <div className='mb-12 grid gap-6 md:grid-cols-3'>
       {/* Key Metrics Card */}
-      <div className='special-border glass-card bg-linear-to-br from-blue-500/5 to-purple-500/5 p-6'>
+      <div className='special-border glass-card from-primary-500/5 to-secondary-500/5 bg-linear-to-br p-6'>
         <div className='mb-4 flex items-center gap-3'>
-          <div className='special-border glass-card bg-linear-to-r from-blue-500/20 to-purple-500/20 p-2'>
-            <FaCheckCircle className='h-5 w-5 text-blue-600 dark:text-blue-400' />
+          <div className='special-border glass-card from-primary-500/20 to-secondary-500/20 bg-linear-to-r p-2'>
+            <FaCheckCircle className='text-primary-600 dark:text-primary-400 h-5 w-5' />
           </div>
           <h3 className='text-lg font-bold text-gray-900 dark:text-white'>
             Project Metrics
@@ -131,9 +131,9 @@ export const ProjectOverviewCards = ({
       </div>
 
       {/* Featured Status & Highlights Card */}
-      <div className='special-border glass-card bg-linear-to-br from-orange-500/5 to-pink-500/5 p-6'>
+      <div className='special-border glass-card to-accent-500/5 bg-linear-to-br from-orange-500/5 p-6'>
         <div className='mb-4 flex items-center gap-3'>
-          <div className='special-border glass-card bg-linear-to-r from-orange-500/20 to-pink-500/20 p-2'>
+          <div className='special-border glass-card to-accent-500/20 bg-linear-to-r from-orange-500/20 p-2'>
             <FaStar className='h-5 w-5 text-orange-600 dark:text-orange-400' />
           </div>
           <h3 className='text-lg font-bold text-gray-900 dark:text-white'>
@@ -165,7 +165,7 @@ export const ProjectOverviewCards = ({
                     key={i}
                     className={`h-2 w-2 rounded-full ${
                       i < project.complexity
-                        ? 'bg-blue-500'
+                        ? 'bg-primary-500'
                         : 'bg-gray-300 dark:bg-gray-600'
                     }`}
                   />

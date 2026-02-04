@@ -51,7 +51,7 @@ export function OptimizedImage({
       {/* Loading state */}
       {isLoading && (
         <div className='absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-800'>
-          <div className='h-8 w-8 animate-spin rounded-full border-2 border-gray-300 border-t-blue-600 dark:border-gray-600 dark:border-t-blue-400' />
+          <div className='border-t-primary-600 dark:border-t-primary-400 h-8 w-8 animate-spin rounded-full border-2 border-gray-300 dark:border-gray-600' />
         </div>
       )}
 

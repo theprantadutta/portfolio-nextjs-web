@@ -18,10 +18,10 @@ const sizeClasses = {
 
 // Color mappings
 const colorClasses = {
-  primary: 'text-blue-600',
+  primary: 'text-primary-600',
   white: 'text-white',
   gray: 'text-gray-600',
-  accent: 'text-purple-600',
+  accent: 'text-secondary-600',
 }
 
 // Simple spinning circle loader
@@ -120,7 +120,7 @@ export const GradientSpinner: React.FC<
 > = ({
   size = 'md',
   className = '',
-  gradient = 'from-purple-600 to-blue-600',
+  gradient = 'from-secondary-600 to-primary-600',
 }) => {
   return (
     <div className={`${sizeClasses[size]} ${className}`}>
@@ -266,7 +266,7 @@ export const PageLoader: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
       <div className='text-center'>
         <GradientSpinner
           size='xl'
-          gradient='from-purple-600 via-blue-600 to-cyan-600'
+          gradient='from-secondary-600 via-primary-600 to-primary-600'
         />
         <p className='mt-4 font-medium text-gray-600 dark:text-gray-400'>
           Loading...

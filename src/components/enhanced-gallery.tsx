@@ -173,7 +173,7 @@ export const EnhancedGallery = ({
       <div className='mb-6 text-center sm:mb-8'>
         <div className='special-border glass-card inline-flex flex-wrap items-center justify-center gap-2 bg-white/10 px-3 py-2 backdrop-blur-xl sm:gap-4 sm:px-6 sm:py-3 dark:bg-gray-900/30'>
           <div className='flex items-center gap-2'>
-            <FaImage className='h-3 w-3 text-blue-500 sm:h-4 sm:w-4' />
+            <FaImage className='text-primary-500 h-3 w-3 sm:h-4 sm:w-4' />
             <span className='text-sm font-medium text-gray-900 sm:text-base dark:text-white'>
               {imageCount} Screenshots
             </span>
@@ -182,7 +182,7 @@ export const EnhancedGallery = ({
             <>
               <div className='hidden h-4 w-px bg-gray-300 sm:block dark:bg-gray-600'></div>
               <div className='flex items-center gap-2'>
-                <FaVideo className='h-3 w-3 text-purple-500 sm:h-4 sm:w-4' />
+                <FaVideo className='text-secondary-500 h-3 w-3 sm:h-4 sm:w-4' />
                 <span className='text-sm font-medium text-gray-900 sm:text-base dark:text-white'>
                   {videoCount} Video{videoCount > 1 ? 's' : ''}
                 </span>
@@ -213,8 +213,8 @@ export const EnhancedGallery = ({
       <div className='relative mb-6 px-4 sm:mb-8 sm:px-8'>
         <div className='relative mx-auto aspect-9/16 w-full max-w-[280px] sm:max-w-sm'>
           {/* Enhanced Glow Effects */}
-          <div className='absolute -inset-8 bg-linear-to-br from-blue-500/30 via-purple-500/20 to-pink-500/30 blur-2xl'></div>
-          <div className='absolute -inset-4 bg-linear-to-br from-blue-400/20 via-purple-400/15 to-pink-400/20 blur-xl'></div>
+          <div className='from-primary-500/30 via-secondary-500/20 to-accent-500/30 absolute -inset-8 bg-linear-to-br blur-2xl'></div>
+          <div className='from-primary-400/20 via-secondary-400/15 to-accent-400/20 absolute -inset-4 bg-linear-to-br blur-xl'></div>
 
           {/* Enhanced Glassmorphic Container */}
           <div className='special-border glass-card relative h-full overflow-hidden border border-white/20 bg-white/10 p-4 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/30'>
@@ -261,7 +261,7 @@ export const EnhancedGallery = ({
               {/* Video Badge */}
               {isCurrentVideo && (
                 <div className='absolute top-2 left-2'>
-                  <div className='special-border glass-card flex items-center gap-1 bg-purple-500/80 px-2 py-1 text-white'>
+                  <div className='special-border glass-card bg-secondary-500/80 flex items-center gap-1 px-2 py-1 text-white'>
                     <FaVideo className='h-3 w-3' />
                     <span className='text-xs font-medium'>Video</span>
                   </div>
@@ -359,7 +359,7 @@ export const EnhancedGallery = ({
               aria-label={`View ${media.isVideo ? 'video' : 'image'} ${index + 1} of ${allMedia.length}`}
               className={`relative shrink-0 overflow-hidden rounded-lg transition-all duration-200 ${
                 selectedIndex === index
-                  ? 'ring-2 ring-blue-500 ring-offset-2 ring-offset-gray-50 dark:ring-offset-gray-900'
+                  ? 'ring-primary-500 ring-2 ring-offset-2 ring-offset-gray-50 dark:ring-offset-gray-900'
                   : 'opacity-60 hover:opacity-100'
               }`}
             >
@@ -380,7 +380,7 @@ export const EnhancedGallery = ({
               </div>
               {/* Video indicator overlay */}
               {media.isVideo && (
-                <div className='absolute right-0 bottom-0 left-0 bg-purple-500/80 py-0.5 text-center'>
+                <div className='bg-secondary-500/80 absolute right-0 bottom-0 left-0 py-0.5 text-center'>
                   <span className='text-[8px] font-medium text-white'>
                     VIDEO
                   </span>

@@ -14,8 +14,8 @@ export const Contact: React.FC<IContactProps> = () => {
       <SectionMarker section='Contact' threshold={0.3} />
 
       <div className='pointer-events-none absolute inset-0 -z-10 hidden overflow-hidden lg:block'>
-        <div className='absolute top-1/4 left-1/4 h-72 w-[18rem] rounded-full bg-linear-to-br from-blue-400/10 to-purple-400/10 opacity-70 blur-2xl' />
-        <div className='absolute right-1/4 bottom-1/4 h-64 w-[16rem] rounded-full bg-linear-to-br from-purple-400/10 to-pink-400/10 opacity-60 blur-xl' />
+        <div className='from-primary-400/10 to-secondary-400/10 absolute top-1/4 left-1/4 h-72 w-[18rem] rounded-full bg-linear-to-br opacity-70 blur-2xl' />
+        <div className='from-secondary-400/10 to-accent-400/10 absolute right-1/4 bottom-1/4 h-64 w-[16rem] rounded-full bg-linear-to-br opacity-60 blur-xl' />
       </div>
 
       <div className='content-container mx-auto max-w-2xl text-center'>

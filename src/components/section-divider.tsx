@@ -21,7 +21,7 @@ export const SectionDivider: React.FC<ISectionDividerProps> = () => {
     >
       {/* eslint-enable react-hooks/refs */}
       <div className='flex justify-center'>
-        <div className='h-16 w-1 rounded-full bg-linear-to-b from-blue-500 via-purple-500 to-pink-500 opacity-60 shadow-lg' />
+        <div className='from-primary-500 via-secondary-500 to-accent-500 h-16 w-1 rounded-full bg-linear-to-b opacity-60 shadow-lg' />
       </div>
     </div>
   )

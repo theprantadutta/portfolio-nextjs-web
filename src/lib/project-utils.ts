@@ -306,13 +306,13 @@ export const getPlatformBadgeInfo = (platformType: PlatformType) => {
     },
     'android-and-ios': {
       label: 'Mobile App',
-      color: 'from-blue-500/20 to-purple-500/20',
-      textColor: 'text-blue-600 dark:text-blue-400',
+      color: 'from-primary-500/20 to-secondary-500/20',
+      textColor: 'text-primary-600 dark:text-primary-400',
     },
     web: {
       label: 'Web Application',
-      color: 'from-cyan-500/20 to-teal-500/20',
-      textColor: 'text-cyan-600 dark:text-cyan-400',
+      color: 'from-primary-500/20 to-secondary-500/20',
+      textColor: 'text-primary-600 dark:text-primary-400',
     },
     cloud: {
       label: 'Cloud Service',
@@ -339,8 +339,8 @@ export const getStatusBadgeInfo = (
     },
     ongoing: {
       label: 'In Progress',
-      color: 'from-blue-500/20 to-cyan-500/20',
-      textColor: 'text-blue-600 dark:text-blue-400',
+      color: 'from-primary-500/20 to-primary-500/20',
+      textColor: 'text-primary-600 dark:text-primary-400',
     },
     completed: {
       label: 'Completed',

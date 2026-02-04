@@ -106,7 +106,7 @@ export const ProjectModal: React.FC<IProjectModal> = ({ imageUrls, slug }) => {
             >
               <div className='glass-card special-border relative overflow-hidden border border-white/20 bg-white/10 shadow-2xl backdrop-blur-xl dark:border-gray-700/50 dark:bg-gray-900/80'>
                 {/* Enhanced gradient background */}
-                <div className='absolute inset-0 bg-linear-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 dark:from-blue-500/5 dark:via-purple-500/5 dark:to-pink-500/5' />
+                <div className='from-primary-500/10 via-secondary-500/10 to-accent-500/10 dark:from-primary-500/5 dark:via-secondary-500/5 dark:to-accent-500/5 absolute inset-0 bg-linear-to-br' />
 
                 {/* Close Button */}
                 <button
@@ -126,9 +126,9 @@ export const ProjectModal: React.FC<IProjectModal> = ({ imageUrls, slug }) => {
                           <CirclesWithBars
                             size='lg'
                             color='white'
-                            outerCircleColor='text-blue-500'
-                            innerCircleColor='text-purple-500'
-                            barColor='text-blue-400'
+                            outerCircleColor='text-primary-500'
+                            innerCircleColor='text-secondary-500'
+                            barColor='text-primary-400'
                           />
                           <p className='mt-3 text-center text-sm text-white'>
                             Loading...

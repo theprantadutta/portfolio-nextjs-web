@@ -78,7 +78,7 @@ export const Header: React.FC<IHeaderProps> = () => {
       >
         {/* Enhanced gradient overlay - only when scrolled */}
         <div
-          className='absolute inset-0 rounded-tl-3xl rounded-tr-lg rounded-br-3xl rounded-bl-3xl bg-linear-to-r from-blue-500/10 via-purple-500/10 to-cyan-500/10 transition-opacity duration-500'
+          className='from-primary-500/10 via-secondary-500/10 to-primary-500/10 absolute inset-0 rounded-tl-3xl rounded-tr-lg rounded-br-3xl rounded-bl-3xl bg-linear-to-r transition-opacity duration-500'
           style={{
             opacity: isScrolled ? 1 : 0,
           }}
@@ -96,7 +96,7 @@ export const Header: React.FC<IHeaderProps> = () => {
                   className={clsx(
                     'group relative flex items-center gap-2 rounded-tl-3xl rounded-tr-lg rounded-br-3xl rounded-bl-3xl px-4 py-2.5 text-sm font-medium transition-all duration-300',
                     {
-                      'bg-linear-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25':
+                      'from-primary-600 to-secondary-600 shadow-primary-500/25 bg-linear-to-r text-white shadow-lg':
                         activeSection === link.name,
                       [`text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white ${
                         isScrolled
@@ -113,7 +113,7 @@ export const Header: React.FC<IHeaderProps> = () => {
 
                   {/* Hover effect */}
                   {activeSection !== link.name && (
-                    <div className='absolute inset-0 rounded-xl bg-linear-to-r from-blue-500/10 to-purple-500/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
+                    <div className='from-primary-500/10 to-secondary-500/10 absolute inset-0 rounded-xl bg-linear-to-r opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
                   )}
                 </Link>
               </li>
@@ -145,7 +145,7 @@ export const Header: React.FC<IHeaderProps> = () => {
             className={`absolute inset-0 rounded-2xl transition-opacity duration-300 ${
               isMenuOpen
                 ? 'bg-linear-to-r from-red-500 to-pink-500 opacity-20 blur-lg'
-                : 'bg-linear-to-r from-blue-500 to-purple-500 opacity-0 blur-lg hover:opacity-20'
+                : 'from-primary-500 to-secondary-500 bg-linear-to-r opacity-0 blur-lg hover:opacity-20'
             } `}
           />
         </button>
@@ -166,7 +166,7 @@ export const Header: React.FC<IHeaderProps> = () => {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Enhanced gradient background */}
-            <div className='special-border absolute inset-0 bg-linear-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10' />
+            <div className='special-border from-primary-500/10 via-secondary-500/10 to-accent-500/10 absolute inset-0 bg-linear-to-br' />
             {/* Additional blur layer */}
             <div className='special-border absolute inset-0 backdrop-blur-lg' />
 
@@ -176,7 +176,7 @@ export const Header: React.FC<IHeaderProps> = () => {
                 <h3 className='mb-1 text-lg font-semibold text-gray-800 dark:text-gray-200'>
                   Navigation
                 </h3>
-                <div className='h-1 w-12 rounded-full bg-linear-to-r from-blue-500 to-purple-500' />
+                <div className='from-primary-500 to-secondary-500 h-1 w-12 rounded-full bg-linear-to-r' />
               </div>
 
               {/* Menu Items */}
@@ -198,9 +198,9 @@ export const Header: React.FC<IHeaderProps> = () => {
                         className={clsx(
                           'group relative flex items-center gap-3 overflow-hidden rounded-tl-3xl rounded-tr-lg rounded-br-3xl rounded-bl-3xl px-4 py-3 text-base font-medium transition-all duration-300',
                           {
-                            'bg-linear-to-r from-blue-600 to-purple-600 text-white shadow-lg':
+                            'from-primary-600 to-secondary-600 bg-linear-to-r text-white shadow-lg':
                               activeSection === link.name,
-                            'text-gray-700 hover:bg-linear-to-r hover:from-blue-50 hover:to-purple-50 dark:text-gray-300 dark:hover:from-blue-900/20 dark:hover:to-purple-900/20':
+                            'hover:from-primary-50 hover:to-secondary-50 dark:hover:from-primary-900/20 dark:hover:to-secondary-900/20 text-gray-700 hover:bg-linear-to-r dark:text-gray-300':
                               activeSection !== link.name,
                           }
                         )}
@@ -211,7 +211,7 @@ export const Header: React.FC<IHeaderProps> = () => {
                           className={`flex h-8 w-8 items-center justify-center rounded-lg transition-all duration-300 ${
                             activeSection === link.name
                               ? 'bg-white/20'
-                              : 'bg-linear-to-br from-blue-100 to-purple-100 group-hover:scale-110 dark:from-blue-900/30 dark:to-purple-900/30'
+                              : 'from-primary-100 to-secondary-100 dark:from-primary-900/30 dark:to-secondary-900/30 bg-linear-to-br group-hover:scale-110'
                           } `}
                         >
                           {IconComponent && (
@@ -219,7 +219,7 @@ export const Header: React.FC<IHeaderProps> = () => {
                               className={`h-4 w-4 transition-colors duration-300 ${
                                 activeSection === link.name
                                   ? 'text-white'
-                                  : 'text-blue-600 dark:text-blue-400'
+                                  : 'text-primary-600 dark:text-primary-400'
                               } `}
                             />
                           )}
@@ -234,7 +234,7 @@ export const Header: React.FC<IHeaderProps> = () => {
                         )}
 
                         {/* Hover effect */}
-                        <div className='absolute inset-0 rounded-xl bg-linear-to-r from-blue-500/0 to-purple-500/0 transition-all duration-300 group-hover:from-blue-500/5 group-hover:to-purple-500/5' />
+                        <div className='from-primary-500/0 to-secondary-500/0 group-hover:from-primary-500/5 group-hover:to-secondary-500/5 absolute inset-0 rounded-xl bg-linear-to-r transition-all duration-300' />
                       </Link>
                     </li>
                   )

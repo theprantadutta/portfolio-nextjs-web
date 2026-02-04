@@ -37,7 +37,7 @@ export const ContactForm = () => {
               required
               maxLength={100}
               placeholder='John Doe'
-              className='glass-card special-border h-14 w-full border border-gray-200 px-4 text-gray-900 placeholder-gray-500 transition-all duration-300 focus:border-transparent focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:text-gray-100 dark:placeholder-gray-400'
+              className='glass-card special-border focus:ring-primary-500 h-14 w-full border border-gray-200 px-4 text-gray-900 placeholder-gray-500 transition-all duration-300 focus:border-transparent focus:ring-2 dark:border-gray-700 dark:text-gray-100 dark:placeholder-gray-400'
             />
           </div>
 
@@ -55,7 +55,7 @@ export const ContactForm = () => {
               required
               maxLength={500}
               placeholder='john@example.com'
-              className='glass-card special-border h-14 w-full border border-gray-200 px-4 text-gray-900 placeholder-gray-500 transition-all duration-300 focus:border-transparent focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:text-gray-100 dark:placeholder-gray-400'
+              className='glass-card special-border focus:ring-primary-500 h-14 w-full border border-gray-200 px-4 text-gray-900 placeholder-gray-500 transition-all duration-300 focus:border-transparent focus:ring-2 dark:border-gray-700 dark:text-gray-100 dark:placeholder-gray-400'
             />
           </div>
         </div>
@@ -74,7 +74,7 @@ export const ContactForm = () => {
             required
             maxLength={5000}
             rows={6}
-            className='glass-card special-border w-full resize-none border border-gray-200 p-4 text-gray-900 placeholder-gray-500 transition-all duration-300 focus:border-transparent focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:text-gray-100 dark:placeholder-gray-400'
+            className='glass-card special-border focus:ring-primary-500 w-full resize-none border border-gray-200 p-4 text-gray-900 placeholder-gray-500 transition-all duration-300 focus:border-transparent focus:ring-2 dark:border-gray-700 dark:text-gray-100 dark:placeholder-gray-400'
           />
         </div>
 

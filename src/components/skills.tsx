@@ -91,7 +91,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
           'dart',
         ].some((tech) => s.title.toLowerCase().includes(tech))
       ),
-      color: 'from-blue-500 to-cyan-500',
+      color: 'from-primary-500 to-primary-500',
       icon: FaReact,
     },
     {
@@ -139,7 +139,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
           'tools',
         ].some((tech) => s.title.toLowerCase().includes(tech))
       ),
-      color: 'from-purple-500 to-pink-500',
+      color: 'from-secondary-500 to-accent-500',
       icon: FaTools,
     },
     {
@@ -160,9 +160,9 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
     >
       {/* Background Elements */}
       <div className='absolute inset-0 -z-10'>
-        <div className='absolute top-10 left-10 h-72 w-72 animate-pulse rounded-full bg-linear-to-r from-blue-500/10 to-purple-500/10 blur-3xl' />
+        <div className='from-primary-500/10 to-secondary-500/10 absolute top-10 left-10 h-72 w-72 animate-pulse rounded-full bg-linear-to-r blur-3xl' />
         <div
-          className='absolute right-10 bottom-10 h-80 w-80 animate-pulse rounded-full bg-linear-to-r from-pink-500/10 to-orange-500/10 blur-3xl'
+          className='from-accent-500/10 absolute right-10 bottom-10 h-80 w-80 animate-pulse rounded-full bg-linear-to-r to-orange-500/10 blur-3xl'
           style={{ animationDelay: '2s' }}
         />
       </div>
@@ -188,7 +188,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
               onClick={() => setViewMode('hexagon')}
               className={`special-border mr-1 px-6 py-2 transition-all duration-300 ${
                 viewMode === 'hexagon'
-                  ? 'bg-linear-to-r from-blue-500 to-purple-500 text-white'
+                  ? 'from-primary-500 to-secondary-500 bg-linear-to-r text-white'
                   : 'hover:bg-white/10'
               }`}
             >
@@ -198,7 +198,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
               onClick={() => setViewMode('cards')}
               className={`special-border ml-1 px-6 py-2 transition-all duration-300 ${
                 viewMode === 'cards'
-                  ? 'bg-linear-to-r from-blue-500 to-purple-500 text-white'
+                  ? 'from-primary-500 to-secondary-500 bg-linear-to-r text-white'
                   : 'hover:bg-white/10'
               }`}
             >
@@ -232,7 +232,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
                       <div
                         className={`absolute inset-0 bg-linear-to-br ${
                           skill.isFavourite
-                            ? 'from-blue-400 to-cyan-400 shadow-blue-400/50'
+                            ? 'from-primary-400 to-primary-400 shadow-primary-400/50'
                             : 'from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800'
                         } clip-hexagon transition-all duration-300 group-hover:shadow-2xl ${
                           selectedSkill === skill.title
@@ -274,7 +274,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
                             className={`h-1.5 w-1.5 rounded-full transition-all duration-300 ${
                               dot <= skill.rating
                                 ? skill.isFavourite
-                                  ? 'bg-blue-400'
+                                  ? 'bg-primary-400'
                                   : 'bg-gray-400 dark:bg-gray-600'
                                 : 'bg-gray-200 dark:bg-gray-800'
                             }`}
@@ -308,7 +308,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
                         key={skill.id}
                         className={`special-border glass-card group relative cursor-pointer p-4 text-center transition-all duration-300 hover:-translate-y-2 hover:scale-105 ${
                           skill.isFavourite
-                            ? 'border-blue-400/50 bg-linear-to-br from-blue-500/20 to-cyan-500/20'
+                            ? 'border-primary-400/50 from-primary-500/20 to-primary-500/20 bg-linear-to-br'
                             : 'border-white/10 bg-white/5 dark:bg-gray-900/20'
                         }`}
                         style={{ animationDelay: `${index * 50}ms` }}
@@ -316,7 +316,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
                         <Icon
                           className={`mx-auto mb-3 h-8 w-8 ${
                             skill.isFavourite
-                              ? 'text-blue-400'
+                              ? 'text-primary-400'
                               : 'text-gray-600 dark:text-gray-400'
                           }`}
                         />
@@ -329,7 +329,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
                           <div
                             className={`h-1.5 rounded-full transition-all duration-1000 ${
                               skill.isFavourite
-                                ? 'bg-linear-to-r from-blue-400 to-cyan-400'
+                                ? 'from-primary-400 to-primary-400 bg-linear-to-r'
                                 : `bg-linear-to-r ${category.color}`
                             }`}
                             style={{ width: `${(skill.rating / 5) * 100}%` }}
@@ -362,7 +362,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
               label: 'Total Skills',
               value: skills.data.length,
               icon: FaCode,
-              color: 'blue',
+              color: 'primary',
             },
             {
               label: 'Favorite',
@@ -374,7 +374,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
               label: 'Years Exp',
               value: '4+',
               icon: FaRocket,
-              color: 'purple',
+              color: 'secondary',
             },
             { label: 'Projects', value: '20+', icon: FaStar, color: 'yellow' },
           ].map((stat, index) => (

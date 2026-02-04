@@ -23,15 +23,15 @@ export const Intro: React.FC<IIntroProps> = () => {
 
       {/* Background accents */}
       <div className='pointer-events-none absolute inset-0 -z-10 hidden md:block'>
-        <div className='absolute top-1/4 left-1/2 h-96 w-[24rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-linear-to-br from-blue-400/15 via-purple-400/15 to-pink-400/15 opacity-70 blur-2xl' />
-        <div className='absolute top-[32%] right-[12%] h-64 w-[16rem] rounded-full bg-linear-to-br from-cyan-400/15 to-blue-500/15 opacity-60 blur-xl' />
-        <div className='absolute bottom-[18%] left-[18%] h-72 w-[18rem] rounded-full bg-linear-to-br from-purple-400/15 to-pink-500/15 opacity-60 blur-xl' />
+        <div className='from-primary-400/15 via-secondary-400/15 to-accent-400/15 absolute top-1/4 left-1/2 h-96 w-[24rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-linear-to-br opacity-70 blur-2xl' />
+        <div className='from-primary-400/15 to-primary-500/15 absolute top-[32%] right-[12%] h-64 w-[16rem] rounded-full bg-linear-to-br opacity-60 blur-xl' />
+        <div className='from-secondary-400/15 to-accent-500/15 absolute bottom-[18%] left-[18%] h-72 w-[18rem] rounded-full bg-linear-to-br opacity-60 blur-xl' />
       </div>
 
       {/* Profile */}
       <div className='flex items-center justify-center'>
         <div className='relative h-36 w-36'>
-          <span className='absolute inset-0 rounded-full bg-linear-to-br from-blue-500 via-purple-500 to-pink-500 opacity-25 blur-md' />
+          <span className='from-primary-500 via-secondary-500 to-accent-500 absolute inset-0 rounded-full bg-linear-to-br opacity-25 blur-md' />
           <div className='relative h-36 w-36 overflow-hidden rounded-full border-4 border-white shadow-2xl dark:border-gray-800'>
             <Image
               src={profilePic}
@@ -98,7 +98,7 @@ export const Intro: React.FC<IIntroProps> = () => {
             Contact me here
             <BsArrowRight className='transition-transform duration-300 group-hover:translate-x-1' />
           </span>
-          <span className='absolute inset-0 bg-linear-to-r from-blue-600 via-purple-600 to-blue-600 opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
+          <span className='from-primary-600 via-secondary-600 to-primary-600 absolute inset-0 bg-linear-to-r opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
         </SectionLink>
 
         <a
@@ -116,14 +116,14 @@ export const Intro: React.FC<IIntroProps> = () => {
       {/* Social links */}
       <div className='mt-8 flex justify-center gap-4'>
         <a
-          className='glass-card special-border group relative flex h-12 w-12 items-center justify-center text-gray-700 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400'
+          className='glass-card special-border group hover:text-primary-600 dark:hover:text-primary-400 relative flex h-12 w-12 items-center justify-center text-gray-700 transition-all duration-300 hover:-translate-y-1 hover:scale-110 dark:text-gray-300'
           href={LINKED_IN_LINK}
           target='_blank'
           rel='noopener noreferrer'
           aria-label='Visit my LinkedIn profile'
         >
           <BsLinkedin className='h-5 w-5 transition-transform duration-300 group-hover:scale-110' />
-          <span className='absolute inset-0 rounded-2xl bg-linear-to-br from-blue-500/20 to-blue-600/20 opacity-0 blur-xs transition-opacity duration-300 group-hover:opacity-100' />
+          <span className='from-primary-500/20 to-primary-600/20 absolute inset-0 rounded-2xl bg-linear-to-br opacity-0 blur-xs transition-opacity duration-300 group-hover:opacity-100' />
         </a>
 
         <a

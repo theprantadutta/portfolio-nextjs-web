@@ -47,13 +47,13 @@ interface FeatureCardProps {
 const FeatureCard = ({ feature, index }: FeatureCardProps) => {
   const getCategoryColor = (category: string) => {
     const colors: Record<string, string> = {
-      design: 'from-purple-500/20 to-pink-500/20',
+      design: 'from-secondary-500/20 to-accent-500/20',
       performance: 'from-green-500/20 to-teal-500/20',
-      development: 'from-blue-500/20 to-indigo-500/20',
+      development: 'from-primary-500/20 to-primary-500/20',
       security: 'from-red-500/20 to-orange-500/20',
       compatibility: 'from-yellow-500/20 to-orange-500/20',
-      deployment: 'from-cyan-500/20 to-blue-500/20',
-      documentation: 'from-indigo-500/20 to-purple-500/20',
+      deployment: 'from-primary-500/20 to-primary-500/20',
+      documentation: 'from-primary-500/20 to-secondary-500/20',
     }
     return colors[category] || 'from-gray-500/20 to-gray-600/20'
   }

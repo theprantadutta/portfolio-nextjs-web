@@ -19,11 +19,11 @@ interface IAboutProps {
 //           self-taught programmer
 //         </span>
 //         . My happy place is{' '}
-//         <span className='font-medium underline decoration-blue-500'>
+//         <span className='font-medium underline decoration-primary-500'>
 //           full-stack web and mobile development
 //         </span>
 //         , with a special love for{' '}
-//         <span className='mono rounded-sm bg-linear-to-r from-blue-100 to-purple-100 px-2 py-1 text-sm font-semibold dark:from-blue-900/30 dark:to-purple-900/30'>
+//         <span className='mono rounded-sm bg-linear-to-r from-primary-100 to-secondary-100 px-2 py-1 text-sm font-semibold dark:from-primary-900/30 dark:to-secondary-900/30'>
 //           React Native &amp; Flutter
 //         </span>
 //         .
@@ -42,7 +42,7 @@ interface IAboutProps {
 //         </span>{' '}
 //         and finding elegant solutions to complex problems. Debugging is my
 //         puzzle, and shipping polished experiences is my{' '}
-//         <span className='font-medium underline decoration-purple-500'>
+//         <span className='font-medium underline decoration-secondary-500'>
 //           reward
 //         </span>
 //         .
@@ -56,7 +56,7 @@ interface IAboutProps {
 //         I have hands-on experience with{' '}
 //         <span className='text-gradient font-semibold'>System Design</span> and
 //         cloud infrastructure. I’ve built a resilient{' '}
-//         <span className='mono rounded-sm bg-linear-to-r from-green-100 to-blue-100 px-2 py-1 text-sm font-medium dark:from-green-900/30 dark:to-blue-900/30'>
+//         <span className='mono rounded-sm bg-linear-to-r from-green-100 to-primary-100 px-2 py-1 text-sm font-medium dark:from-green-900/30 dark:to-primary-900/30'>
 //           Ubuntu server
 //         </span>{' '}
 //         stack featuring{' '}
@@ -96,7 +96,7 @@ const paragraphs = [
           mobile apps, backend APIs, and infrastructure
         </span>
         . My core stack is{' '}
-        <span className='mono rounded-sm bg-linear-to-r from-blue-100 to-purple-100 px-2 py-1 text-sm font-semibold dark:from-blue-900/30 dark:to-purple-900/30'>
+        <span className='mono from-primary-100 to-secondary-100 dark:from-primary-900/30 dark:to-secondary-900/30 rounded-sm bg-linear-to-r px-2 py-1 text-sm font-semibold'>
           Flutter, React Native, Go &amp; .NET
         </span>
         .
@@ -116,11 +116,11 @@ const paragraphs = [
           reduced fraud by 99.99%
         </span>
         , an HRMS that{' '}
-        <span className='font-medium underline decoration-blue-500'>
+        <span className='decoration-primary-500 font-medium underline'>
           cut processing time by 40%
         </span>
         , and a QC system that{' '}
-        <span className='font-medium underline decoration-purple-500'>
+        <span className='decoration-secondary-500 font-medium underline'>
           eliminated 80% of reporting delays
         </span>
         .
@@ -136,7 +136,7 @@ const paragraphs = [
           AI/LLM integrations
         </span>
         . I&apos;ve built production assistants using{' '}
-        <span className='mono rounded-sm bg-linear-to-r from-purple-100 to-pink-100 px-2 py-1 text-sm font-medium dark:from-purple-900/30 dark:to-pink-900/30'>
+        <span className='mono from-secondary-100 to-accent-100 dark:from-secondary-900/30 dark:to-accent-900/30 rounded-sm bg-linear-to-r px-2 py-1 text-sm font-medium'>
           MCP servers, Gemini, OpenAI &amp; Claude
         </span>{' '}
         that answer queries dynamically from live database APIs.
@@ -150,7 +150,7 @@ const paragraphs = [
         I handle my own{' '}
         <span className='text-gradient font-semibold'>DevOps</span>. Currently
         running production workloads on{' '}
-        <span className='mono rounded-sm bg-linear-to-r from-green-100 to-blue-100 px-2 py-1 text-sm font-medium dark:from-green-900/30 dark:to-blue-900/30'>
+        <span className='mono to-primary-100 dark:to-primary-900/30 rounded-sm bg-linear-to-r from-green-100 px-2 py-1 text-sm font-medium dark:from-green-900/30'>
           Hetzner VPS
         </span>{' '}
         with{' '}
@@ -172,7 +172,7 @@ const paragraphs = [
         — including several on the{' '}
         <span className='font-medium'>Google Play Store</span>. When I&apos;m
         not building enterprise systems, I&apos;m making{' '}
-        <span className='font-medium underline decoration-purple-500'>
+        <span className='decoration-secondary-500 font-medium underline'>
           games, open-source libraries, and side projects
         </span>
         .
@@ -207,7 +207,7 @@ const achievements = [
     icon: '🏗️',
     title: 'Infrastructure Design',
     subtitle: 'Enterprise Solutions',
-    accent: 'from-blue-400 to-purple-500',
+    accent: 'from-primary-400 to-secondary-500',
   },
   {
     icon: '⚡',
@@ -219,13 +219,13 @@ const achievements = [
     icon: '🖥️',
     title: 'Self-Hosted Infrastructure',
     subtitle: 'Ubuntu Server Stack',
-    accent: 'from-cyan-400 to-blue-500',
+    accent: 'from-primary-400 to-primary-500',
   },
   {
     icon: '🚀',
     title: '20+ Projects Completed',
     subtitle: 'Web, Mobile & Cloud',
-    accent: 'from-violet-400 to-fuchsia-500',
+    accent: 'from-secondary-400 to-accent-500',
   },
 ]
 
@@ -236,8 +236,8 @@ export const About: React.FC<IAboutProps> = () => {
 
       {/* Background accents */}
       <div className='pointer-events-none absolute inset-0 -z-10 hidden overflow-hidden lg:block'>
-        <div className='absolute top-1/4 right-0 h-72 w-[18rem] rounded-full bg-linear-to-br from-purple-400/10 to-pink-400/10 opacity-70 blur-2xl' />
-        <div className='absolute bottom-[18%] left-0 h-80 w-[20rem] rounded-full bg-linear-to-br from-blue-400/10 to-cyan-400/10 opacity-60 blur-xl' />
+        <div className='from-secondary-400/10 to-accent-400/10 absolute top-1/4 right-0 h-72 w-[18rem] rounded-full bg-linear-to-br opacity-70 blur-2xl' />
+        <div className='from-primary-400/10 to-primary-400/10 absolute bottom-[18%] left-0 h-80 w-[20rem] rounded-full bg-linear-to-br opacity-60 blur-xl' />
       </div>
 
       <div className='content-container'>
@@ -271,7 +271,7 @@ export const About: React.FC<IAboutProps> = () => {
                     <ul className='space-y-1'>
                       {section.items.map((item) => (
                         <li key={item} className='flex items-center gap-2'>
-                          <span className='h-2 w-2 rounded-full bg-linear-to-br from-blue-500 to-purple-500' />
+                          <span className='from-primary-500 to-secondary-500 h-2 w-2 rounded-full bg-linear-to-br' />
                           <span>{item}</span>
                         </li>
                       ))}

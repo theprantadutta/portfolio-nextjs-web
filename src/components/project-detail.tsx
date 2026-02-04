@@ -104,9 +104,9 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
     <div className='relative min-h-screen'>
       {/* Background Gradients */}
       <div className='fixed inset-0 -z-10'>
-        <div className='absolute top-0 left-1/4 h-96 w-96 animate-pulse rounded-full bg-linear-to-br from-blue-500/20 to-purple-600/20 blur-3xl' />
+        <div className='from-primary-500/20 to-secondary-600/20 absolute top-0 left-1/4 h-96 w-96 animate-pulse rounded-full bg-linear-to-br blur-3xl' />
         <div
-          className='absolute right-1/4 bottom-1/4 h-80 w-80 animate-pulse rounded-full bg-linear-to-br from-pink-500/20 to-orange-500/20 blur-3xl'
+          className='from-accent-500/20 absolute right-1/4 bottom-1/4 h-80 w-80 animate-pulse rounded-full bg-linear-to-br to-orange-500/20 blur-3xl'
           style={{ animationDelay: '2s' }}
         />
         <div
@@ -171,7 +171,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
             {/* Quick Project Stats */}
             <div className='mb-8 flex flex-wrap justify-center gap-6 text-sm text-gray-600 dark:text-gray-400'>
               <div className='flex items-center gap-2'>
-                <div className='h-2 w-2 rounded-full bg-blue-500'></div>
+                <div className='bg-primary-500 h-2 w-2 rounded-full'></div>
                 <span>{project.Tags?.length || 0} Technologies</span>
               </div>
               <div className='flex items-center gap-2'>
@@ -179,7 +179,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                 <span>{project.imageUrls?.length || 0} Screenshots</span>
               </div>
               <div className='flex items-center gap-2'>
-                <div className='h-2 w-2 rounded-full bg-purple-500'></div>
+                <div className='bg-secondary-500 h-2 w-2 rounded-full'></div>
                 <span>Complexity: {project.complexity}/5</span>
               </div>
               <div className='flex items-center gap-2'>
@@ -265,7 +265,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                     key={tag.id}
                     className={`special-border glass-card px-3 py-2 text-sm font-medium transition-transform duration-200 hover:scale-105 ${
                       tag.isFavorite
-                        ? 'bg-linear-to-r from-blue-500/20 to-purple-500/20 text-blue-700 ring-2 ring-blue-500/30 dark:text-blue-300'
+                        ? 'from-primary-500/20 to-secondary-500/20 text-primary-700 ring-primary-500/30 dark:text-primary-300 bg-linear-to-r ring-2'
                         : 'bg-linear-to-r from-gray-500/10 to-gray-600/10 text-gray-700 dark:text-gray-300'
                     }`}
                   >
@@ -278,7 +278,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                 ))}
               </div>
               {enhancedTags.some((tag) => tag.isFavorite) && (
-                <p className='mt-4 text-sm text-blue-600 dark:text-blue-400'>
+                <p className='text-primary-600 dark:text-primary-400 mt-4 text-sm'>
                   ★ Flutter is highlighted as the preferred technology for
                   mobile development
                 </p>
@@ -291,8 +291,8 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
             className={`special-border glass-card p-6 ${getContentItemClass(1)}`}
           >
             <div className='mb-5 flex items-center gap-3'>
-              <div className='special-border glass-card bg-linear-to-r from-blue-500/20 to-purple-500/20 p-2'>
-                <FaCode className='h-5 w-5 text-blue-600 dark:text-blue-400' />
+              <div className='special-border glass-card from-primary-500/20 to-secondary-500/20 bg-linear-to-r p-2'>
+                <FaCode className='text-primary-600 dark:text-primary-400 h-5 w-5' />
               </div>
               <h2 className='text-2xl font-bold text-gray-900 dark:text-white'>
                 About This Project
@@ -392,7 +392,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
 
             {/* Project Analytics */}
             <div
-              className={`special-border glass-card bg-linear-to-br from-blue-500/5 to-purple-500/5 p-6 ${getContentItemClass(3)}`}
+              className={`special-border glass-card from-primary-500/5 to-secondary-500/5 bg-linear-to-br p-6 ${getContentItemClass(3)}`}
             >
               <h3 className='mb-4 text-lg font-bold text-gray-900 dark:text-white'>
                 Project Analytics

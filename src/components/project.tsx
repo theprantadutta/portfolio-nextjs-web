@@ -66,7 +66,7 @@ export const Project: React.FC<IProjectProps> = ({
       {/* eslint-enable react-hooks/refs */}
       <div className='special-border glass-card relative mx-auto max-w-4xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xs transition-all duration-500 hover:-translate-y-3 hover:bg-white/10 hover:shadow-2xl dark:border-gray-700/30 dark:bg-gray-900/20 dark:hover:bg-gray-900/30'>
         {/* Enhanced gradient overlay */}
-        <div className='absolute inset-0 bg-linear-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
+        <div className='from-primary-500/10 via-secondary-500/10 to-accent-500/10 absolute inset-0 bg-linear-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
 
         {/* Content Layout */}
         <div className='grid gap-6 p-6 md:grid-cols-2'>
@@ -76,11 +76,11 @@ export const Project: React.FC<IProjectProps> = ({
             <div className='mb-3 flex flex-wrap items-center gap-2'>
               {/* Platform Badge */}
               <div
-                className={`special-border glass-card flex items-center gap-2 bg-linear-to-r ${platformBadge?.color || 'from-blue-500/20 to-purple-500/20'} px-3 py-1`}
+                className={`special-border glass-card flex items-center gap-2 bg-linear-to-r ${platformBadge?.color || 'from-primary-500/20 to-secondary-500/20'} px-3 py-1`}
               >
                 {getProjectIcon()}
                 <span
-                  className={`text-xs font-medium ${platformBadge?.textColor || 'text-blue-600 dark:text-blue-400'}`}
+                  className={`text-xs font-medium ${platformBadge?.textColor || 'text-primary-600 dark:text-primary-400'}`}
                 >
                   {platformBadge?.label || 'Project'}
                 </span>
@@ -149,7 +149,7 @@ export const Project: React.FC<IProjectProps> = ({
             <div className='special-border relative aspect-4/3 overflow-hidden bg-linear-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900'>
               {/* Background Pattern */}
               <div className='absolute inset-0 opacity-10'>
-                <div className='absolute inset-0 scale-150 rotate-12 transform bg-linear-to-r from-blue-500/20 to-purple-500/20' />
+                <div className='from-primary-500/20 to-secondary-500/20 absolute inset-0 scale-150 rotate-12 transform bg-linear-to-r' />
               </div>
 
               {/* Main Project Image */}
@@ -172,8 +172,8 @@ export const Project: React.FC<IProjectProps> = ({
               </div>
 
               {/* Decorative Elements */}
-              <div className='absolute top-3 right-3 h-2 w-2 animate-ping rounded-full bg-blue-500' />
-              <div className='absolute bottom-3 left-3 h-2 w-2 animate-pulse rounded-full bg-purple-500' />
+              <div className='bg-primary-500 absolute top-3 right-3 h-2 w-2 animate-ping rounded-full' />
+              <div className='bg-secondary-500 absolute bottom-3 left-3 h-2 w-2 animate-pulse rounded-full' />
 
               {/* Screenshot Count Badge */}
               <div className='special-border glass-card absolute top-3 left-3 bg-black/20 px-2 py-1 backdrop-blur-xs'>
@@ -208,7 +208,7 @@ export const Project: React.FC<IProjectProps> = ({
                       key={i}
                       className={`h-1.5 w-1.5 rounded-full ${
                         i < complexity
-                          ? 'bg-blue-500'
+                          ? 'bg-primary-500'
                           : 'bg-gray-300 dark:bg-gray-600'
                       }`}
                     />

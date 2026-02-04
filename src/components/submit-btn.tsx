@@ -32,7 +32,7 @@ export const SubmitBtn: React.FC<ISubmitBtnProps> = () => {
 
       {/* Animated background */}
       {!pending && (
-        <div className='animate-gradient absolute inset-0 bg-linear-to-r from-blue-600 via-purple-600 to-blue-600 bg-size-[200%_100%] opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
+        <div className='animate-gradient from-primary-600 via-secondary-600 to-primary-600 absolute inset-0 bg-linear-to-r bg-size-[200%_100%] opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
       )}
     </button>
   )
