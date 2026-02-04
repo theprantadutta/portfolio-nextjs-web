@@ -221,7 +221,7 @@ export const Carousel: React.FC<CarouselProps> = ({
         {children.map((child, index) => (
           <div
             key={index}
-            className={`flex-shrink-0 ${slideClassName}`}
+            className={`shrink-0 ${slideClassName}`}
             style={{
               width: getSlideWidth(),
             }}
@@ -237,14 +237,14 @@ export const Carousel: React.FC<CarouselProps> = ({
           <button
             onClick={prevSlide}
             disabled={!loop && currentSlide === 0}
-            className='special-border absolute left-2 top-1/2 z-10 -translate-y-1/2 bg-white/80 p-2 text-gray-800 shadow-lg transition-all duration-200 hover:scale-110 hover:bg-white disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-800/80 dark:text-white dark:hover:bg-gray-800'
+            className='special-border absolute top-1/2 left-2 z-10 -translate-y-1/2 bg-white/80 p-2 text-gray-800 shadow-lg transition-all duration-200 hover:scale-110 hover:bg-white disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-800/80 dark:text-white dark:hover:bg-gray-800'
           >
             <FaChevronLeft className='h-4 w-4' />
           </button>
           <button
             onClick={nextSlide}
             disabled={!loop && currentSlide === totalSlides - 1}
-            className='special-border absolute right-2 top-1/2 z-10 -translate-y-1/2 bg-white/80 p-2 text-gray-800 shadow-lg transition-all duration-200 hover:scale-110 hover:bg-white disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-800/80 dark:text-white dark:hover:bg-gray-800'
+            className='special-border absolute top-1/2 right-2 z-10 -translate-y-1/2 bg-white/80 p-2 text-gray-800 shadow-lg transition-all duration-200 hover:scale-110 hover:bg-white disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gray-800/80 dark:text-white dark:hover:bg-gray-800'
           >
             <FaChevronRight className='h-4 w-4' />
           </button>
@@ -330,7 +330,7 @@ export const Carousel3D: React.FC<CarouselProps> = ({
           return (
             <div
               key={index}
-              className='absolute inset-0 left-1/2 top-1/2 h-48 w-64'
+              className='absolute inset-0 top-1/2 left-1/2 h-48 w-64'
               style={{
                 transform: `
                   translate(-50%, -50%) 
@@ -353,7 +353,7 @@ export const Carousel3D: React.FC<CarouselProps> = ({
             prev === 0 ? children.length - 1 : prev - 1
           )
         }
-        className='absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/80 p-2 text-gray-800 shadow-lg transition-all duration-200 hover:bg-white dark:bg-gray-800/80 dark:text-white dark:hover:bg-gray-800'
+        className='absolute top-1/2 left-4 z-10 -translate-y-1/2 rounded-full bg-white/80 p-2 text-gray-800 shadow-lg transition-all duration-200 hover:bg-white dark:bg-gray-800/80 dark:text-white dark:hover:bg-gray-800'
       >
         <FaChevronLeft className='h-4 w-4' />
       </button>
@@ -363,7 +363,7 @@ export const Carousel3D: React.FC<CarouselProps> = ({
             prev === children.length - 1 ? 0 : prev + 1
           )
         }
-        className='absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/80 p-2 text-gray-800 shadow-lg transition-all duration-200 hover:bg-white dark:bg-gray-800/80 dark:text-white dark:hover:bg-gray-800'
+        className='absolute top-1/2 right-4 z-10 -translate-y-1/2 rounded-full bg-white/80 p-2 text-gray-800 shadow-lg transition-all duration-200 hover:bg-white dark:bg-gray-800/80 dark:text-white dark:hover:bg-gray-800'
       >
         <FaChevronRight className='h-4 w-4' />
       </button>

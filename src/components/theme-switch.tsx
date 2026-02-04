@@ -13,21 +13,21 @@ export const ThemeSwitch: React.FC<IThemeSwitchProps> = () => {
 
   return (
     <button
-      className='special-border glass-card group fixed bottom-5 right-5 z-[998] flex h-[3.5rem] w-[3.5rem] items-center justify-center border-white/30 bg-white/20 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:scale-110 hover:shadow-blue-500/25 active:scale-95 dark:border-white/20 dark:bg-gray-900/40'
+      className='special-border glass-card group fixed right-5 bottom-5 z-998 flex h-14 w-14 items-center justify-center border-white/30 bg-white/20 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:scale-110 hover:shadow-blue-500/25 active:scale-95 dark:border-white/20 dark:bg-gray-900/40'
       onClick={toggleTheme}
       aria-label={
         theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'
       }
     >
       {/* Background gradient overlay */}
-      <div className='special-border absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-cyan-500/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
+      <div className='special-border absolute inset-0 bg-linear-to-br from-blue-500/10 via-purple-500/10 to-cyan-500/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
 
       {/* Glowing background for active state */}
       <div
         className={`special-border absolute inset-0 transition-all duration-500 ${
           theme === 'light'
-            ? 'bg-gradient-to-br from-yellow-400/20 to-orange-500/20 opacity-100'
-            : 'bg-gradient-to-br from-blue-600/20 to-purple-600/20 opacity-100'
+            ? 'bg-linear-to-br from-yellow-400/20 to-orange-500/20 opacity-100'
+            : 'bg-linear-to-br from-blue-600/20 to-purple-600/20 opacity-100'
         }`}
       />
 
@@ -46,7 +46,7 @@ export const ThemeSwitch: React.FC<IThemeSwitchProps> = () => {
 
       {/* Pulsing indicator */}
       <div
-        className={`absolute right-1 top-1 h-2 w-2 rounded-full transition-all duration-300 ${
+        className={`absolute top-1 right-1 h-2 w-2 rounded-full transition-all duration-300 ${
           theme === 'light'
             ? 'animate-pulse bg-yellow-400'
             : 'animate-pulse bg-blue-400'
@@ -57,8 +57,8 @@ export const ThemeSwitch: React.FC<IThemeSwitchProps> = () => {
       <div
         className={`special-border absolute inset-0 opacity-0 blur-lg transition-opacity duration-300 group-hover:opacity-50 ${
           theme === 'light'
-            ? 'bg-gradient-to-br from-yellow-400 to-orange-500'
-            : 'bg-gradient-to-br from-blue-500 to-purple-500'
+            ? 'bg-linear-to-br from-yellow-400 to-orange-500'
+            : 'bg-linear-to-br from-blue-500 to-purple-500'
         }`}
       />
     </button>

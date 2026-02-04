@@ -160,9 +160,9 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
     >
       {/* Background Elements */}
       <div className='absolute inset-0 -z-10'>
-        <div className='absolute left-10 top-10 h-72 w-72 animate-pulse rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 blur-3xl' />
+        <div className='absolute top-10 left-10 h-72 w-72 animate-pulse rounded-full bg-linear-to-r from-blue-500/10 to-purple-500/10 blur-3xl' />
         <div
-          className='absolute bottom-10 right-10 h-80 w-80 animate-pulse rounded-full bg-gradient-to-r from-pink-500/10 to-orange-500/10 blur-3xl'
+          className='absolute right-10 bottom-10 h-80 w-80 animate-pulse rounded-full bg-linear-to-r from-pink-500/10 to-orange-500/10 blur-3xl'
           style={{ animationDelay: '2s' }}
         />
       </div>
@@ -188,7 +188,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
               onClick={() => setViewMode('hexagon')}
               className={`special-border mr-1 px-6 py-2 transition-all duration-300 ${
                 viewMode === 'hexagon'
-                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
+                  ? 'bg-linear-to-r from-blue-500 to-purple-500 text-white'
                   : 'hover:bg-white/10'
               }`}
             >
@@ -198,7 +198,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
               onClick={() => setViewMode('cards')}
               className={`special-border ml-1 px-6 py-2 transition-all duration-300 ${
                 viewMode === 'cards'
-                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
+                  ? 'bg-linear-to-r from-blue-500 to-purple-500 text-white'
                   : 'hover:bg-white/10'
               }`}
             >
@@ -230,7 +230,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
                     {/* Hexagon Shape */}
                     <div className='relative h-20 w-24'>
                       <div
-                        className={`absolute inset-0 bg-gradient-to-br ${
+                        className={`absolute inset-0 bg-linear-to-br ${
                           skill.isFavourite
                             ? 'from-blue-400 to-cyan-400 shadow-blue-400/50'
                             : 'from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800'
@@ -251,7 +251,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
                           }`}
                         />
                         <span
-                          className={`text-xs font-medium leading-tight ${
+                          className={`text-xs leading-tight font-medium ${
                             skill.isFavourite
                               ? 'text-white'
                               : 'text-gray-700 dark:text-gray-300'
@@ -262,7 +262,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
 
                         {/* Favorite Badge */}
                         {skill.isFavourite && (
-                          <FaHeart className='absolute -right-1 -top-1 h-3 w-3 animate-pulse text-red-500' />
+                          <FaHeart className='absolute -top-1 -right-1 h-3 w-3 animate-pulse text-red-500' />
                         )}
                       </div>
 
@@ -294,7 +294,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
               <div key={category.name} className='space-y-6'>
                 <div className='flex items-center justify-center gap-3'>
                   <category.icon
-                    className={`h-6 w-6 bg-gradient-to-r ${category.color} bg-clip-text text-transparent`}
+                    className={`h-6 w-6 bg-linear-to-r ${category.color} bg-clip-text text-transparent`}
                   />
                   <h3 className='text-2xl font-bold'>{category.name}</h3>
                 </div>
@@ -308,7 +308,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
                         key={skill.id}
                         className={`special-border glass-card group relative cursor-pointer p-4 text-center transition-all duration-300 hover:-translate-y-2 hover:scale-105 ${
                           skill.isFavourite
-                            ? 'border-blue-400/50 bg-gradient-to-br from-blue-500/20 to-cyan-500/20'
+                            ? 'border-blue-400/50 bg-linear-to-br from-blue-500/20 to-cyan-500/20'
                             : 'border-white/10 bg-white/5 dark:bg-gray-900/20'
                         }`}
                         style={{ animationDelay: `${index * 50}ms` }}
@@ -329,8 +329,8 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
                           <div
                             className={`h-1.5 rounded-full transition-all duration-1000 ${
                               skill.isFavourite
-                                ? 'bg-gradient-to-r from-blue-400 to-cyan-400'
-                                : `bg-gradient-to-r ${category.color}`
+                                ? 'bg-linear-to-r from-blue-400 to-cyan-400'
+                                : `bg-linear-to-r ${category.color}`
                             }`}
                             style={{ width: `${(skill.rating / 5) * 100}%` }}
                           />
@@ -342,7 +342,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
 
                         {/* Favorite Badge */}
                         {skill.isFavourite && (
-                          <div className='absolute -right-2 -top-2 rounded-full bg-red-500 p-1'>
+                          <div className='absolute -top-2 -right-2 rounded-full bg-red-500 p-1'>
                             <FaHeart className='h-3 w-3 text-white' />
                           </div>
                         )}

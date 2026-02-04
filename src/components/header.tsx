@@ -66,11 +66,11 @@ export const Header: React.FC<IHeaderProps> = () => {
   }
 
   return (
-    <header className='relative z-[10]'>
+    <header className='relative z-10'>
       {/* Desktop Navigation */}
       <nav
         ref={containerRef}
-        className={`fixed left-1/2 top-6 z-[1000] hidden -translate-x-1/2 transform rounded-bl-3xl rounded-br-3xl rounded-tl-3xl rounded-tr-lg transition-all duration-500 ease-out sm:block ${
+        className={`fixed top-6 left-1/2 z-1000 hidden -translate-x-1/2 transform rounded-tl-3xl rounded-tr-lg rounded-br-3xl rounded-bl-3xl transition-all duration-500 ease-out sm:block ${
           isScrolled
             ? 'border border-white/30 bg-white/20 shadow-lg backdrop-blur-xl dark:border-white/20 dark:bg-gray-900/40'
             : 'border border-transparent bg-transparent'
@@ -78,7 +78,7 @@ export const Header: React.FC<IHeaderProps> = () => {
       >
         {/* Enhanced gradient overlay - only when scrolled */}
         <div
-          className='absolute inset-0 rounded-bl-3xl rounded-br-3xl rounded-tl-3xl rounded-tr-lg bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-cyan-500/10 transition-opacity duration-500'
+          className='absolute inset-0 rounded-tl-3xl rounded-tr-lg rounded-br-3xl rounded-bl-3xl bg-linear-to-r from-blue-500/10 via-purple-500/10 to-cyan-500/10 transition-opacity duration-500'
           style={{
             opacity: isScrolled ? 1 : 0,
           }}
@@ -94,9 +94,9 @@ export const Header: React.FC<IHeaderProps> = () => {
               <li className={`relative ${itemClassName}`} key={link.hash}>
                 <Link
                   className={clsx(
-                    'group relative flex items-center gap-2 rounded-bl-3xl rounded-br-3xl rounded-tl-3xl rounded-tr-lg px-4 py-2.5 text-sm font-medium transition-all duration-300',
+                    'group relative flex items-center gap-2 rounded-tl-3xl rounded-tr-lg rounded-br-3xl rounded-bl-3xl px-4 py-2.5 text-sm font-medium transition-all duration-300',
                     {
-                      'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25':
+                      'bg-linear-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25':
                         activeSection === link.name,
                       [`text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white ${
                         isScrolled
@@ -113,7 +113,7 @@ export const Header: React.FC<IHeaderProps> = () => {
 
                   {/* Hover effect */}
                   {activeSection !== link.name && (
-                    <div className='absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
+                    <div className='absolute inset-0 rounded-xl bg-linear-to-r from-blue-500/10 to-purple-500/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
                   )}
                 </Link>
               </li>
@@ -123,14 +123,14 @@ export const Header: React.FC<IHeaderProps> = () => {
       </nav>
 
       {/* Mobile Menu Button */}
-      <div className='fixed right-4 top-4 z-[1001] sm:hidden'>
+      <div className='fixed top-4 right-4 z-1001 sm:hidden'>
         <button
           onClick={toggleMenu}
           aria-label={
             isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'
           }
           aria-expanded={isMenuOpen}
-          className={`special-border glass-card relative h-12 w-12 transform border-white/30 bg-white/20 shadow-lg backdrop-blur-xl transition-all duration-300 hover:scale-110 active:scale-95 dark:border-white/20 dark:bg-gray-900/40 ${isMenuOpen ? 'bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-red-500/25' : 'text-gray-700 dark:text-gray-300'} `}
+          className={`special-border glass-card relative h-12 w-12 transform border-white/30 bg-white/20 shadow-lg backdrop-blur-xl transition-all duration-300 hover:scale-110 active:scale-95 dark:border-white/20 dark:bg-gray-900/40 ${isMenuOpen ? 'bg-linear-to-r from-red-500 to-pink-500 text-white shadow-red-500/25' : 'text-gray-700 dark:text-gray-300'} `}
         >
           <div className='flex h-full w-full items-center justify-center'>
             {isMenuOpen ? (
@@ -144,8 +144,8 @@ export const Header: React.FC<IHeaderProps> = () => {
           <div
             className={`absolute inset-0 rounded-2xl transition-opacity duration-300 ${
               isMenuOpen
-                ? 'bg-gradient-to-r from-red-500 to-pink-500 opacity-20 blur-lg'
-                : 'bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 blur-lg hover:opacity-20'
+                ? 'bg-linear-to-r from-red-500 to-pink-500 opacity-20 blur-lg'
+                : 'bg-linear-to-r from-blue-500 to-purple-500 opacity-0 blur-lg hover:opacity-20'
             } `}
           />
         </button>
@@ -154,19 +154,19 @@ export const Header: React.FC<IHeaderProps> = () => {
       {/* Mobile Menu Overlay */}
       {isMenuOpen && (
         <div
-          className='fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm transition-opacity duration-300 sm:hidden'
+          className='fixed inset-0 z-999 bg-black/60 backdrop-blur-xs transition-opacity duration-300 sm:hidden'
           onClick={toggleMenu}
         >
           {/* Mobile Menu Panel */}
           <div
-            className={`glass-card special-border absolute right-4 top-20 w-72 transform border-white/30 bg-white/20 shadow-2xl backdrop-blur-xl transition-all duration-300 ease-out dark:border-white/20 dark:bg-gray-900/40 ${isMenuOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'} `}
+            className={`glass-card special-border absolute top-20 right-4 w-72 transform border-white/30 bg-white/20 shadow-2xl backdrop-blur-xl transition-all duration-300 ease-out dark:border-white/20 dark:bg-gray-900/40 ${isMenuOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'} `}
             style={{
               padding: '1.5rem',
             }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Enhanced gradient background */}
-            <div className='special-border absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10' />
+            <div className='special-border absolute inset-0 bg-linear-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10' />
             {/* Additional blur layer */}
             <div className='special-border absolute inset-0 backdrop-blur-lg' />
 
@@ -176,7 +176,7 @@ export const Header: React.FC<IHeaderProps> = () => {
                 <h3 className='mb-1 text-lg font-semibold text-gray-800 dark:text-gray-200'>
                   Navigation
                 </h3>
-                <div className='h-1 w-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500' />
+                <div className='h-1 w-12 rounded-full bg-linear-to-r from-blue-500 to-purple-500' />
               </div>
 
               {/* Menu Items */}
@@ -196,11 +196,11 @@ export const Header: React.FC<IHeaderProps> = () => {
                       <Link
                         href={link.hash}
                         className={clsx(
-                          'group relative flex items-center gap-3 overflow-hidden rounded-bl-3xl rounded-br-3xl rounded-tl-3xl rounded-tr-lg px-4 py-3 text-base font-medium transition-all duration-300',
+                          'group relative flex items-center gap-3 overflow-hidden rounded-tl-3xl rounded-tr-lg rounded-br-3xl rounded-bl-3xl px-4 py-3 text-base font-medium transition-all duration-300',
                           {
-                            'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg':
+                            'bg-linear-to-r from-blue-600 to-purple-600 text-white shadow-lg':
                               activeSection === link.name,
-                            'text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 dark:text-gray-300 dark:hover:from-blue-900/20 dark:hover:to-purple-900/20':
+                            'text-gray-700 hover:bg-linear-to-r hover:from-blue-50 hover:to-purple-50 dark:text-gray-300 dark:hover:from-blue-900/20 dark:hover:to-purple-900/20':
                               activeSection !== link.name,
                           }
                         )}
@@ -211,7 +211,7 @@ export const Header: React.FC<IHeaderProps> = () => {
                           className={`flex h-8 w-8 items-center justify-center rounded-lg transition-all duration-300 ${
                             activeSection === link.name
                               ? 'bg-white/20'
-                              : 'bg-gradient-to-br from-blue-100 to-purple-100 group-hover:scale-110 dark:from-blue-900/30 dark:to-purple-900/30'
+                              : 'bg-linear-to-br from-blue-100 to-purple-100 group-hover:scale-110 dark:from-blue-900/30 dark:to-purple-900/30'
                           } `}
                         >
                           {IconComponent && (
@@ -234,7 +234,7 @@ export const Header: React.FC<IHeaderProps> = () => {
                         )}
 
                         {/* Hover effect */}
-                        <div className='absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/0 to-purple-500/0 transition-all duration-300 group-hover:from-blue-500/5 group-hover:to-purple-500/5' />
+                        <div className='absolute inset-0 rounded-xl bg-linear-to-r from-blue-500/0 to-purple-500/0 transition-all duration-300 group-hover:from-blue-500/5 group-hover:to-purple-500/5' />
                       </Link>
                     </li>
                   )

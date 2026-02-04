@@ -60,12 +60,12 @@ const FeatureCard = ({ feature, index }: FeatureCardProps) => {
 
   return (
     <div
-      className={`special-border glass-card bg-gradient-to-br ${getCategoryColor(feature.category)} p-6 transition-all duration-300 hover:scale-[1.02]`}
+      className={`special-border glass-card bg-linear-to-br ${getCategoryColor(feature.category)} p-6 transition-all duration-300 hover:scale-[1.02]`}
       style={{ animationDelay: `${index * 100}ms` }}
     >
       <div className='mb-4 flex items-center gap-3'>
         <div
-          className={`special-border glass-card flex items-center justify-center bg-gradient-to-r ${getCategoryColor(feature.category)} p-2 text-gray-700 dark:text-gray-300`}
+          className={`special-border glass-card flex items-center justify-center bg-linear-to-r ${getCategoryColor(feature.category)} p-2 text-gray-700 dark:text-gray-300`}
         >
           {feature.icon}
         </div>
@@ -77,7 +77,7 @@ const FeatureCard = ({ feature, index }: FeatureCardProps) => {
         {feature.description}
       </p>
       <div className='mt-3'>
-        <span className='text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-500'>
+        <span className='text-xs font-medium tracking-wide text-gray-500 uppercase dark:text-gray-500'>
           {feature.category}
         </span>
       </div>

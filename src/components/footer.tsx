@@ -11,7 +11,7 @@ export const Footer: React.FC<IFooterProps> = () => {
       <Copyright />
       <p className='text-xs font-semibold'>
         Built with Next.js, Tailwind CSS, Strapi and{' '}
-        <span className='bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text font-bold text-transparent'>
+        <span className='bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text font-bold text-transparent'>
           AI
         </span>
         {' ✨'}

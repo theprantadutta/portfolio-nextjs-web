@@ -171,35 +171,35 @@ export const EnhancedGallery = ({
     <>
       {/* Gallery Header with Enhanced Stats */}
       <div className='mb-6 text-center sm:mb-8'>
-        <div className='special-border glass-card inline-flex flex-wrap items-center justify-center gap-2 bg-white/10 px-3 py-2 backdrop-blur-xl dark:bg-gray-900/30 sm:gap-4 sm:px-6 sm:py-3'>
+        <div className='special-border glass-card inline-flex flex-wrap items-center justify-center gap-2 bg-white/10 px-3 py-2 backdrop-blur-xl sm:gap-4 sm:px-6 sm:py-3 dark:bg-gray-900/30'>
           <div className='flex items-center gap-2'>
             <FaImage className='h-3 w-3 text-blue-500 sm:h-4 sm:w-4' />
-            <span className='text-sm font-medium text-gray-900 dark:text-white sm:text-base'>
+            <span className='text-sm font-medium text-gray-900 sm:text-base dark:text-white'>
               {imageCount} Screenshots
             </span>
           </div>
           {videoCount > 0 && (
             <>
-              <div className='hidden h-4 w-px bg-gray-300 dark:bg-gray-600 sm:block'></div>
+              <div className='hidden h-4 w-px bg-gray-300 sm:block dark:bg-gray-600'></div>
               <div className='flex items-center gap-2'>
                 <FaVideo className='h-3 w-3 text-purple-500 sm:h-4 sm:w-4' />
-                <span className='text-sm font-medium text-gray-900 dark:text-white sm:text-base'>
+                <span className='text-sm font-medium text-gray-900 sm:text-base dark:text-white'>
                   {videoCount} Video{videoCount > 1 ? 's' : ''}
                 </span>
               </div>
             </>
           )}
-          <div className='hidden h-4 w-px bg-gray-300 dark:bg-gray-600 sm:block'></div>
+          <div className='hidden h-4 w-px bg-gray-300 sm:block dark:bg-gray-600'></div>
           <div className='flex items-center gap-2'>
-            <span className='text-xs text-gray-600 dark:text-gray-400 sm:text-sm'>
+            <span className='text-xs text-gray-600 sm:text-sm dark:text-gray-400'>
               Current: {selectedIndex + 1}/{allMedia.length}
             </span>
           </div>
           {!isCurrentVideo && (
             <>
-              <div className='hidden h-4 w-px bg-gray-300 dark:bg-gray-600 sm:block'></div>
+              <div className='hidden h-4 w-px bg-gray-300 sm:block dark:bg-gray-600'></div>
               <div className='flex items-center gap-2'>
-                <span className='text-xs text-gray-600 dark:text-gray-400 sm:text-sm'>
+                <span className='text-xs text-gray-600 sm:text-sm dark:text-gray-400'>
                   {getMediaDimensions(currentMedia).width}×
                   {getMediaDimensions(currentMedia).height}
                 </span>
@@ -211,10 +211,10 @@ export const EnhancedGallery = ({
 
       {/* Main Image Display with Enhanced Container */}
       <div className='relative mb-6 px-4 sm:mb-8 sm:px-8'>
-        <div className='relative mx-auto aspect-[9/16] w-full max-w-[280px] sm:max-w-sm'>
+        <div className='relative mx-auto aspect-9/16 w-full max-w-[280px] sm:max-w-sm'>
           {/* Enhanced Glow Effects */}
-          <div className='absolute -inset-8 bg-gradient-to-br from-blue-500/30 via-purple-500/20 to-pink-500/30 blur-2xl'></div>
-          <div className='absolute -inset-4 bg-gradient-to-br from-blue-400/20 via-purple-400/15 to-pink-400/20 blur-xl'></div>
+          <div className='absolute -inset-8 bg-linear-to-br from-blue-500/30 via-purple-500/20 to-pink-500/30 blur-2xl'></div>
+          <div className='absolute -inset-4 bg-linear-to-br from-blue-400/20 via-purple-400/15 to-pink-400/20 blur-xl'></div>
 
           {/* Enhanced Glassmorphic Container */}
           <div className='special-border glass-card relative h-full overflow-hidden border border-white/20 bg-white/10 p-4 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-gray-900/30'>
@@ -237,7 +237,7 @@ export const EnhancedGallery = ({
               )}
 
               {/* Media Overlay Actions */}
-              <div className='absolute right-2 top-2 flex gap-2'>
+              <div className='absolute top-2 right-2 flex gap-2'>
                 <button
                   onClick={() => setShowFullscreen(true)}
                   className='special-border glass-card p-2 text-white/90 transition-all duration-300 hover:bg-white/20'
@@ -260,7 +260,7 @@ export const EnhancedGallery = ({
 
               {/* Video Badge */}
               {isCurrentVideo && (
-                <div className='absolute left-2 top-2'>
+                <div className='absolute top-2 left-2'>
                   <div className='special-border glass-card flex items-center gap-1 bg-purple-500/80 px-2 py-1 text-white'>
                     <FaVideo className='h-3 w-3' />
                     <span className='text-xs font-medium'>Video</span>
@@ -270,7 +270,7 @@ export const EnhancedGallery = ({
 
               {/* Image Info Overlay */}
               {showImageInfo && !isCurrentVideo && (
-                <div className='absolute bottom-0 left-0 right-0 bg-black/80 p-3 text-white backdrop-blur-sm'>
+                <div className='absolute right-0 bottom-0 left-0 bg-black/80 p-3 text-white backdrop-blur-xs'>
                   <div className='space-y-1 text-xs'>
                     <div>
                       Dimensions: {getMediaDimensions(currentMedia).width} ×{' '}
@@ -294,14 +294,14 @@ export const EnhancedGallery = ({
             <>
               <button
                 onClick={prevImage}
-                className='special-border glass-card absolute -left-4 top-1/2 z-20 -translate-y-1/2 p-2 transition-all duration-300 hover:scale-110 hover:bg-white/30 dark:hover:bg-gray-800/50 sm:-left-6 sm:p-3'
+                className='special-border glass-card absolute top-1/2 -left-4 z-20 -translate-y-1/2 p-2 transition-all duration-300 hover:scale-110 hover:bg-white/30 sm:-left-6 sm:p-3 dark:hover:bg-gray-800/50'
                 aria-label='Previous image'
               >
                 <FaArrowLeft className='h-4 w-4 sm:h-5 sm:w-5' />
               </button>
               <button
                 onClick={nextImage}
-                className='special-border glass-card absolute -right-4 top-1/2 z-20 -translate-y-1/2 p-2 transition-all duration-300 hover:scale-110 hover:bg-white/30 dark:hover:bg-gray-800/50 sm:-right-6 sm:p-3'
+                className='special-border glass-card absolute top-1/2 -right-4 z-20 -translate-y-1/2 p-2 transition-all duration-300 hover:scale-110 hover:bg-white/30 sm:-right-6 sm:p-3 dark:hover:bg-gray-800/50'
                 aria-label='Next image'
               >
                 <FaArrowRight className='h-4 w-4 sm:h-5 sm:w-5' />
@@ -324,7 +324,7 @@ export const EnhancedGallery = ({
         {canScrollLeft && (
           <button
             onClick={() => scrollThumbnails('left')}
-            className='absolute left-0 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-lg transition-all duration-200 hover:scale-110 hover:bg-white dark:bg-gray-800/90 dark:text-gray-200 dark:hover:bg-gray-800'
+            className='absolute top-1/2 left-0 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-lg transition-all duration-200 hover:scale-110 hover:bg-white dark:bg-gray-800/90 dark:text-gray-200 dark:hover:bg-gray-800'
             aria-label='Scroll thumbnails left'
           >
             <FaChevronLeft className='h-4 w-4' />
@@ -335,7 +335,7 @@ export const EnhancedGallery = ({
         {canScrollRight && (
           <button
             onClick={() => scrollThumbnails('right')}
-            className='absolute right-0 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-lg transition-all duration-200 hover:scale-110 hover:bg-white dark:bg-gray-800/90 dark:text-gray-200 dark:hover:bg-gray-800'
+            className='absolute top-1/2 right-0 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-lg transition-all duration-200 hover:scale-110 hover:bg-white dark:bg-gray-800/90 dark:text-gray-200 dark:hover:bg-gray-800'
             aria-label='Scroll thumbnails right'
           >
             <FaChevronRight className='h-4 w-4' />
@@ -357,7 +357,7 @@ export const EnhancedGallery = ({
               key={media.id}
               onClick={() => onIndexChange(index)}
               aria-label={`View ${media.isVideo ? 'video' : 'image'} ${index + 1} of ${allMedia.length}`}
-              className={`relative flex-shrink-0 overflow-hidden rounded-lg transition-all duration-200 ${
+              className={`relative shrink-0 overflow-hidden rounded-lg transition-all duration-200 ${
                 selectedIndex === index
                   ? 'ring-2 ring-blue-500 ring-offset-2 ring-offset-gray-50 dark:ring-offset-gray-900'
                   : 'opacity-60 hover:opacity-100'
@@ -380,7 +380,7 @@ export const EnhancedGallery = ({
               </div>
               {/* Video indicator overlay */}
               {media.isVideo && (
-                <div className='absolute bottom-0 left-0 right-0 bg-purple-500/80 py-0.5 text-center'>
+                <div className='absolute right-0 bottom-0 left-0 bg-purple-500/80 py-0.5 text-center'>
                   <span className='text-[8px] font-medium text-white'>
                     VIDEO
                   </span>
@@ -395,7 +395,7 @@ export const EnhancedGallery = ({
       {shouldRender &&
         createPortal(
           <div
-            className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-sm transition-all duration-300 ${
+            className={`fixed inset-0 z-9999 flex items-center justify-center bg-black/95 backdrop-blur-xs transition-all duration-300 ${
               animationPhase === 'entering' || animationPhase === 'entered'
                 ? 'opacity-100'
                 : 'opacity-0'
@@ -430,7 +430,7 @@ export const EnhancedGallery = ({
               )}
 
               {/* Fullscreen Controls */}
-              <div className='absolute right-4 top-4 flex gap-2'>
+              <div className='absolute top-4 right-4 flex gap-2'>
                 {!isCurrentVideo && (
                   <button
                     onClick={() => setShowImageInfo(!showImageInfo)}
@@ -456,14 +456,14 @@ export const EnhancedGallery = ({
                 <>
                   <button
                     onClick={prevImage}
-                    className='special-border glass-card absolute left-4 top-1/2 -translate-y-1/2 p-4 text-white transition-all duration-300 hover:bg-white/20'
+                    className='special-border glass-card absolute top-1/2 left-4 -translate-y-1/2 p-4 text-white transition-all duration-300 hover:bg-white/20'
                     aria-label='Previous image'
                   >
                     <FaArrowLeft className='h-6 w-6' />
                   </button>
                   <button
                     onClick={nextImage}
-                    className='special-border glass-card absolute right-4 top-1/2 -translate-y-1/2 p-4 text-white transition-all duration-300 hover:bg-white/20'
+                    className='special-border glass-card absolute top-1/2 right-4 -translate-y-1/2 p-4 text-white transition-all duration-300 hover:bg-white/20'
                     aria-label='Next image'
                   >
                     <FaArrowRight className='h-6 w-6' />
@@ -473,7 +473,7 @@ export const EnhancedGallery = ({
 
               {/* Fullscreen Info Panel (images only) */}
               {showImageInfo && !isCurrentVideo && (
-                <div className='absolute bottom-4 left-4 right-4 rounded-lg bg-black/80 p-4 text-white backdrop-blur-sm'>
+                <div className='absolute right-4 bottom-4 left-4 rounded-lg bg-black/80 p-4 text-white backdrop-blur-xs'>
                   <div className='grid grid-cols-2 gap-4 text-sm md:grid-cols-4'>
                     <div>
                       <div className='font-medium'>Dimensions</div>

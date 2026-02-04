@@ -23,7 +23,7 @@ interface IAboutProps {
 //           full-stack web and mobile development
 //         </span>
 //         , with a special love for{' '}
-//         <span className='mono rounded bg-gradient-to-r from-blue-100 to-purple-100 px-2 py-1 text-sm font-semibold dark:from-blue-900/30 dark:to-purple-900/30'>
+//         <span className='mono rounded-sm bg-linear-to-r from-blue-100 to-purple-100 px-2 py-1 text-sm font-semibold dark:from-blue-900/30 dark:to-purple-900/30'>
 //           React Native &amp; Flutter
 //         </span>
 //         .
@@ -56,7 +56,7 @@ interface IAboutProps {
 //         I have hands-on experience with{' '}
 //         <span className='text-gradient font-semibold'>System Design</span> and
 //         cloud infrastructure. I’ve built a resilient{' '}
-//         <span className='mono rounded bg-gradient-to-r from-green-100 to-blue-100 px-2 py-1 text-sm font-medium dark:from-green-900/30 dark:to-blue-900/30'>
+//         <span className='mono rounded-sm bg-linear-to-r from-green-100 to-blue-100 px-2 py-1 text-sm font-medium dark:from-green-900/30 dark:to-blue-900/30'>
 //           Ubuntu server
 //         </span>{' '}
 //         stack featuring{' '}
@@ -96,7 +96,7 @@ const paragraphs = [
           mobile apps, backend APIs, and infrastructure
         </span>
         . My core stack is{' '}
-        <span className='mono rounded bg-gradient-to-r from-blue-100 to-purple-100 px-2 py-1 text-sm font-semibold dark:from-blue-900/30 dark:to-purple-900/30'>
+        <span className='mono rounded-sm bg-linear-to-r from-blue-100 to-purple-100 px-2 py-1 text-sm font-semibold dark:from-blue-900/30 dark:to-purple-900/30'>
           Flutter, React Native, Go &amp; .NET
         </span>
         .
@@ -136,7 +136,7 @@ const paragraphs = [
           AI/LLM integrations
         </span>
         . I&apos;ve built production assistants using{' '}
-        <span className='mono rounded bg-gradient-to-r from-purple-100 to-pink-100 px-2 py-1 text-sm font-medium dark:from-purple-900/30 dark:to-pink-900/30'>
+        <span className='mono rounded-sm bg-linear-to-r from-purple-100 to-pink-100 px-2 py-1 text-sm font-medium dark:from-purple-900/30 dark:to-pink-900/30'>
           MCP servers, Gemini, OpenAI &amp; Claude
         </span>{' '}
         that answer queries dynamically from live database APIs.
@@ -150,7 +150,7 @@ const paragraphs = [
         I handle my own{' '}
         <span className='text-gradient font-semibold'>DevOps</span>. Currently
         running production workloads on{' '}
-        <span className='mono rounded bg-gradient-to-r from-green-100 to-blue-100 px-2 py-1 text-sm font-medium dark:from-green-900/30 dark:to-blue-900/30'>
+        <span className='mono rounded-sm bg-linear-to-r from-green-100 to-blue-100 px-2 py-1 text-sm font-medium dark:from-green-900/30 dark:to-blue-900/30'>
           Hetzner VPS
         </span>{' '}
         with{' '}
@@ -236,8 +236,8 @@ export const About: React.FC<IAboutProps> = () => {
 
       {/* Background accents */}
       <div className='pointer-events-none absolute inset-0 -z-10 hidden overflow-hidden lg:block'>
-        <div className='absolute right-0 top-1/4 h-[18rem] w-[18rem] rounded-full bg-gradient-to-br from-purple-400/10 to-pink-400/10 opacity-70 blur-2xl' />
-        <div className='absolute bottom-[18%] left-0 h-[20rem] w-[20rem] rounded-full bg-gradient-to-br from-blue-400/10 to-cyan-400/10 opacity-60 blur-xl' />
+        <div className='absolute top-1/4 right-0 h-72 w-[18rem] rounded-full bg-linear-to-br from-purple-400/10 to-pink-400/10 opacity-70 blur-2xl' />
+        <div className='absolute bottom-[18%] left-0 h-80 w-[20rem] rounded-full bg-linear-to-br from-blue-400/10 to-cyan-400/10 opacity-60 blur-xl' />
       </div>
 
       <div className='content-container'>
@@ -262,7 +262,7 @@ export const About: React.FC<IAboutProps> = () => {
               <h3 className='text-gradient mb-4 text-xl font-semibold'>
                 Core Technologies
               </h3>
-              <div className='grid grid-cols-2 gap-4 text-sm text-gray-700 dark:text-gray-300 sm:grid-cols-3'>
+              <div className='grid grid-cols-2 gap-4 text-sm text-gray-700 sm:grid-cols-3 dark:text-gray-300'>
                 {coreTechnologies.map((section) => (
                   <div key={section.title} className='space-y-2'>
                     <h4 className='font-medium text-gray-800 dark:text-gray-200'>
@@ -271,7 +271,7 @@ export const About: React.FC<IAboutProps> = () => {
                     <ul className='space-y-1'>
                       {section.items.map((item) => (
                         <li key={item} className='flex items-center gap-2'>
-                          <span className='h-2 w-2 rounded-full bg-gradient-to-br from-blue-500 to-purple-500' />
+                          <span className='h-2 w-2 rounded-full bg-linear-to-br from-blue-500 to-purple-500' />
                           <span>{item}</span>
                         </li>
                       ))}
@@ -289,7 +289,7 @@ export const About: React.FC<IAboutProps> = () => {
                 {achievements.map((item) => (
                   <div key={item.title} className='flex items-center gap-3'>
                     <div
-                      className={`flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${item.accent}`}
+                      className={`flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br ${item.accent}`}
                     >
                       <span className='text-lg'>{item.icon}</span>
                     </div>

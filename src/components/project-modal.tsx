@@ -106,11 +106,11 @@ export const ProjectModal: React.FC<IProjectModal> = ({ imageUrls, slug }) => {
             >
               <div className='glass-card special-border relative overflow-hidden border border-white/20 bg-white/10 shadow-2xl backdrop-blur-xl dark:border-gray-700/50 dark:bg-gray-900/80'>
                 {/* Enhanced gradient background */}
-                <div className='absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 dark:from-blue-500/5 dark:via-purple-500/5 dark:to-pink-500/5' />
+                <div className='absolute inset-0 bg-linear-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 dark:from-blue-500/5 dark:via-purple-500/5 dark:to-pink-500/5' />
 
                 {/* Close Button */}
                 <button
-                  className='special-border glass-card group absolute right-4 top-4 z-40 flex h-10 w-10 items-center justify-center border-white/20 transition-all duration-300 hover:bg-red-500/20 dark:border-white/10'
+                  className='special-border glass-card group absolute top-4 right-4 z-40 flex h-10 w-10 items-center justify-center border-white/20 transition-all duration-300 hover:bg-red-500/20 dark:border-white/10'
                   onClick={handleClose}
                 >
                   <FaTimes className='h-4 w-4 text-gray-700 transition-colors duration-300 group-hover:text-red-500 dark:text-gray-300' />
@@ -121,7 +121,7 @@ export const ProjectModal: React.FC<IProjectModal> = ({ imageUrls, slug }) => {
                   {/* Carousel wrapper */}
                   <div className='special-border relative h-[80vh] max-h-screen overflow-hidden'>
                     {isLoading && (
-                      <div className='absolute inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm'>
+                      <div className='absolute inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-xs'>
                         <div className='glass-card special-border p-6'>
                           <CirclesWithBars
                             size='lg'
@@ -148,7 +148,7 @@ export const ProjectModal: React.FC<IProjectModal> = ({ imageUrls, slug }) => {
                         height={500}
                         width={500}
                         src={currentImage.url}
-                        className='absolute left-1/2 top-1/2 block max-h-full max-w-full -translate-x-1/2 -translate-y-1/2 object-contain'
+                        className='absolute top-1/2 left-1/2 block max-h-full max-w-full -translate-x-1/2 -translate-y-1/2 object-contain'
                         alt='Project screenshot'
                         onLoad={() => setIsLoading(false)}
                       />

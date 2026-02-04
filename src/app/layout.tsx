@@ -104,7 +104,7 @@ const RootLayout: React.FC<IRootLayoutProps> = ({ children }) => {
   return (
     <html
       lang='en'
-      className={`!scroll-smooth ${inter.variable} ${playfair.variable} ${jetbrains.variable}`}
+      className={`scroll-smooth! ${inter.variable} ${playfair.variable} ${jetbrains.variable}`}
     >
       <head>
         {/* Resource hints for better performance */}
@@ -114,7 +114,7 @@ const RootLayout: React.FC<IRootLayoutProps> = ({ children }) => {
         <script dangerouslySetInnerHTML={{ __html: themeInitialiser }} />
       </head>
       <body
-        className={`${jetbrains.className} bg-gray-50 text-gray-950 dark:bg-gray-900 dark:text-gray-50 dark:text-opacity-90`}
+        className={`${jetbrains.className} dark:text-opacity-90 bg-gray-50 text-gray-950 dark:bg-gray-900 dark:text-gray-50`}
       >
         <ThemeContextProvider>
           <ActiveSectionContextProvider>

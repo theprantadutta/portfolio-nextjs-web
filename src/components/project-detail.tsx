@@ -104,19 +104,19 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
     <div className='relative min-h-screen'>
       {/* Background Gradients */}
       <div className='fixed inset-0 -z-10'>
-        <div className='absolute left-1/4 top-0 h-96 w-96 animate-pulse rounded-full bg-gradient-to-br from-blue-500/20 to-purple-600/20 blur-3xl' />
+        <div className='absolute top-0 left-1/4 h-96 w-96 animate-pulse rounded-full bg-linear-to-br from-blue-500/20 to-purple-600/20 blur-3xl' />
         <div
-          className='absolute bottom-1/4 right-1/4 h-80 w-80 animate-pulse rounded-full bg-gradient-to-br from-pink-500/20 to-orange-500/20 blur-3xl'
+          className='absolute right-1/4 bottom-1/4 h-80 w-80 animate-pulse rounded-full bg-linear-to-br from-pink-500/20 to-orange-500/20 blur-3xl'
           style={{ animationDelay: '2s' }}
         />
         <div
-          className='absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 transform animate-pulse rounded-full bg-gradient-to-br from-green-500/15 to-teal-500/15 blur-3xl'
+          className='absolute top-1/2 left-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 transform animate-pulse rounded-full bg-linear-to-br from-green-500/15 to-teal-500/15 blur-3xl'
           style={{ animationDelay: '4s' }}
         />
       </div>
 
       {/* Back Button */}
-      <div className='fixed left-4 top-4 z-50'>
+      <div className='fixed top-4 left-4 z-50'>
         <Link
           href='/#projects'
           className='special-border glass-card group flex items-center gap-2 px-4 py-2 transition-all duration-300 hover:bg-white/20 dark:hover:bg-gray-800/40'
@@ -129,28 +129,28 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
       {/* Enhanced Hero Section */}
       <section
         ref={heroRef}
-        className={`relative px-4 pb-8 pt-10 sm:px-6 sm:pt-16 lg:px-8 ${heroAnimation}`}
+        className={`relative px-4 pt-10 pb-8 sm:px-6 sm:pt-16 lg:px-8 ${heroAnimation}`}
       >
         <div className='mx-auto max-w-7xl'>
           <div className='mb-8 text-center'>
             {/* Enhanced Project Category/Type Badge */}
             <div className='mb-6 flex flex-wrap justify-center gap-3'>
               <span
-                className={`special-border glass-card bg-gradient-to-r ${platformBadge?.color} px-4 py-2 text-sm font-medium ${platformBadge?.textColor}`}
+                className={`special-border glass-card bg-linear-to-r ${platformBadge?.color} px-4 py-2 text-sm font-medium ${platformBadge?.textColor}`}
               >
                 {platformBadge?.label}
               </span>
 
               {/* Project Status Badge */}
               <span
-                className={`special-border glass-card bg-gradient-to-r ${statusBadge?.color} px-4 py-2 text-sm font-medium ${statusBadge?.textColor}`}
+                className={`special-border glass-card bg-linear-to-r ${statusBadge?.color} px-4 py-2 text-sm font-medium ${statusBadge?.textColor}`}
               >
                 {statusBadge?.label}
               </span>
 
               {/* Featured Project Badge */}
               {project.isFeatured && (
-                <span className='special-border glass-card flex items-center gap-2 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 px-4 py-2 text-sm font-medium text-yellow-600 dark:text-yellow-400'>
+                <span className='special-border glass-card flex items-center gap-2 bg-linear-to-r from-yellow-500/20 to-orange-500/20 px-4 py-2 text-sm font-medium text-yellow-600 dark:text-yellow-400'>
                   <FaStar className='h-4 w-4' />
                   Featured
                 </span>
@@ -158,12 +158,12 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
             </div>
 
             {/* Project Title */}
-            <h1 className='mb-6 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-4xl font-bold leading-tight text-transparent dark:from-white dark:via-gray-100 dark:to-white md:text-6xl lg:text-7xl'>
+            <h1 className='mb-6 bg-linear-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-4xl leading-tight font-bold text-transparent md:text-6xl lg:text-7xl dark:from-white dark:via-gray-100 dark:to-white'>
               {project.title}
             </h1>
 
             {/* Enhanced Project Description */}
-            <p className='mx-auto mb-6 max-w-3xl text-lg leading-relaxed text-gray-600 dark:text-gray-300 md:text-xl'>
+            <p className='mx-auto mb-6 max-w-3xl text-lg leading-relaxed text-gray-600 md:text-xl dark:text-gray-300'>
               {project.description ||
                 'A showcase of problem-solving and creativity.'}
             </p>
@@ -199,7 +199,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                 >
                   <FaGithub className='h-5 w-5' />
                   View Source Code
-                  <FaExternalLinkAlt className='h-4 w-4 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1' />
+                  <FaExternalLinkAlt className='h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1' />
                 </a>
               )}
               {project.googlePlayLink && (
@@ -211,7 +211,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                 >
                   <FaGooglePlay className='h-5 w-5' />
                   Download App
-                  <FaExternalLinkAlt className='h-4 w-4 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1' />
+                  <FaExternalLinkAlt className='h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1' />
                 </a>
               )}
             </div>
@@ -252,7 +252,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
               className={`special-border glass-card p-6 ${getContentItemClass(0)}`}
             >
               <div className='mb-5 flex items-center gap-3'>
-                <div className='special-border glass-card bg-gradient-to-r from-green-500/20 to-teal-500/20 p-2'>
+                <div className='special-border glass-card bg-linear-to-r from-green-500/20 to-teal-500/20 p-2'>
                   <FaMobile className='h-5 w-5 text-green-600 dark:text-green-400' />
                 </div>
                 <h2 className='text-2xl font-bold text-gray-900 dark:text-white'>
@@ -265,8 +265,8 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                     key={tag.id}
                     className={`special-border glass-card px-3 py-2 text-sm font-medium transition-transform duration-200 hover:scale-105 ${
                       tag.isFavorite
-                        ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-700 ring-2 ring-blue-500/30 dark:text-blue-300'
-                        : 'bg-gradient-to-r from-gray-500/10 to-gray-600/10 text-gray-700 dark:text-gray-300'
+                        ? 'bg-linear-to-r from-blue-500/20 to-purple-500/20 text-blue-700 ring-2 ring-blue-500/30 dark:text-blue-300'
+                        : 'bg-linear-to-r from-gray-500/10 to-gray-600/10 text-gray-700 dark:text-gray-300'
                     }`}
                   >
                     {tag.isFavorite && (
@@ -291,14 +291,14 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
             className={`special-border glass-card p-6 ${getContentItemClass(1)}`}
           >
             <div className='mb-5 flex items-center gap-3'>
-              <div className='special-border glass-card bg-gradient-to-r from-blue-500/20 to-purple-500/20 p-2'>
+              <div className='special-border glass-card bg-linear-to-r from-blue-500/20 to-purple-500/20 p-2'>
                 <FaCode className='h-5 w-5 text-blue-600 dark:text-blue-400' />
               </div>
               <h2 className='text-2xl font-bold text-gray-900 dark:text-white'>
                 About This Project
               </h2>
             </div>
-            <div className='prose prose-lg prose-gray max-w-none dark:prose-invert'>
+            <div className='prose prose-lg prose-gray dark:prose-invert max-w-none'>
               {project.longDescription && project.longDescription.length > 0 ? (
                 <BlocksRenderer content={project.longDescription} />
               ) : (
@@ -334,7 +334,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
             {/* Project Links - Only show if there are links */}
             {(project.githubLink || project.googlePlayLink) && (
               <div
-                className={`special-border glass-card bg-gradient-to-br from-gray-500/5 to-slate-500/5 p-6 ${getContentItemClass(2)}`}
+                className={`special-border glass-card bg-linear-to-br from-gray-500/5 to-slate-500/5 p-6 ${getContentItemClass(2)}`}
               >
                 <h3 className='mb-4 text-lg font-bold text-gray-900 dark:text-white'>
                   Project Access
@@ -345,7 +345,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                       href={project.githubLink}
                       target='_blank'
                       rel='noopener noreferrer'
-                      className='special-border glass-card group block w-full bg-gradient-to-r from-gray-500/5 to-gray-600/5 p-4 transition-all duration-300 hover:from-gray-500/10 hover:to-gray-600/10'
+                      className='special-border glass-card group block w-full bg-linear-to-r from-gray-500/5 to-gray-600/5 p-4 transition-all duration-300 hover:from-gray-500/10 hover:to-gray-600/10'
                     >
                       <div className='flex items-center justify-between'>
                         <div className='flex items-center gap-3'>
@@ -359,7 +359,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                             </div>
                           </div>
                         </div>
-                        <FaExternalLinkAlt className='h-4 w-4 text-gray-500 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1' />
+                        <FaExternalLinkAlt className='h-4 w-4 text-gray-500 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1' />
                       </div>
                     </a>
                   )}
@@ -368,7 +368,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                       href={project.googlePlayLink}
                       target='_blank'
                       rel='noopener noreferrer'
-                      className='special-border glass-card group block w-full bg-gradient-to-r from-green-500/5 to-teal-500/5 p-4 transition-all duration-300 hover:from-green-500/10 hover:to-teal-500/10'
+                      className='special-border glass-card group block w-full bg-linear-to-r from-green-500/5 to-teal-500/5 p-4 transition-all duration-300 hover:from-green-500/10 hover:to-teal-500/10'
                     >
                       <div className='flex items-center justify-between'>
                         <div className='flex items-center gap-3'>
@@ -382,7 +382,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                             </div>
                           </div>
                         </div>
-                        <FaExternalLinkAlt className='h-4 w-4 text-gray-500 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1' />
+                        <FaExternalLinkAlt className='h-4 w-4 text-gray-500 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1' />
                       </div>
                     </a>
                   )}
@@ -392,7 +392,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
 
             {/* Project Analytics */}
             <div
-              className={`special-border glass-card bg-gradient-to-br from-blue-500/5 to-purple-500/5 p-6 ${getContentItemClass(3)}`}
+              className={`special-border glass-card bg-linear-to-br from-blue-500/5 to-purple-500/5 p-6 ${getContentItemClass(3)}`}
             >
               <h3 className='mb-4 text-lg font-bold text-gray-900 dark:text-white'>
                 Project Analytics

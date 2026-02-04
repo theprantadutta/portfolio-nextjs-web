@@ -44,9 +44,9 @@ export const ProjectOverviewCards = ({
   return (
     <div className='mb-12 grid gap-6 md:grid-cols-3'>
       {/* Key Metrics Card */}
-      <div className='special-border glass-card bg-gradient-to-br from-blue-500/5 to-purple-500/5 p-6'>
+      <div className='special-border glass-card bg-linear-to-br from-blue-500/5 to-purple-500/5 p-6'>
         <div className='mb-4 flex items-center gap-3'>
-          <div className='special-border glass-card bg-gradient-to-r from-blue-500/20 to-purple-500/20 p-2'>
+          <div className='special-border glass-card bg-linear-to-r from-blue-500/20 to-purple-500/20 p-2'>
             <FaCheckCircle className='h-5 w-5 text-blue-600 dark:text-blue-400' />
           </div>
           <h3 className='text-lg font-bold text-gray-900 dark:text-white'>
@@ -79,9 +79,9 @@ export const ProjectOverviewCards = ({
       </div>
 
       {/* Platform & Availability Card */}
-      <div className='special-border glass-card bg-gradient-to-br from-green-500/5 to-teal-500/5 p-6'>
+      <div className='special-border glass-card bg-linear-to-br from-green-500/5 to-teal-500/5 p-6'>
         <div className='mb-4 flex items-center gap-3'>
-          <div className='special-border glass-card bg-gradient-to-r from-green-500/20 to-teal-500/20 p-2'>
+          <div className='special-border glass-card bg-linear-to-r from-green-500/20 to-teal-500/20 p-2'>
             <FaMobile className='h-5 w-5 text-green-600 dark:text-green-400' />
           </div>
           <h3 className='text-lg font-bold text-gray-900 dark:text-white'>
@@ -131,9 +131,9 @@ export const ProjectOverviewCards = ({
       </div>
 
       {/* Featured Status & Highlights Card */}
-      <div className='special-border glass-card bg-gradient-to-br from-orange-500/5 to-pink-500/5 p-6'>
+      <div className='special-border glass-card bg-linear-to-br from-orange-500/5 to-pink-500/5 p-6'>
         <div className='mb-4 flex items-center gap-3'>
-          <div className='special-border glass-card bg-gradient-to-r from-orange-500/20 to-pink-500/20 p-2'>
+          <div className='special-border glass-card bg-linear-to-r from-orange-500/20 to-pink-500/20 p-2'>
             <FaStar className='h-5 w-5 text-orange-600 dark:text-orange-400' />
           </div>
           <h3 className='text-lg font-bold text-gray-900 dark:text-white'>
@@ -143,7 +143,7 @@ export const ProjectOverviewCards = ({
 
         <div className='space-y-4'>
           {project.isFeatured && (
-            <div className='special-border glass-card bg-gradient-to-r from-yellow-500/10 to-orange-500/10 p-3 text-center'>
+            <div className='special-border glass-card bg-linear-to-r from-yellow-500/10 to-orange-500/10 p-3 text-center'>
               <div className='flex items-center justify-center gap-2'>
                 <FaStar className='h-4 w-4 text-yellow-500' />
                 <span className='font-medium text-yellow-700 dark:text-yellow-400'>

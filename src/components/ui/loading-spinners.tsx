@@ -103,7 +103,7 @@ export const BarsSpinner: React.FC<LoadingSpinnerProps> = ({
       {[0, 1, 2, 3].map((index) => (
         <div
           key={index}
-          className={`${barSizes[size]} bg-current ${colorClasses[color]} animate-bounce rounded`}
+          className={`${barSizes[size]} bg-current ${colorClasses[color]} animate-bounce rounded-sm`}
           style={{
             animationDelay: `${index * 0.1}s`,
             animationDuration: '1.2s',
@@ -125,11 +125,11 @@ export const GradientSpinner: React.FC<
   return (
     <div className={`${sizeClasses[size]} ${className}`}>
       <div
-        className={`h-full w-full rounded-full bg-gradient-to-r ${gradient} relative animate-spin`}
+        className={`h-full w-full rounded-full bg-linear-to-r ${gradient} relative animate-spin`}
       >
         <div className='absolute inset-1 rounded-full bg-white dark:bg-gray-900'></div>
         <div
-          className={`absolute inset-0 rounded-full bg-gradient-to-r ${gradient} animate-ping opacity-75`}
+          className={`absolute inset-0 rounded-full bg-linear-to-r ${gradient} animate-ping opacity-75`}
         ></div>
       </div>
     </div>
@@ -214,7 +214,7 @@ export const CirclesWithBars: React.FC<
           {[0, 1, 2].map((index) => (
             <div
               key={index}
-              className={`h-2 w-0.5 bg-current ${barColor || finalColor} animate-bounce rounded`}
+              className={`h-2 w-0.5 bg-current ${barColor || finalColor} animate-bounce rounded-sm`}
               style={{
                 animationDelay: `${index * 0.1}s`,
                 animationDuration: '1s',
@@ -239,8 +239,8 @@ export const SkeletonLoader: React.FC<{
         <div className='mb-4 flex items-center space-x-4'>
           <div className='h-12 w-12 rounded-full bg-gray-300 dark:bg-gray-700'></div>
           <div className='flex-1 space-y-2'>
-            <div className='h-4 w-1/4 rounded bg-gray-300 dark:bg-gray-700'></div>
-            <div className='h-3 w-1/2 rounded bg-gray-300 dark:bg-gray-700'></div>
+            <div className='h-4 w-1/4 rounded-sm bg-gray-300 dark:bg-gray-700'></div>
+            <div className='h-3 w-1/2 rounded-sm bg-gray-300 dark:bg-gray-700'></div>
           </div>
         </div>
       )}
@@ -248,7 +248,7 @@ export const SkeletonLoader: React.FC<{
         {Array.from({ length: rows }).map((_, index) => (
           <div
             key={index}
-            className='h-4 rounded bg-gray-300 dark:bg-gray-700'
+            className='h-4 rounded-sm bg-gray-300 dark:bg-gray-700'
             style={{ width: `${100 - index * 10}%` }}
           />
         ))}
@@ -262,7 +262,7 @@ export const PageLoader: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
   if (!isLoading) return null
 
   return (
-    <div className='fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm dark:bg-gray-900/80'>
+    <div className='fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-xs dark:bg-gray-900/80'>
       <div className='text-center'>
         <GradientSpinner
           size='xl'
