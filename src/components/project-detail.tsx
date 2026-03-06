@@ -118,7 +118,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
       {/* Back Button */}
       <div className='fixed top-4 left-4 z-50'>
         <Link
-          href='/#projects'
+          href='/projects'
           className='special-border glass-card group flex items-center gap-2 px-4 py-2 transition-all duration-300 hover:bg-white/20 dark:hover:bg-gray-800/40'
         >
           <FaArrowLeft className='h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1' />
