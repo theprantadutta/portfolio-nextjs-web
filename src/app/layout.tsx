@@ -45,23 +45,74 @@ try {
 }
 `
 
+// export const metadata = {
+//   metadataBase: new URL(
+//     process.env.NODE_ENV === 'production'
+//       ? 'https://pranta.dev'
+//       : 'http://localhost:3000'
+//   ),
+//   title: 'Pranta Dutta | Full Stack Developer Portfolio',
+//   description:
+//     'Pranta Dutta is a skilled full-stack developer with 3+ years of experience in Flutter, React Native, and modern web technologies. Explore his projects and get in touch.',
+//   keywords:
+//     'Pranta Dutta, Full Stack Developer, Flutter, React Native, Web Development, Portfolio',
+//   authors: [{ name: 'Pranta Dutta' }],
+//   creator: 'Pranta Dutta',
+//   openGraph: {
+//     title: 'Pranta Dutta | Full Stack Developer Portfolio',
+//     description:
+//       'Skilled full-stack developer specializing in Flutter & React Native mobile apps and modern web development.',
+//     url: '/',
+//     siteName: 'Pranta Dutta Portfolio',
+//     type: 'website',
+//     locale: 'en_US',
+//     images: [
+//       {
+//         url: '/profile.png',
+//         width: 400,
+//         height: 400,
+//         alt: 'Pranta Dutta - Full Stack Developer',
+//       },
+//     ],
+//   },
+//   twitter: {
+//     card: 'summary_large_image',
+//     title: 'Pranta Dutta | Full Stack Developer Portfolio',
+//     description:
+//       'Skilled full-stack developer specializing in Flutter & React Native mobile apps and modern web development.',
+//     images: ['/profile.png'],
+//   },
+//   robots: {
+//     index: true,
+//     follow: true,
+//     googleBot: {
+//       index: true,
+//       follow: true,
+//       'max-video-preview': -1,
+//       'max-image-preview': 'large',
+//       'max-snippet': -1,
+//     },
+//   },
+//   category: 'technology',
+// }
+
 export const metadata = {
   metadataBase: new URL(
     process.env.NODE_ENV === 'production'
       ? 'https://pranta.dev'
       : 'http://localhost:3000'
   ),
-  title: 'Pranta Dutta | Full Stack Developer Portfolio',
+  title: 'Pranta Dutta | Flutter & Mobile Engineer',
   description:
-    'Pranta Dutta is a skilled full-stack developer with 3+ years of experience in Flutter, React Native, and modern web technologies. Explore his projects and get in touch.',
+    'Pranta Dutta is a Flutter & Mobile Engineer with 4+ years of experience building production apps, backend APIs, and AI-powered systems. Explore his projects and get in touch.',
   keywords:
-    'Pranta Dutta, Full Stack Developer, Flutter, React Native, Web Development, Portfolio',
+    'Pranta Dutta, Flutter Developer, Mobile Engineer, Flutter, React Native, Go, ASP.NET Core, AI integrations, Full Stack Developer, Portfolio',
   authors: [{ name: 'Pranta Dutta' }],
   creator: 'Pranta Dutta',
   openGraph: {
-    title: 'Pranta Dutta | Full Stack Developer Portfolio',
+    title: 'Pranta Dutta | Flutter & Mobile Engineer',
     description:
-      'Skilled full-stack developer specializing in Flutter & React Native mobile apps and modern web development.',
+      'Flutter & Mobile Engineer with 4+ years shipping production apps, backend APIs, and AI-powered systems.',
     url: '/',
     siteName: 'Pranta Dutta Portfolio',
     type: 'website',
@@ -71,15 +122,15 @@ export const metadata = {
         url: '/profile.png',
         width: 400,
         height: 400,
-        alt: 'Pranta Dutta - Full Stack Developer',
+        alt: 'Pranta Dutta - Flutter & Mobile Engineer',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Pranta Dutta | Full Stack Developer Portfolio',
+    title: 'Pranta Dutta | Flutter & Mobile Engineer',
     description:
-      'Skilled full-stack developer specializing in Flutter & React Native mobile apps and modern web development.',
+      'Flutter & Mobile Engineer with 4+ years shipping production apps, backend APIs, and AI-powered systems.',
     images: ['/profile.png'],
   },
   robots: {

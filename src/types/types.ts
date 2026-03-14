@@ -73,6 +73,7 @@ export type ProjectDataAttributes = {
     id: number
     flag: FeatureFlag
   }[]
+  hidden?: boolean | null
 }
 
 export interface IStrapiImageData {

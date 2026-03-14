@@ -85,12 +85,32 @@ interface IAboutProps {
 // ]
 
 const paragraphs = [
+  // {
+  //   id: 'journey',
+  //   copy: (
+  //     <>
+  //       I&apos;m a{' '}
+  //       <span className='text-gradient font-semibold'>full-stack engineer</span>{' '}
+  //       with 4 years of experience building{' '}
+  //       <span className='text-gradient-accent font-medium'>
+  //         mobile apps, backend APIs, and infrastructure
+  //       </span>
+  //       . My core stack is{' '}
+  //       <span className='mono from-primary-100 to-secondary-100 dark:from-primary-900/30 dark:to-secondary-900/30 rounded-sm bg-linear-to-r px-2 py-1 text-sm font-semibold'>
+  //         Flutter, React Native, Go &amp; .NET
+  //       </span>
+  //       .
+  //     </>
+  //   ),
+  // },
   {
     id: 'journey',
     copy: (
       <>
         I&apos;m a{' '}
-        <span className='text-gradient font-semibold'>full-stack engineer</span>{' '}
+        <span className='text-gradient font-semibold'>
+          Flutter &amp; Mobile Engineer
+        </span>{' '}
         with 4 years of experience building{' '}
         <span className='text-gradient-accent font-medium'>
           mobile apps, backend APIs, and infrastructure
@@ -161,6 +181,24 @@ const paragraphs = [
       </>
     ),
   },
+  // {
+  //   id: 'apps',
+  //   copy: (
+  //     <>
+  //       I&apos;ve shipped{' '}
+  //       <span className='text-gradient-accent font-semibold'>
+  //         20+ production apps
+  //       </span>{' '}
+  //       — including several on the{' '}
+  //       <span className='font-medium'>Google Play Store</span>. When I&apos;m
+  //       not building enterprise systems, I&apos;m making{' '}
+  //       <span className='decoration-secondary-500 font-medium underline'>
+  //         games, open-source libraries, and side projects
+  //       </span>
+  //       .
+  //     </>
+  //   ),
+  // },
   {
     id: 'apps',
     copy: (
@@ -169,13 +207,13 @@ const paragraphs = [
         <span className='text-gradient-accent font-semibold'>
           20+ production apps
         </span>{' '}
-        — including several on the{' '}
-        <span className='font-medium'>Google Play Store</span>. When I&apos;m
-        not building enterprise systems, I&apos;m making{' '}
+        — including games, tools, and enterprise systems on the{' '}
+        <span className='font-medium'>Google Play Store</span>. Outside of work,
+        I build{' '}
         <span className='decoration-secondary-500 font-medium underline'>
-          games, open-source libraries, and side projects
-        </span>
-        .
+          open-source libraries and side projects
+        </span>{' '}
+        because building things is just what I do.
       </>
     ),
   },

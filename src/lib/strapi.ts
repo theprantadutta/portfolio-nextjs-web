@@ -99,6 +99,8 @@ export const getAllFeaturedProjects = async () => {
     searchParams: {
       sort: 'sortBy:asc',
       'filters[isFeatured][$eq]': 'true',
+      'filters[$or][0][hidden][$eq]': 'false',
+      'filters[$or][1][hidden][$null]': 'true',
       'fields[0]': 'id',
       'fields[1]': 'documentId',
       'fields[2]': 'title',
@@ -134,6 +136,8 @@ export const getAllProjects = async () => {
   return strapiFetch<IStrapiApiResponse<ProjectDataAttributes>>('/projects', {
     searchParams: {
       sort: 'sortBy:asc',
+      'filters[$or][0][hidden][$eq]': 'false',
+      'filters[$or][1][hidden][$null]': 'true',
       'fields[0]': 'id',
       'fields[1]': 'documentId',
       'fields[2]': 'title',

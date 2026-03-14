@@ -58,8 +58,13 @@ export const Intro: React.FC<IIntroProps> = () => {
             Hello, I&apos;m <span className='heading-primary'>Pranta</span>
             <span className='text-2xl sm:text-4xl'>.</span>
           </span>
-          <span className='mt-3 block text-xl font-medium text-gray-600 sm:text-3xl lg:text-4xl dark:text-gray-400'>
+          {/* <span className='mt-3 block text-xl font-medium text-gray-600 sm:text-3xl lg:text-4xl dark:text-gray-400'>
             Full-stack developer with{' '}
+            <span className='text-gradient font-semibold'>4 years</span> of
+            experience.
+          </span> */}
+          <span className='mt-3 block text-xl font-medium text-gray-600 sm:text-3xl lg:text-4xl dark:text-gray-400'>
+            Flutter & Mobile Engineer with{' '}
             <span className='text-gradient font-semibold'>4 years</span> of
             experience.
           </span>
@@ -79,7 +84,7 @@ export const Intro: React.FC<IIntroProps> = () => {
           <span className='text-gradient font-semibold'>React Native</span>,{' '}
           <span className='text-gradient font-semibold'>Go</span>, and{' '}
           <span className='text-gradient font-semibold'>.NET</span> — plus a
-          growing obsession with{' '}
+          hands-on experience building{' '}
           <span className='text-gradient font-semibold'>
             AI/LLM integrations
           </span>

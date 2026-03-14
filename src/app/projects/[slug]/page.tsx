@@ -5,13 +5,16 @@ import { notFound } from 'next/navigation'
 
 // Fetch all project SLUGS at build time for static generation
 export async function generateStaticParams() {
-  const response = await fetch(`${STRAPI_API_URL}/projects?fields[0]=slug`, {
-    headers: {
-      Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    // next: { revalidate: 3600 }, // Optional: Revalidate every hour (ISR)
-  })
+  const response = await fetch(
+    `${STRAPI_API_URL}/projects?fields[0]=slug&filters[$or][0][hidden][$eq]=false&filters[$or][1][hidden][$null]=true`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      // next: { revalidate: 3600 }, // Optional: Revalidate every hour (ISR)
+    }
+  )
 
   if (!response.ok) {
     throw new Error('Failed to fetch project slugs')
@@ -27,7 +30,7 @@ export async function generateStaticParams() {
 // Fetch detailed project data by SLUG
 async function getProjectData(slug: string) {
   const res = await fetch(
-    `${STRAPI_API_URL}/projects?filters[slug][$eq]=${slug}&populate=*`, // Fixed: using consistent URL constant
+    `${STRAPI_API_URL}/projects?filters[slug][$eq]=${slug}&filters[$or][0][hidden][$eq]=false&filters[$or][1][hidden][$null]=true&populate=*`,
     {
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
