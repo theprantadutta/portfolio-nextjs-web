@@ -2,6 +2,7 @@
 
 import React, { ReactNode, useState, useEffect } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import clsx from 'clsx'
 
 import { links } from '@/lib/data'
@@ -15,6 +16,7 @@ import {
   FiBriefcase,
   FiStar,
   FiMail,
+  FiBookOpen,
 } from 'react-icons/fi'
 
 interface IHeaderProps {
@@ -26,6 +28,7 @@ const navigationIcons = {
   Home: FiHome,
   About: FiUser,
   Projects: FiBriefcase,
+  Blogs: FiBookOpen,
   Skills: FiStar,
   Experience: FiBriefcase,
   Contact: FiMail,
@@ -36,6 +39,7 @@ export const Header: React.FC<IHeaderProps> = () => {
     useActiveSectionContext()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const pathname = usePathname()
 
   const { containerRef, getItemClassName } = useStaggeredAnimation({
     itemCount: links.length,
@@ -43,6 +47,16 @@ export const Header: React.FC<IHeaderProps> = () => {
     staggerDelay: 20,
     animationClass: 'animate-fade-in',
   })
+
+  // Set active section based on pathname for route-based pages
+  useEffect(() => {
+    for (const link of links) {
+      if (!link.hash.startsWith('/#') && pathname.startsWith(link.hash)) {
+        setActiveSection(link.name)
+        return
+      }
+    }
+  }, [pathname, setActiveSection])
 
   // Handle scroll effect
   useEffect(() => {

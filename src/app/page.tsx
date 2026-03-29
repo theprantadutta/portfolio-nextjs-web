@@ -11,16 +11,19 @@ import {
   getAllSkills,
   getAllFeaturedProjects,
 } from '@/lib/strapi'
+import { getMostLikedArticles } from '@/lib/devto'
 import { SectionDivider } from '@/components/section-divider'
+import { PopularBlogs } from '@/components/popular-blogs'
 
 // Enable ISR for this page
 export const revalidate = 3600 // Revalidate every hour
 
 const Home: NextPage = async () => {
-  const [experiences, projects, skills] = await Promise.all([
+  const [experiences, projects, skills, popularBlogs] = await Promise.all([
     getAllExperiences(),
     getAllFeaturedProjects(),
     getAllSkills(),
+    getMostLikedArticles(3),
   ])
   return (
     <main className='flex flex-col items-center px-4'>
@@ -33,6 +36,8 @@ const Home: NextPage = async () => {
       <Skills skills={skills} />
       <SectionDivider />
       <Experience experiences={experiences} />
+      <SectionDivider />
+      <PopularBlogs articles={popularBlogs} />
       <SectionDivider />
       <Contact />
     </main>
