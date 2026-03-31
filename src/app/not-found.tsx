@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <main className='relative flex min-h-screen items-center justify-center overflow-hidden px-4'>
+    <main className='relative flex h-dvh items-center justify-center overflow-hidden px-4'>
       {/* Background Gradient Blobs */}
       <div className='fixed inset-0 -z-10'>
         <div className='from-primary-500/20 to-secondary-600/20 absolute top-1/4 left-1/4 h-96 w-96 animate-pulse rounded-full bg-linear-to-br blur-3xl' />
@@ -24,7 +24,7 @@ export default function NotFound() {
       {/* Content */}
       <div className='animate-fade-in-up relative text-center'>
         {/* Glass Card */}
-        <div className='special-border glass-card relative overflow-hidden border border-white/10 px-8 py-12 sm:px-16 sm:py-16 dark:border-gray-700/30'>
+        <div className='special-border glass-card relative overflow-hidden border border-white/10 px-6 py-8 sm:px-16 sm:py-16 dark:border-gray-700/30'>
           {/* Gradient overlay */}
           <div className='from-primary-500/5 via-secondary-500/5 to-accent-500/5 absolute inset-0 bg-linear-to-br' />
 
@@ -38,7 +38,7 @@ export default function NotFound() {
 
           <div className='relative'>
             {/* 404 Number */}
-            <h1 className='from-primary-500 to-secondary-500 animate-float mb-4 bg-linear-to-r bg-clip-text font-serif text-8xl font-bold text-transparent sm:text-9xl'>
+            <h1 className='from-primary-500 to-secondary-500 animate-float mb-4 bg-linear-to-r bg-clip-text font-serif text-7xl font-bold text-transparent sm:text-9xl'>
               404
             </h1>
 
@@ -48,16 +48,16 @@ export default function NotFound() {
             </h2>
 
             {/* Description */}
-            <p className='mx-auto mb-10 max-w-md text-base leading-relaxed text-gray-600 dark:text-gray-400'>
+            <p className='mx-auto mb-8 max-w-md text-sm leading-relaxed text-gray-600 sm:text-base dark:text-gray-400'>
               The page you&apos;re looking for doesn&apos;t exist or has been
               moved. Let&apos;s get you back on track.
             </p>
 
             {/* CTA Buttons */}
-            <div className='flex flex-col items-center justify-center gap-4 sm:flex-row'>
+            <div className='flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4'>
               <Link
                 href='/'
-                className='btn-primary special-border group inline-flex items-center gap-2 px-6 py-3 font-medium'
+                className='btn-primary special-border group inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium sm:px-6 sm:py-3 sm:text-base'
               >
                 <svg
                   className='h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1'
@@ -77,7 +77,7 @@ export default function NotFound() {
 
               <Link
                 href='/projects'
-                className='btn-secondary special-border group inline-flex items-center gap-2 px-6 py-3 font-medium'
+                className='btn-secondary special-border group inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium sm:px-6 sm:py-3 sm:text-base'
               >
                 <span>View Projects</span>
                 <svg
@@ -91,6 +91,26 @@ export default function NotFound() {
                     strokeLinecap='round'
                     strokeLinejoin='round'
                     d='M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3'
+                  />
+                </svg>
+              </Link>
+
+              <Link
+                href='/blogs'
+                className='btn-secondary special-border group inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium sm:px-6 sm:py-3 sm:text-base'
+              >
+                <span>View Blogs</span>
+                <svg
+                  className='h-4 w-4 transition-transform duration-300 group-hover:translate-x-1'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  strokeWidth={2}
+                  stroke='currentColor'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    d='M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.331 0 4.472.89 6.077 2.35m0-14.308a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-5.923 2.35'
                   />
                 </svg>
               </Link>
