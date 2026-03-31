@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <main className='relative flex h-dvh items-center justify-center overflow-hidden px-4'>
+    <main className='fixed inset-0 z-40 flex items-center justify-center overflow-hidden bg-gray-50 px-4 dark:bg-gray-900'>
       {/* Background Gradient Blobs */}
       <div className='fixed inset-0 -z-10'>
         <div className='from-primary-500/20 to-secondary-600/20 absolute top-1/4 left-1/4 h-96 w-96 animate-pulse rounded-full bg-linear-to-br blur-3xl' />
