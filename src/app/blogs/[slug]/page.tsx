@@ -6,6 +6,7 @@ import { getAllArticles, getArticleBySlug } from '@/lib/devto'
 import { DevToArticleDetail } from '@/types/blog-types'
 
 export const revalidate = 3600
+export const dynamicParams = true
 
 export async function generateStaticParams() {
   const articles = await getAllArticles()
