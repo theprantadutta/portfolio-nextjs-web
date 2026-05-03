@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation'
 
 import { BlogDetail } from '@/components/blog-detail'
 import { getAllArticles, getArticleBySlug } from '@/lib/devto'
-import { DevToArticleDetail } from '@/types/blog-types'
 
 export const revalidate = 3600
 export const dynamicParams = true
@@ -54,23 +53,18 @@ export default async function BlogPostPage({
 }: {
   params: Promise<{ slug: string }>
 }) {
-  let article: DevToArticleDetail | null = null
+  const { slug } = await params
 
-  try {
-    const { slug } = await params
-
-    if (!slug || typeof slug !== 'string') {
-      return notFound()
-    }
-
-    article = await getArticleBySlug(slug)
-  } catch (error) {
-    console.error('Error fetching blog post:', error)
-    return notFound()
+  if (!slug || typeof slug !== 'string') {
+    notFound()
   }
 
+  // Let transient fetch errors propagate — Next.js does not cache thrown
+  // errors, so the next request retries against dev.to. notFound() only
+  // fires when getArticleBySlug confirms a real 404.
+  const article = await getArticleBySlug(slug)
   if (!article) {
-    return notFound()
+    notFound()
   }
 
   return <BlogDetail article={article} />

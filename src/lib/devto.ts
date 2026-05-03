@@ -32,13 +32,24 @@ export const getArticleBySlug = async (
     {
       next: {
         revalidate: ONE_HOUR,
-        tags: ['blog-detail'],
+        tags: ['blog-detail', `blog-detail:${slug}`],
       },
     }
   )
 
-  if (!response.ok) {
+  // Article truly doesn't exist on dev.to — caller should render a 404.
+  if (response.status === 404) {
     return null
+  }
+
+  // Any other non-OK (429 rate limit, 5xx, network blip) is a TRANSIENT
+  // failure. Throw so Next.js does not cache the response. Returning null
+  // here would cause notFound() upstream to be cached for the full
+  // revalidate window, pinning a real article as 404 for an hour.
+  if (!response.ok) {
+    throw new Error(
+      `Dev.to request failed for slug "${slug}" — ${response.status} ${response.statusText}`
+    )
   }
 
   const article = (await response.json()) as DevToArticleDetail
