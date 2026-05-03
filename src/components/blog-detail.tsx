@@ -1,5 +1,3 @@
-'use client'
-
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -12,25 +10,12 @@ import {
 } from 'react-icons/fi'
 
 import { DevToArticleDetail } from '@/types/blog-types'
-import { useAnimationOnScroll } from '@/lib/animation-hooks'
 
 interface BlogDetailProps {
   article: DevToArticleDetail
 }
 
 export const BlogDetail = ({ article }: BlogDetailProps) => {
-  const { ref: heroRef, className: heroAnimation } = useAnimationOnScroll({
-    animationClass: 'animate-fade-in-up',
-    delay: 100,
-  })
-
-  const { ref: contentRef, className: contentAnimation } = useAnimationOnScroll(
-    {
-      animationClass: 'animate-fade-in-up',
-      delay: 300,
-    }
-  )
-
   return (
     <div className='relative min-h-screen'>
       {/* Background Gradients */}
@@ -60,8 +45,8 @@ export const BlogDetail = ({ article }: BlogDetailProps) => {
       {/* Hero Section */}
 
       <section
-        ref={heroRef as React.RefObject<HTMLElement>}
-        className={`relative px-4 pt-10 pb-8 sm:px-6 sm:pt-16 lg:px-8 ${heroAnimation}`}
+        className='animate-fade-in-up relative px-4 pt-10 pb-8 sm:px-6 sm:pt-16 lg:px-8'
+        style={{ '--animation-delay': '100ms' } as React.CSSProperties}
       >
         <div className='mx-auto max-w-4xl'>
           {/* Cover Image */}
@@ -120,8 +105,8 @@ export const BlogDetail = ({ article }: BlogDetailProps) => {
       {/* Article Body */}
 
       <section
-        ref={contentRef as React.RefObject<HTMLElement>}
-        className={`px-4 pb-16 sm:px-6 lg:px-8 ${contentAnimation}`}
+        className='animate-fade-in-up px-4 pb-16 sm:px-6 lg:px-8'
+        style={{ '--animation-delay': '300ms' } as React.CSSProperties}
       >
         <div className='mx-auto max-w-4xl'>
           <div className='special-border glass-card overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xs dark:border-gray-700/30 dark:bg-gray-900/20'>
