@@ -5,10 +5,15 @@ const DEVTO_USERNAME = 'pranta'
 const ONE_HOUR = 60 * 60
 
 // Build-time prerender fans out per-article fetches in parallel; cap concurrency
-// so we don't trip dev.to's anonymous rate limit (~30 req / 30s).
-const MAX_CONCURRENT_REQUESTS = 3
-const MAX_RETRIES = 4
-const BASE_BACKOFF_MS = 750
+// to 1 so a cold-cache build (~50 articles) stays under dev.to's anonymous
+// rate limit. Empirically a previous build burned through 21 requests in 5s
+// (~4 req/s) before getting throttled, so we serialize and let request
+// duration pace us naturally.
+const MAX_CONCURRENT_REQUESTS = 1
+const MAX_RETRIES = 6
+const BASE_BACKOFF_MS = 1000
+const MAX_BACKOFF_MS = 30_000
+const MAX_RETRY_AFTER_MS = 60_000
 
 type DevToFetchOptions = {
   revalidate: number
@@ -43,9 +48,12 @@ const computeBackoff = (response: Response, attempt: number): number => {
   const header = response.headers.get('retry-after')
   const retryAfterSec = header ? Number(header) : NaN
   if (Number.isFinite(retryAfterSec) && retryAfterSec > 0) {
-    return retryAfterSec * 1000
+    return Math.min(retryAfterSec * 1000, MAX_RETRY_AFTER_MS)
   }
-  return BASE_BACKOFF_MS * 2 ** attempt + Math.random() * 500
+  // 1s, 2s, 4s, 8s, 16s, 30s (capped) + jitter — totals ~61s of retry budget,
+  // long enough to outlast dev.to's typical 30s rate-limit window.
+  const exponential = Math.min(BASE_BACKOFF_MS * 2 ** attempt, MAX_BACKOFF_MS)
+  return exponential + Math.random() * 500
 }
 
 const fetchDevTo = async (
