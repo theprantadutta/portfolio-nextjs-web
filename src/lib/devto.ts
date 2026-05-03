@@ -4,12 +4,14 @@ const DEVTO_API_BASE = 'https://dev.to/api'
 const DEVTO_USERNAME = 'pranta'
 const ONE_HOUR = 60 * 60
 
-// Build-time prerender fans out per-article fetches in parallel; cap concurrency
-// to 1 so a cold-cache build (~50 articles) stays under dev.to's anonymous
-// rate limit. Empirically a previous build burned through 21 requests in 5s
-// (~4 req/s) before getting throttled, so we serialize and let request
-// duration pace us naturally.
+// Build-time prerender fans out per-article fetches in parallel; cap
+// concurrency to 1 AND enforce a minimum gap between requests so a cold-cache
+// build (~50 articles) stays under dev.to's anonymous rate limit. Vercel's
+// egress IP is shared across many projects, so the limit is effectively even
+// stricter than dev.to's nominal ~30 req / 30s per IP. We keep ~0.8 req/sec
+// sustained to leave headroom.
 const MAX_CONCURRENT_REQUESTS = 1
+const MIN_REQUEST_INTERVAL_MS = 1250
 const MAX_RETRIES = 6
 const BASE_BACKOFF_MS = 1000
 const MAX_BACKOFF_MS = 30_000
@@ -22,6 +24,7 @@ type DevToFetchOptions = {
 
 let inflight = 0
 const waiters: Array<() => void> = []
+let nextAllowedAt = 0
 
 const acquireSlot = (): Promise<void> => {
   if (inflight < MAX_CONCURRENT_REQUESTS) {
@@ -44,6 +47,17 @@ const releaseSlot = () => {
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
 
+// Reserve the next request slot in monotonic order so concurrent callers
+// don't all read the same `nextAllowedAt` and stampede.
+const waitForRateLimitWindow = async () => {
+  const now = Date.now()
+  const scheduledAt = Math.max(now, nextAllowedAt)
+  nextAllowedAt = scheduledAt + MIN_REQUEST_INTERVAL_MS
+  if (scheduledAt > now) {
+    await sleep(scheduledAt - now)
+  }
+}
+
 const computeBackoff = (response: Response, attempt: number): number => {
   const header = response.headers.get('retry-after')
   const retryAfterSec = header ? Number(header) : NaN
@@ -63,6 +77,7 @@ const fetchDevTo = async (
   await acquireSlot()
   try {
     for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+      await waitForRateLimitWindow()
       const response = await fetch(url, { next: { revalidate, tags } })
 
       // Definitive outcomes — don't retry success or genuine 404.
@@ -77,7 +92,11 @@ const fetchDevTo = async (
 
       // Drain body so the connection can be released cleanly before sleeping.
       await response.arrayBuffer().catch(() => {})
-      await sleep(computeBackoff(response, attempt))
+      const backoffMs = computeBackoff(response, attempt)
+      console.warn(
+        `[devto] ${response.status} ${response.statusText} for ${url} — retry ${attempt + 1}/${MAX_RETRIES} in ${Math.round(backoffMs)}ms`
+      )
+      await sleep(backoffMs)
     }
     // Unreachable: loop returns or throws.
     throw new Error('fetchDevTo: exhausted retries without returning')
