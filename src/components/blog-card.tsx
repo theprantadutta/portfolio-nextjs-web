@@ -33,8 +33,9 @@ export const BlogCard: React.FC<BlogCardProps> = ({ article }) => {
         {/* Gradient overlay on hover */}
         <div className='from-primary-500/10 via-secondary-500/10 to-accent-500/10 absolute inset-0 bg-linear-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
 
-        {/* Cover Image */}
-        <div className='relative aspect-video shrink-0 overflow-hidden bg-linear-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900'>
+        {/* Cover Image — dev.to standard cover ratio is 1000:420; matching the
+            container avoids the cover/cropping mismatch we'd see with aspect-video. */}
+        <div className='relative aspect-[1000/420] shrink-0 overflow-hidden bg-linear-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900'>
           {article.cover_image ? (
             <Image
               src={article.cover_image}

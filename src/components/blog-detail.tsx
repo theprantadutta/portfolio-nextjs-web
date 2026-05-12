@@ -49,9 +49,10 @@ export const BlogDetail = ({ article }: BlogDetailProps) => {
         style={{ '--animation-delay': '100ms' } as React.CSSProperties}
       >
         <div className='mx-auto max-w-4xl'>
-          {/* Cover Image */}
+          {/* Cover Image — match dev.to's 1000:420 canonical cover ratio so the
+              uploaded artwork shows in full without crop or pillarboxing. */}
           {article.cover_image && (
-            <div className='special-border relative mb-8 aspect-video overflow-hidden'>
+            <div className='special-border relative mb-8 aspect-[1000/420] overflow-hidden'>
               <Image
                 src={article.cover_image}
                 alt={article.title}
