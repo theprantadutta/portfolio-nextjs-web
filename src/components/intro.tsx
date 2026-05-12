@@ -4,7 +4,7 @@ import { BsArrowRight, BsLinkedin } from 'react-icons/bs'
 import { HiDownload } from 'react-icons/hi'
 import { FaGithubSquare } from 'react-icons/fa'
 
-import profilePic from '@/../public/profile.png'
+import profilePic from '@/../public/profile_studio_gibli.png'
 import { CV_PATH, GITHUB_LINK, LINKED_IN_LINK } from '@/constants/selectors'
 import { SectionMarker } from '@/components/section-marker'
 import { SectionLink } from '@/components/section-link'
@@ -30,22 +30,22 @@ export const Intro: React.FC<IIntroProps> = () => {
 
       {/* Profile */}
       <div className='flex items-center justify-center'>
-        <div className='relative h-36 w-36'>
-          <span className='from-primary-500 via-secondary-500 to-accent-500 absolute inset-0 rounded-full bg-linear-to-br opacity-25 blur-md' />
-          <div className='relative h-36 w-36 overflow-hidden rounded-full border-4 border-white shadow-2xl dark:border-gray-800'>
+        <div className='relative aspect-[1054/1493] w-56 sm:w-64 md:w-72 lg:w-80'>
+          <span className='special-border from-primary-500 via-secondary-500 to-accent-500 absolute -inset-2 bg-linear-to-br opacity-25 blur-lg' />
+          <div className='special-border relative h-full w-full overflow-hidden border-4 border-white shadow-2xl dark:border-gray-800'>
             <Image
               src={profilePic}
               alt='Pranta Dutta - Full Stack Developer'
               fill
               priority
-              sizes='144px'
+              sizes='(min-width: 1024px) 320px, (min-width: 768px) 288px, (min-width: 640px) 256px, 224px'
               className='object-cover'
             />
           </div>
-          <div className='absolute -right-2 -bottom-2 flex h-8 w-8 items-center justify-center rounded-full bg-linear-to-br from-yellow-400 to-orange-500 shadow-lg'>
-            <span className='text-lg'>👋</span>
+          <div className='absolute -right-3 -bottom-3 flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-br from-yellow-400 to-orange-500 shadow-lg'>
+            <span className='text-xl'>👋</span>
           </div>
-          <div className='absolute top-0 right-0 h-6 w-6 rounded-full border-2 border-white bg-linear-to-br from-green-400 to-emerald-500 shadow-lg dark:border-gray-800'>
+          <div className='absolute -top-1 -right-1 h-6 w-6 rounded-full border-2 border-white bg-linear-to-br from-green-400 to-emerald-500 shadow-lg dark:border-gray-800'>
             <div className='h-full w-full animate-ping rounded-full bg-green-300 opacity-75' />
           </div>
         </div>
