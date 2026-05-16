@@ -33,11 +33,11 @@ const Home: NextPage = async () => {
       <SectionDivider />
       <Projects showAllProjects={false} projects={projects} />
       <SectionDivider />
+      <PopularBlogs articles={popularBlogs} />
+      <SectionDivider />
       <Skills skills={skills} />
       <SectionDivider />
       <Experience experiences={experiences} />
-      <SectionDivider />
-      <PopularBlogs articles={popularBlogs} />
       <SectionDivider />
       <Contact />
     </main>
