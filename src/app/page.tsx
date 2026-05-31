@@ -4,6 +4,7 @@ import { About } from '@/components/about'
 import { Contact } from '@/components/contact'
 import { Experience } from '@/components/experience'
 import { Intro } from '@/components/intro'
+import { OpenSource } from '@/components/open-source'
 import { Projects } from '@/components/projects'
 import { Skills } from '@/components/skills'
 import {
@@ -32,6 +33,8 @@ const Home: NextPage = async () => {
       <About />
       <SectionDivider />
       <Projects showAllProjects={false} projects={projects} />
+      <SectionDivider />
+      <OpenSource />
       <SectionDivider />
       <PopularBlogs articles={popularBlogs} />
       <SectionDivider />
