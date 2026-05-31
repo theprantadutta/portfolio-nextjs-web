@@ -6,6 +6,7 @@ import { BsArrowRight } from 'react-icons/bs'
 import { DevToArticle } from '@/types/blog-types'
 import { SectionHeading } from '@/components/section-heading'
 import { SectionMarker } from '@/components/section-marker'
+import { SectionSubheading } from '@/components/section-subheading'
 import { BlogCard } from '@/components/blog-card'
 
 interface PopularBlogsProps {
@@ -16,9 +17,14 @@ export const PopularBlogs: React.FC<PopularBlogsProps> = ({ articles }) => {
   const router = useRouter()
 
   return (
-    <section id='blog' className='scroll-mt-28'>
+    <section id='blog' className='section-spacing-sm scroll-mt-28'>
       <SectionMarker section='Blogs' threshold={0.3} />
-      <SectionHeading>Popular Blog Posts</SectionHeading>
+      <div className='mb-16 text-center'>
+        <SectionHeading>Popular Blog Posts</SectionHeading>
+        <SectionSubheading>
+          Writing on Flutter, backend, and lessons from building in production
+        </SectionSubheading>
+      </div>
       <div className='mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'>
         {articles.map((article) => (
           <BlogCard key={article.id} article={article} />

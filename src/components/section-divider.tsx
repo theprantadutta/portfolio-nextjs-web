@@ -17,7 +17,7 @@ export const SectionDivider: React.FC<ISectionDividerProps> = () => {
     /* eslint-disable react-hooks/refs -- Animation hook pattern: ref and className are designed to be used during render */
     <div
       ref={animation.ref}
-      className={`my-14 hidden sm:block ${animation.className}`}
+      className={`my-[clamp(1.5rem,4vh,3rem)] hidden sm:block ${animation.className}`}
     >
       {/* eslint-enable react-hooks/refs */}
       <div className='flex justify-center'>

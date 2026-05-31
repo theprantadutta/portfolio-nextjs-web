@@ -1,6 +1,7 @@
 'use client'
 
 import { SectionHeading } from '@/components/section-heading'
+import { SectionSubheading } from '@/components/section-subheading'
 import { useAnimationOnScroll } from '@/lib/animation-hooks'
 import { useSectionInView } from '@/lib/hooks'
 import { IStrapiApiResponse, SkillDataAttributes } from '@/types/types'
@@ -176,9 +177,9 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
         >
           {/* eslint-enable react-hooks/refs */}
           <SectionHeading>Skills & Technologies</SectionHeading>
-          <p className='mx-auto mt-4 max-w-2xl text-lg text-gray-600 dark:text-gray-400'>
+          <SectionSubheading>
             Crafting beautiful experiences with modern technologies
-          </p>
+          </SectionSubheading>
         </div>
 
         {/* View Toggle */}

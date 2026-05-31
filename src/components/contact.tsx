@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 
 import { SectionHeading } from '@/components/section-heading'
 import { SectionMarker } from '@/components/section-marker'
+import { SectionSubheading } from '@/components/section-subheading'
 import { ContactForm } from '@/components/contact-form'
 
 interface IContactProps {
@@ -20,9 +21,9 @@ export const Contact: React.FC<IContactProps> = () => {
 
       <div className='content-container mx-auto max-w-2xl text-center'>
         <SectionHeading>Contact Me</SectionHeading>
-        <p className='mx-auto mt-4 max-w-xl text-lg text-gray-600 dark:text-gray-400'>
+        <SectionSubheading>
           Looking for a developer? Let&apos;s build something great together.
-        </p>
+        </SectionSubheading>
 
         <div className='mt-8 space-y-6 text-gray-700 dark:text-gray-200'>
           <p>

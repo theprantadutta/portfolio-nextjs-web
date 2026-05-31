@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 
 import { SectionHeading } from '@/components/section-heading'
+import { SectionSubheading } from '@/components/section-subheading'
 import { VerticalTimeline } from '@/components/ui/timeline'
 import { CgWorkAlt } from 'react-icons/cg'
 import { ExperienceDataAttributes, IStrapiApiResponse } from '@/types/types'
@@ -27,9 +28,9 @@ export const Experience: React.FC<IExperienceProps> = ({ experiences }) => {
       {/* Section Header */}
       <div className='mb-16 text-center'>
         <SectionHeading>My Experience</SectionHeading>
-        <p className='mx-auto mt-4 max-w-2xl text-lg text-gray-600 dark:text-gray-400'>
+        <SectionSubheading>
           My professional journey and the experiences that shaped my skills
-        </p>
+        </SectionSubheading>
       </div>
 
       {/* Custom Timeline */}

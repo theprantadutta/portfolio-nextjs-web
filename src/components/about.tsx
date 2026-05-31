@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 
 import { SectionHeading } from '@/components/section-heading'
 import { SectionMarker } from '@/components/section-marker'
+import { SectionSubheading } from '@/components/section-subheading'
 
 interface IAboutProps {
   children?: ReactNode
@@ -281,6 +282,9 @@ export const About: React.FC<IAboutProps> = () => {
       <div className='content-container'>
         <div className='mb-16 text-center'>
           <SectionHeading>About Me</SectionHeading>
+          <SectionSubheading>
+            A bit about who I am, how I got here, and what I love building
+          </SectionSubheading>
         </div>
 
         <div className='grid items-start gap-12 lg:grid-cols-2 lg:gap-16'>
