@@ -11,14 +11,18 @@ export const links = [
     name: 'Projects',
     hash: '/projects',
   },
-  {
-    name: 'Blogs',
-    hash: '/blogs',
-  },
   // {
   //   name: 'All Projects',
   //   hash: '/projects'
   // },
+  {
+    name: 'Open Source',
+    hash: '/#open-source',
+  },
+  {
+    name: 'Blogs',
+    hash: '/blogs',
+  },
   {
     name: 'Skills',
     hash: '/#skills',

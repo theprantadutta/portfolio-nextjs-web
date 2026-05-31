@@ -17,6 +17,7 @@ import {
   FiStar,
   FiMail,
   FiBookOpen,
+  FiGithub,
 } from 'react-icons/fi'
 
 interface IHeaderProps {
@@ -29,6 +30,7 @@ const navigationIcons = {
   About: FiUser,
   Projects: FiBriefcase,
   Blogs: FiBookOpen,
+  'Open Source': FiGithub,
   Skills: FiStar,
   Experience: FiBriefcase,
   Contact: FiMail,
@@ -84,7 +86,7 @@ export const Header: React.FC<IHeaderProps> = () => {
       {/* Desktop Navigation */}
       <nav
         ref={containerRef}
-        className={`fixed top-6 left-1/2 z-1000 hidden -translate-x-1/2 transform rounded-tl-3xl rounded-tr-lg rounded-br-3xl rounded-bl-3xl transition-all duration-500 ease-out sm:block ${
+        className={`fixed top-6 left-1/2 z-1000 hidden -translate-x-1/2 transform rounded-tl-3xl rounded-tr-lg rounded-br-3xl rounded-bl-3xl transition-all duration-500 ease-out lg:block ${
           isScrolled
             ? 'border border-white/30 bg-white/20 shadow-lg backdrop-blur-xl dark:border-white/20 dark:bg-gray-900/40'
             : 'border border-transparent bg-transparent'
@@ -108,7 +110,7 @@ export const Header: React.FC<IHeaderProps> = () => {
               <li className={`relative ${itemClassName}`} key={link.hash}>
                 <Link
                   className={clsx(
-                    'group relative flex items-center gap-2 rounded-tl-3xl rounded-tr-lg rounded-br-3xl rounded-bl-3xl px-4 py-2.5 text-sm font-medium transition-all duration-300',
+                    'group relative flex items-center gap-2 rounded-tl-3xl rounded-tr-lg rounded-br-3xl rounded-bl-3xl px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-all duration-300',
                     {
                       'from-primary-600 to-secondary-600 shadow-primary-500/25 bg-linear-to-r text-white shadow-lg':
                         activeSection === link.name,
@@ -137,7 +139,7 @@ export const Header: React.FC<IHeaderProps> = () => {
       </nav>
 
       {/* Mobile Menu Button */}
-      <div className='fixed top-4 right-4 z-1001 sm:hidden'>
+      <div className='fixed top-4 right-4 z-1001 lg:hidden'>
         <button
           onClick={toggleMenu}
           aria-label={
@@ -168,7 +170,7 @@ export const Header: React.FC<IHeaderProps> = () => {
       {/* Mobile Menu Overlay */}
       {isMenuOpen && (
         <div
-          className='fixed inset-0 z-999 bg-black/60 backdrop-blur-xs transition-opacity duration-300 sm:hidden'
+          className='fixed inset-0 z-999 bg-black/60 backdrop-blur-xs transition-opacity duration-300 lg:hidden'
           onClick={toggleMenu}
         >
           {/* Mobile Menu Panel */}
