@@ -1,11 +1,16 @@
 import Image from 'next/image'
 import type { ReactNode } from 'react'
-import { BsArrowRight, BsLinkedin } from 'react-icons/bs'
+import { BsArrowRight, BsLinkedin, BsTwitterX } from 'react-icons/bs'
 import { HiDownload } from 'react-icons/hi'
 import { FaGithubSquare } from 'react-icons/fa'
 
 import profilePic from '@/../public/profile_studio_gibli.png'
-import { CV_PATH, GITHUB_LINK, LINKED_IN_LINK } from '@/constants/selectors'
+import {
+  CV_PATH,
+  GITHUB_LINK,
+  LINKED_IN_LINK,
+  X_LINK,
+} from '@/constants/selectors'
 import { SectionMarker } from '@/components/section-marker'
 import { SectionLink } from '@/components/section-link'
 
@@ -17,7 +22,7 @@ export const Intro: React.FC<IIntroProps> = () => {
   return (
     <section
       id='home'
-      className='relative flex min-h-[70vh] scroll-mt-28 flex-col items-center justify-center gap-8 px-4 text-center sm:mb-0'
+      className='relative flex min-h-[70vh] scroll-mt-28 flex-col items-center justify-center gap-8 px-4 pb-8 text-center sm:mb-0 lg:pb-12'
     >
       <SectionMarker section='Home' threshold={0.5} />
 
@@ -119,7 +124,18 @@ export const Intro: React.FC<IIntroProps> = () => {
       </div>
 
       {/* Social links */}
-      <div className='mt-8 flex justify-center gap-4'>
+      <div className='mt-8 flex flex-wrap justify-center gap-4'>
+        <a
+          className='glass-card special-border group relative flex h-12 w-12 items-center justify-center text-gray-700 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white'
+          href={GITHUB_LINK}
+          target='_blank'
+          rel='noopener noreferrer'
+          aria-label='Visit my GitHub profile'
+        >
+          <FaGithubSquare className='h-5 w-5 transition-transform duration-300 group-hover:scale-110' />
+          <span className='absolute inset-0 rounded-2xl bg-linear-to-br from-gray-500/20 to-gray-700/20 opacity-0 blur-xs transition-opacity duration-300 group-hover:opacity-100' />
+        </a>
+
         <a
           className='glass-card special-border group hover:text-primary-600 dark:hover:text-primary-400 relative flex h-12 w-12 items-center justify-center text-gray-700 transition-all duration-300 hover:-translate-y-1 hover:scale-110 dark:text-gray-300'
           href={LINKED_IN_LINK}
@@ -133,12 +149,12 @@ export const Intro: React.FC<IIntroProps> = () => {
 
         <a
           className='glass-card special-border group relative flex h-12 w-12 items-center justify-center text-gray-700 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white'
-          href={GITHUB_LINK}
+          href={X_LINK}
           target='_blank'
           rel='noopener noreferrer'
-          aria-label='Visit my GitHub profile'
+          aria-label='Visit my X profile'
         >
-          <FaGithubSquare className='h-5 w-5 transition-transform duration-300 group-hover:scale-110' />
+          <BsTwitterX className='h-5 w-5 transition-transform duration-300 group-hover:scale-110' />
           <span className='absolute inset-0 rounded-2xl bg-linear-to-br from-gray-500/20 to-gray-700/20 opacity-0 blur-xs transition-opacity duration-300 group-hover:opacity-100' />
         </a>
       </div>
