@@ -209,9 +209,9 @@ const categorizeTags = (
 const calculateAvailability = (
   project: ProjectDataAttributes
 ): ProjectAnalysis['availabilityMetrics'] => {
-  const hasLiveDemo = !!project.googlePlayLink
+  const hasLiveDemo = !!project.googlePlayLink || !!project.appStoreLink
   const hasSourceCode = !!project.githubLink
-  const hasAppStore = !!project.googlePlayLink
+  const hasAppStore = !!project.appStoreLink
 
   let accessibilityScore = 0
   if (hasLiveDemo) accessibilityScore += 40
@@ -243,6 +243,7 @@ const assessContentRichness = (
   if (technologyDiversity > 0) completenessScore += 15
   if (project.githubLink) completenessScore += 10
   if (project.googlePlayLink) completenessScore += 5
+  if (project.appStoreLink) completenessScore += 5
 
   return {
     hasDetailedDescription,
@@ -274,6 +275,7 @@ const generateProjectInsights = (
 
   let platformReach = 1
   if (project.googlePlayLink) platformReach += 1
+  if (project.appStoreLink) platformReach += 1
   if (project.githubLink) platformReach += 1
 
   // Use real complexity from Strapi (1-5 scale, multiply by 2 for 1-10 scale)

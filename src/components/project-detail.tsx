@@ -7,6 +7,7 @@ import { useState } from 'react'
 import {
   FaGithub,
   FaGooglePlay,
+  FaAppStoreIos,
   FaArrowLeft,
   FaExternalLinkAlt,
   FaCode,
@@ -210,7 +211,19 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                   className='btn-secondary special-border group inline-flex items-center gap-2 px-6 py-3 font-medium'
                 >
                   <FaGooglePlay className='h-5 w-5' />
-                  Download App
+                  Google Play
+                  <FaExternalLinkAlt className='h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1' />
+                </a>
+              )}
+              {project.appStoreLink && (
+                <a
+                  href={project.appStoreLink}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='btn-secondary special-border group inline-flex items-center gap-2 px-6 py-3 font-medium'
+                >
+                  <FaAppStoreIos className='h-5 w-5' />
+                  App Store
                   <FaExternalLinkAlt className='h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1' />
                 </a>
               )}
@@ -332,7 +345,9 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
           {/* Project Access & Analytics - Side by Side */}
           <div className='grid gap-6 md:grid-cols-2'>
             {/* Project Links - Only show if there are links */}
-            {(project.githubLink || project.googlePlayLink) && (
+            {(project.githubLink ||
+              project.googlePlayLink ||
+              project.appStoreLink) && (
               <div
                 className={`special-border glass-card bg-linear-to-br from-gray-500/5 to-slate-500/5 p-6 ${getContentItemClass(2)}`}
               >
@@ -379,6 +394,29 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                             </div>
                             <div className='text-sm text-gray-600 dark:text-gray-400'>
                               Available on Google Play Store
+                            </div>
+                          </div>
+                        </div>
+                        <FaExternalLinkAlt className='h-4 w-4 text-gray-500 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1' />
+                      </div>
+                    </a>
+                  )}
+                  {project.appStoreLink && (
+                    <a
+                      href={project.appStoreLink}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='special-border glass-card group block w-full bg-linear-to-r from-blue-500/5 to-sky-500/5 p-4 transition-all duration-300 hover:from-blue-500/10 hover:to-sky-500/10'
+                    >
+                      <div className='flex items-center justify-between'>
+                        <div className='flex items-center gap-3'>
+                          <FaAppStoreIos className='h-5 w-5 text-blue-600 dark:text-blue-400' />
+                          <div>
+                            <div className='font-medium text-gray-900 dark:text-white'>
+                              Download Application
+                            </div>
+                            <div className='text-sm text-gray-600 dark:text-gray-400'>
+                              Available on Apple App Store
                             </div>
                           </div>
                         </div>

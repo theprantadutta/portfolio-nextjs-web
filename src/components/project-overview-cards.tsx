@@ -12,6 +12,7 @@ import {
   FaMobile,
   FaGithub,
   FaGooglePlay,
+  FaAppStoreIos,
   FaImage,
   FaCheckCircle,
   FaStar,
@@ -122,7 +123,16 @@ export const ProjectOverviewCards = ({
               <div className='flex items-center gap-2 text-sm'>
                 <FaGooglePlay className='h-4 w-4 text-gray-600 dark:text-gray-400' />
                 <span className='text-green-600 dark:text-green-400'>
-                  App Store Ready
+                  Google Play
+                </span>
+              </div>
+            )}
+
+            {project.appStoreLink && (
+              <div className='flex items-center gap-2 text-sm'>
+                <FaAppStoreIos className='h-4 w-4 text-gray-600 dark:text-gray-400' />
+                <span className='text-green-600 dark:text-green-400'>
+                  App Store
                 </span>
               </div>
             )}

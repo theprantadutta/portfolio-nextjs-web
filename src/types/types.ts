@@ -50,6 +50,7 @@ export type ProjectDataAttributes = {
   description: string
   longDescription?: any
   googlePlayLink?: string
+  appStoreLink?: string
   githubLink?: string
   cover: IStrapiImageData
   Tags: {
