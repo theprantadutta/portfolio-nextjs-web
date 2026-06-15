@@ -17,7 +17,10 @@ export async function generateStaticParams() {
   )
 
   if (!response.ok) {
-    throw new Error('Failed to fetch project slugs')
+    const body = await response.text().catch(() => '')
+    throw new Error(
+      `Failed to fetch project slugs: HTTP ${response.status} ${response.statusText} — ${body.slice(0, 300)}`
+    )
   }
 
   const projects = await response.json()
@@ -30,7 +33,7 @@ export async function generateStaticParams() {
 // Fetch detailed project data by SLUG
 async function getProjectData(slug: string) {
   const res = await fetch(
-    `${STRAPI_API_URL}/projects?filters[slug][$eq]=${slug}&filters[$or][0][hidden][$eq]=false&filters[$or][1][hidden][$null]=true&populate=*`,
+    `${STRAPI_API_URL}/projects?filters[slug][$eq]=${encodeURIComponent(slug)}&filters[$or][0][hidden][$eq]=false&filters[$or][1][hidden][$null]=true&populate=*`,
     {
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
@@ -40,14 +43,20 @@ async function getProjectData(slug: string) {
     }
   )
 
+  // A real HTTP/transport failure — surface the exact slug, status, and body
+  // so the build fails loudly with something actionable instead of a silent 404.
   if (!res.ok) {
-    throw new Error('Failed to fetch project data')
+    const body = await res.text().catch(() => '')
+    throw new Error(
+      `Failed to fetch project "${slug}": HTTP ${res.status} ${res.statusText} — ${body.slice(0, 300)}`
+    )
   }
 
   const data = (await res.json()) as { data: Array<ProjectDataAttributes> }
 
+  // Genuinely no such (visible) project — this is a real 404, not an error.
   if (!data.data || data.data.length === 0) {
-    throw new Error('Project not found')
+    return null
   }
 
   return data.data[0] // Return first match directly (should be unique)
@@ -58,20 +67,15 @@ export default async function ProjectPage({
 }: {
   params: Promise<{ slug: string }>
 }) {
-  let projectResponse: ProjectDataAttributes | null = null
+  const { slug } = await params // Fixed: awaiting params for Next.js 15
 
-  try {
-    const { slug } = await params // Fixed: awaiting params for Next.js 15
-
-    if (!slug || typeof slug !== 'string') {
-      return notFound()
-    }
-
-    projectResponse = await getProjectData(slug)
-  } catch (error) {
-    console.error('Error fetching project data:', error)
+  if (!slug || typeof slug !== 'string') {
     return notFound()
   }
+
+  // Do NOT catch here: a genuine "not found" returns null below (→ 404), but a
+  // real fetch/HTTP error throws and fails the build with the exact slug+status.
+  const projectResponse = await getProjectData(slug)
 
   if (!projectResponse) {
     return notFound()
