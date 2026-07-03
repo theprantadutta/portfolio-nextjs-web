@@ -209,8 +209,9 @@ const paragraphs = [
           20+ production apps
         </span>{' '}
         — including games, tools, and enterprise systems on the{' '}
-        <span className='font-medium'>Google Play Store</span>. Outside of work,
-        I build{' '}
+        <span className='font-medium'>Google Play Store</span> and{' '}
+        <span className='font-medium'>Apple App Store</span>. Outside of work, I
+        build{' '}
         <span className='decoration-secondary-500 font-medium underline'>
           open-source libraries and side projects
         </span>{' '}
@@ -239,7 +240,7 @@ const achievements = [
   {
     icon: '📱',
     title: 'Published Apps',
-    subtitle: 'Google Play Store',
+    subtitle: 'Play Store & App Store',
     accent: 'from-green-400 to-emerald-500',
   },
   {
