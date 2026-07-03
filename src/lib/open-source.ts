@@ -71,7 +71,7 @@ export const openSourceContributions: IOpenSourceContribution[] = [
     ],
   },
   {
-    name: 'Flutter',
+    name: 'Flutter Packages',
     repo: 'flutter/packages',
     repoUrl: 'https://github.com/flutter/packages',
     description:
