@@ -55,6 +55,22 @@ export interface IOpenSourceContribution {
  */
 export const openSourceContributions: IOpenSourceContribution[] = [
   {
+    name: 'Flutter Framework',
+    repo: 'flutter/flutter',
+    repoUrl: 'https://github.com/flutter/flutter',
+    description:
+      'The core Flutter SDK, framework, and command-line tooling, maintained by Google. Contributed a tooling fix to the new-project templates, reviewed and merged by the Flutter team.',
+    pullRequests: [
+      {
+        number: 187443,
+        title: 'Format the new-app template to match dart format',
+        description:
+          "Reformatted the flutter create --empty app template's main.dart so freshly generated projects pass dart format out of the box, instead of reporting formatting changes on the very first run. Approved by bkonyi and chingjun.",
+        url: 'https://github.com/flutter/flutter/pull/187443',
+      },
+    ],
+  },
+  {
     name: 'Flutter',
     repo: 'flutter/packages',
     repoUrl: 'https://github.com/flutter/packages',
@@ -94,6 +110,7 @@ export const openSourceContributions: IOpenSourceContribution[] = [
     links: [
       { label: 'pub.dev', url: 'https://pub.dev/packages/supabase_flutter' },
     ],
+    shippedIn: 'realtime_client 2.7.4',
     pullRequests: [
       {
         number: 1365,
