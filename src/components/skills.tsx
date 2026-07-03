@@ -9,11 +9,13 @@ import React, { useState } from 'react'
 import { BiLogoPostgresql } from 'react-icons/bi'
 import { DiGoogleCloudPlatform, DiMsqlServer } from 'react-icons/di'
 import {
+  FaAppStoreIos,
   FaCloud,
   FaCode,
   FaDatabase,
   FaDocker,
   FaGitAlt,
+  FaGooglePlay,
   FaHeart,
   FaNodeJs,
   FaReact,
@@ -357,7 +359,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
         )}
 
         {/* Stats */}
-        <div className='mx-auto mt-20 grid max-w-2xl grid-cols-2 gap-6 md:grid-cols-4'>
+        <div className='mx-auto mt-20 grid max-w-4xl grid-cols-2 gap-6 md:grid-cols-5'>
           {[
             {
               label: 'Total Skills',
@@ -392,6 +394,18 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
               </div>
             </div>
           ))}
+
+          {/* Published apps */}
+          <div className='special-border glass-card col-span-2 bg-white/5 p-6 text-center backdrop-blur-lg md:col-span-1 dark:bg-gray-900/20'>
+            <div className='mb-3 flex items-center justify-center gap-2'>
+              <FaGooglePlay className='h-8 w-8 text-green-500' />
+              <FaAppStoreIos className='h-8 w-8 text-green-500' />
+            </div>
+            <div className='mb-1 text-2xl font-bold'>Live</div>
+            <div className='text-sm whitespace-nowrap text-gray-600 dark:text-gray-400'>
+              Play/App Store
+            </div>
+          </div>
         </div>
       </div>
 
