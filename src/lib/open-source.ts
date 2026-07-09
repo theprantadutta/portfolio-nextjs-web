@@ -75,7 +75,7 @@ export const openSourceContributions: IOpenSourceContribution[] = [
     repo: 'flutter/packages',
     repoUrl: 'https://github.com/flutter/packages',
     description:
-      "Flutter's first-party plugins and packages, maintained by the core Flutter team at Google. Contributed a documentation fix, reviewed and merged by the path_provider maintainers.",
+      "Flutter's first-party plugins and packages, maintained by the core Flutter team at Google. Contributed documentation improvements to path_provider and the pigeon code generator, reviewed and merged by their maintainers.",
     shippedIn: 'path_provider 2.1.6',
     links: [
       { label: 'pub.dev', url: 'https://pub.dev/packages/path_provider' },
@@ -85,6 +85,20 @@ export const openSourceContributions: IOpenSourceContribution[] = [
       },
     ],
     pullRequests: [
+      {
+        number: 11894,
+        title: 'Add usage docs to generated pigeon event channel methods',
+        description:
+          "Pigeon's generated Dart event-channel methods shipped with no documentation, so IDE hovers gave users nothing to go on. The generator now emits usage docs (channel-per-call and broadcast-stream patterns) on every generated event channel method, and also preserves the author's own doc comments, which were previously dropped. Approved by stuartmorgan-g and tarrinneal.",
+        url: 'https://github.com/flutter/packages/pull/11894',
+        resolves: [
+          {
+            number: 177776,
+            repo: 'flutter/flutter',
+            url: 'https://github.com/flutter/flutter/issues/177776',
+          },
+        ],
+      },
       {
         number: 11793,
         title: 'Document getDownloadsDirectory null vs. UnsupportedError',
