@@ -59,8 +59,22 @@ export const openSourceContributions: IOpenSourceContribution[] = [
     repo: 'flutter/flutter',
     repoUrl: 'https://github.com/flutter/flutter',
     description:
-      'The core Flutter SDK, framework, and command-line tooling, maintained by Google. Contributed a tooling fix to the new-project templates, reviewed and merged by the Flutter team.',
+      'The core Flutter SDK, framework, and command-line tooling, maintained by Google. Contributed tooling fixes to the new-project templates, reviewed and merged by the Flutter team.',
     pullRequests: [
+      {
+        number: 188382,
+        title: 'Format the plugin example template to match dart format',
+        description:
+          'Completed the template-formatting work started in #187443: reformatted the plugin template so generated projects pass dart format out of the box, and added a regression test that generates a plugin and asserts every Dart file is format-clean — a test that caught two further template regressions before the PR landed. Approved by bkonyi and chingjun; closed the long-standing template-formatting issue.',
+        url: 'https://github.com/flutter/flutter/pull/188382',
+        resolves: [
+          {
+            number: 175960,
+            repo: 'flutter/flutter',
+            url: 'https://github.com/flutter/flutter/issues/175960',
+          },
+        ],
+      },
       {
         number: 187443,
         title: 'Format the new-app template to match dart format',
@@ -75,8 +89,8 @@ export const openSourceContributions: IOpenSourceContribution[] = [
     repo: 'flutter/packages',
     repoUrl: 'https://github.com/flutter/packages',
     description:
-      "Flutter's first-party plugins and packages, maintained by the core Flutter team at Google. Contributed documentation improvements to path_provider and the pigeon code generator, reviewed and merged by their maintainers.",
-    shippedIn: 'path_provider 2.1.6',
+      "Flutter's first-party plugins and packages, maintained by the core Flutter team at Google. Contributed fixes and documentation improvements to path_provider and the pigeon code generator, reviewed and merged by their maintainers.",
+    shippedIn: 'path_provider 2.1.6 · pigeon 27.1.2',
     links: [
       { label: 'pub.dev', url: 'https://pub.dev/packages/path_provider' },
       {
@@ -85,6 +99,20 @@ export const openSourceContributions: IOpenSourceContribution[] = [
       },
     ],
     pullRequests: [
+      {
+        number: 11880,
+        title: 'Report a clear error for enhanced enums in pigeon',
+        description:
+          "Pigeon silently generated broken output when an input file used an enhanced enum (one with a constructor, fields, methods, or arguments on its values) — the enum's members were coalesced into the following class. The parser now detects every enhanced-enum shape and reports a clear error instead, with a fix for a parser crash on enum getters found during self-review. Approved by tarrinneal and stuartmorgan-g; shipped in pigeon 27.1.2.",
+        url: 'https://github.com/flutter/packages/pull/11880',
+        resolves: [
+          {
+            number: 160827,
+            repo: 'flutter/flutter',
+            url: 'https://github.com/flutter/flutter/issues/160827',
+          },
+        ],
+      },
       {
         number: 11894,
         title: 'Add usage docs to generated pigeon event channel methods',
