@@ -1,0 +1,64 @@
+services:
+  portfolio-nextjs-web:
+    image: portfolio/portfolio-nextjs-web
+    container_name: portfolio-nextjs-web
+    restart: always
+    build:
+      context: .
+      # Build-time only. Compose substitutes these from `.env` in this directory
+      # (use `docker compose --env-file .env.local ...` to source them elsewhere).
+      # NEXT_PUBLIC_* is baked into the client bundle, so changing it requires
+      # `docker compose build`, not just a restart.
+      args:
+        NEXT_PUBLIC_STRAPI_PROD_API_URL: ${NEXT_PUBLIC_STRAPI_PROD_API_URL:?set it in .env}
+        NEXT_PUBLIC_STRAPI_DEV_API_URL: ${NEXT_PUBLIC_STRAPI_DEV_API_URL:-http://localhost:1337}
+        STRAPI_API_KEY: ${STRAPI_API_KEY:?set it in .env}
+    env_file:
+      - path: .env
+        required: false
+      - path: .env.local
+        required: false
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      # Server-side data fetching goes straight to the Strapi container over the
+      # shared `proxy` network — no public roundtrip, no TLS handshake. Runtime
+      # variable: edit and restart, no rebuild. Comment out to fall back to the
+      # public URL.
+      STRAPI_INTERNAL_URL: http://portfolio-strapi-cms:1337
+    networks:
+      - proxy
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=proxy'
+      - 'traefik.http.services.portfolio-web.loadbalancer.server.port=3000'
+
+      # --- apex + www ---------------------------------------------------------
+      - 'traefik.http.routers.portfolio-web.rule=Host(`pranta.dev`) || Host(`www.pranta.dev`)'
+      - 'traefik.http.routers.portfolio-web.entrypoints=websecure'
+      - 'traefik.http.routers.portfolio-web.tls.certresolver=letsencrypt'
+      - 'traefik.http.routers.portfolio-web.service=portfolio-web'
+      - 'traefik.http.routers.portfolio-web.priority=100'
+
+      # --- wildcard catch-all -------------------------------------------------
+      # priority=1 keeps this BELOW the Strapi router, so portfolio.pranta.dev
+      # still resolves to the CMS. Traefik's default priority is the rule length,
+      # and this rule is longer than the CMS one — without an explicit priority
+      # the wildcard would hijack the backend.
+      #
+      # NOTE: a *.pranta.dev certificate can only be issued over a DNS-01
+      # challenge. If your `letsencrypt` resolver uses HTTP-01, this router will
+      # serve TLS errors — see README/CLAUDE.md before enabling it.
+      # `$$` is compose's escape for a literal `$` (regex end anchor).
+      - 'traefik.http.routers.portfolio-web-wildcard.rule=HostRegexp(`^.+\.pranta\.dev$$`)'
+      - 'traefik.http.routers.portfolio-web-wildcard.entrypoints=websecure'
+      - 'traefik.http.routers.portfolio-web-wildcard.tls.certresolver=letsencrypt'
+      - 'traefik.http.routers.portfolio-web-wildcard.tls.domains[0].main=pranta.dev'
+      - 'traefik.http.routers.portfolio-web-wildcard.tls.domains[0].sans=*.pranta.dev'
+      - 'traefik.http.routers.portfolio-web-wildcard.service=portfolio-web'
+      - 'traefik.http.routers.portfolio-web-wildcard.priority=1'
+
+networks:
+  proxy:
+    external: true

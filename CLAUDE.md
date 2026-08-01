@@ -6,26 +6,30 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 # Development
-yarn clean && next dev        # Clean and start development server
-yarn dev                      # Start development server (calls clean first)
+bun dev                       # Start development server (calls clean first)
+bun clean                     # Remove the .next directory
 
 # Building and Production
-yarn build                    # Build for production
-yarn start                    # Start production server
+bun run build                 # Build for production (prebuild cleans .next)
+bun start                     # Start production server
 
 # Code Quality
-yarn lint                     # Run ESLint
-yarn format                   # Check code formatting with Prettier
-yarn format:fix               # Fix code formatting with Prettier
+bun run lint                  # Run ESLint
+bun format                    # Check code formatting with Prettier
+bun format:fix                # Fix code formatting with Prettier
+npx tsc --noEmit              # Typecheck
 
 # Git Hooks
-yarn prepare                  # Set up Husky git hooks
-yarn lint-staged              # Run lint-staged (used by pre-commit hook)
+bun prepare                   # Set up Husky git hooks
+bun lint-staged               # Run lint-staged (used by pre-commit hook)
 ```
+
+Note: `bun run build`/`bun run lint` (not bare `bun build`/`bun lint`) — `bun build`
+is Bun's own bundler and will not invoke the package script.
 
 ## Project Architecture
 
-This is a Next.js 15 portfolio website with server-side rendering, featuring:
+This is a Next.js 16 portfolio website with server-side rendering, featuring:
 
 ### Core Structure
 
@@ -58,6 +62,24 @@ This is a Next.js 15 portfolio website with server-side rendering, featuring:
   - Supports both development and production API URLs
 - **Server-side Fetching**: Data fetched at build time using Next.js server components
 
+#### Two Strapi origins (`src/constants/urls.ts`)
+
+The app deliberately resolves Strapi through two separate constants. Do not
+collapse them:
+
+- `STRAPI_URL` — browser-facing, from `NEXT_PUBLIC_STRAPI_{DEV,PROD}_API_URL`.
+  Inlined into the client bundle at build time and used by `getStrapiMedia()`
+  for `<Image>` sources, so it **must** be a publicly reachable URL.
+- `STRAPI_SERVER_URL` / `STRAPI_API_URL` — server-only, from
+  `STRAPI_INTERNAL_URL`, falling back to `STRAPI_URL` when unset. In production
+  this points at the Strapi container over the shared Docker network
+  (`http://portfolio-strapi-cms:1337`), skipping the public roundtrip and TLS.
+
+Because `STRAPI_INTERNAL_URL` has no `NEXT_PUBLIC_` prefix it is a true runtime
+variable (change it in compose and restart — no rebuild), and it is replaced
+with `undefined` in the client bundle, so the internal hostname never reaches a
+browser.
+
 ### Email Integration
 
 - **Resend API**: Handles contact form submissions via server actions
@@ -75,19 +97,64 @@ This is a Next.js 15 portfolio website with server-side rendering, featuring:
 
 ### Environment Variables Required
 
-- `STRAPI_API_KEY`: Authentication for Strapi CMS
-- `NEXT_PUBLIC_STRAPI_DEV_API_URL`: Development Strapi URL
-- `NEXT_PUBLIC_STRAPI_PROD_API_URL`: Production Strapi URL
-- `RESEND_API_KEY`: For contact form email functionality
+See `.env.example`. Local development reads `.env.local`.
+
+| Variable                          | Scope                | Notes                                                                            |
+| --------------------------------- | -------------------- | -------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_STRAPI_PROD_API_URL` | build time           | Public Strapi URL, baked into the client bundle. Changing it needs a rebuild.    |
+| `NEXT_PUBLIC_STRAPI_DEV_API_URL`  | build time           | Public Strapi URL for development.                                               |
+| `STRAPI_API_KEY`                  | build + runtime      | Bearer token. Needed at build time too, since pages are prerendered from Strapi. |
+| `RESEND_API_KEY`                  | runtime              | Contact form email delivery.                                                     |
+| `STRAPI_INTERNAL_URL`             | runtime, server-only | Docker-internal Strapi origin. Optional; falls back to the public URL.           |
+
+### Deployment (self-hosted VPS + Traefik)
+
+The site is self-hosted (previously Vercel). `Dockerfile` + `compose.yml` mirror
+the setup in `../portfolio-strapi-cms`.
+
+- `next.config.ts` sets `output: 'standalone'`; the runtime image just runs
+  `node server.js` on port 3000.
+- Multi-stage build: install and build run on `oven/bun:1` (the repo is locked
+  with `bun.lock`), then the runtime stage drops to `node:24-slim` and runs
+  `node server.js` as the non-root `node` user.
+  - Do **not** try to slim this down by copying the `bun` binary into a Node
+    image — that fails with a wall of `IntegrityCheckFailed extracting tarball`
+    errors during `bun install`. Use the official bun image for those stages.
+- The container joins the **external** `proxy` network shared with Traefik and
+  the Strapi container.
+- Compose reads build args from `.env` via variable substitution and runtime
+  values from `.env`/`.env.local` via `env_file`. Both are optional for
+  `env_file`, but the build args are required — a build with no `.env` fails
+  fast rather than baking an empty URL.
+
+Routing: `pranta.dev` and `www.pranta.dev` on an exact-host router
+(priority 100), plus a `*.pranta.dev` `HostRegexp` catch-all at **priority 1**.
+The low priority is load-bearing — Traefik's default priority is the rule
+length, and the wildcard rule is longer than the CMS's
+``Host(`portfolio.pranta.dev`)``, so without it the wildcard would hijack the
+backend.
+
+> The `*.pranta.dev` router requests a wildcard certificate, which Let's Encrypt
+> only issues over a **DNS-01** challenge. If the `letsencrypt` resolver in the
+> Traefik static config uses HTTP-01, that router will serve TLS errors — either
+> switch the resolver to DNS-01 or drop the wildcard router and list subdomains
+> explicitly.
+
+```bash
+docker compose build
+docker compose up -d --remove-orphans
+```
 
 ### Development Notes
 
-- Uses Yarn as package manager
+- Uses **Bun** as package manager (`bun.lock`); scripts shell out to `bunx`
 - Husky + lint-staged for pre-commit hooks
-- React 19 with experimental React Compiler enabled
+- React 19; `babel-plugin-react-compiler` is a dependency but the React Compiler
+  is **not** currently enabled (`experimental.reactCompiler` is commented out in
+  `next.config.ts`)
 - Vercel Analytics and Speed Insights integrated
 - Prettier + ESLint for code formatting and linting
-- Node.js >=20 required
+- Node.js >=24 required (`engines`)
 
 ### Component Patterns
 
@@ -102,7 +169,8 @@ This is a Next.js 15 portfolio website with server-side rendering, featuring:
 - **Lazy Loading**: Advanced intersection observer-based component lazy loading
 - **Font Optimization**: Local font loading with `font-display: swap` for zero layout shift
 - **CSS Optimization**: Tailwind purging and GPU-accelerated animations (transform/opacity only)
-- **Bundle Optimization**: Webpack chunk splitting and vendor separation
+- **Bundle Optimization**: Turbopack defaults (the custom webpack `splitChunks`
+  config in `next.config.ts` is commented out and not in effect)
 - **ISR**: Incremental Static Regeneration with 1-hour revalidation
 - **Resource Hints**: Preconnect/DNS-prefetch for external resources
 - **SEO**: Comprehensive metadata, OpenGraph, structured data, and Twitter cards

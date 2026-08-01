@@ -88,6 +88,9 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Emits .next/standalone with a self-contained server.js and only the traced
+  // runtime dependencies. Required by the Docker image.
+  output: 'standalone',
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if
