@@ -35,9 +35,14 @@ services:
       - 'traefik.http.services.portfolio-web.loadbalancer.server.port=3000'
 
       # --- apex + www ---------------------------------------------------------
+      # Same `cloudflare` resolver as the wildcard router below, with identical
+      # tls.domains — so a single pranta.dev + *.pranta.dev certificate covers
+      # the apex, www, and every subdomain.
       - 'traefik.http.routers.portfolio-web.rule=Host(`pranta.dev`) || Host(`www.pranta.dev`)'
       - 'traefik.http.routers.portfolio-web.entrypoints=websecure'
-      - 'traefik.http.routers.portfolio-web.tls.certresolver=letsencrypt'
+      - 'traefik.http.routers.portfolio-web.tls.certresolver=cloudflare'
+      - 'traefik.http.routers.portfolio-web.tls.domains[0].main=pranta.dev'
+      - 'traefik.http.routers.portfolio-web.tls.domains[0].sans=*.pranta.dev'
       - 'traefik.http.routers.portfolio-web.service=portfolio-web'
       - 'traefik.http.routers.portfolio-web.priority=100'
 
@@ -47,13 +52,12 @@ services:
       # and this rule is longer than the CMS one — without an explicit priority
       # the wildcard would hijack the backend.
       #
-      # NOTE: a *.pranta.dev certificate can only be issued over a DNS-01
-      # challenge. If your `letsencrypt` resolver uses HTTP-01, this router will
-      # serve TLS errors — see README/CLAUDE.md before enabling it.
+      # Uses the `cloudflare` DNS-01 resolver, not `letsencrypt` — the latter is
+      # an HTTP-01 resolver and cannot issue wildcard certificates.
       # `$$` is compose's escape for a literal `$` (regex end anchor).
       - 'traefik.http.routers.portfolio-web-wildcard.rule=HostRegexp(`^.+\.pranta\.dev$$`)'
       - 'traefik.http.routers.portfolio-web-wildcard.entrypoints=websecure'
-      - 'traefik.http.routers.portfolio-web-wildcard.tls.certresolver=letsencrypt'
+      - 'traefik.http.routers.portfolio-web-wildcard.tls.certresolver=cloudflare'
       - 'traefik.http.routers.portfolio-web-wildcard.tls.domains[0].main=pranta.dev'
       - 'traefik.http.routers.portfolio-web-wildcard.tls.domains[0].sans=*.pranta.dev'
       - 'traefik.http.routers.portfolio-web-wildcard.service=portfolio-web'

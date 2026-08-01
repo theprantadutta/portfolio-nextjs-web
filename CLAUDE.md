@@ -134,11 +134,18 @@ length, and the wildcard rule is longer than the CMS's
 ``Host(`portfolio.pranta.dev`)``, so without it the wildcard would hijack the
 backend.
 
-> The `*.pranta.dev` router requests a wildcard certificate, which Let's Encrypt
-> only issues over a **DNS-01** challenge. If the `letsencrypt` resolver in the
-> Traefik static config uses HTTP-01, that router will serve TLS errors — either
-> switch the resolver to DNS-01 or drop the wildcard router and list subdomains
-> explicitly.
+Both routers use the **`cloudflare`** cert resolver, not `letsencrypt`. A
+wildcard certificate can only be issued over a DNS-01 challenge, and the
+`letsencrypt` resolver on the VPS is HTTP-01. The Traefik static config
+(`/root/traefik/traefik.yml`, not in any repo) therefore defines two resolvers:
+
+- `letsencrypt` — HTTP-01, used by every other service on the box. Untouched.
+- `cloudflare` — DNS-01 via the Cloudflare provider, separate storage at
+  `/acme-dns.json`, token supplied as `CF_DNS_API_TOKEN` from
+  `/root/traefik/.env`.
+
+Both routers declare identical `tls.domains` (`pranta.dev` + `*.pranta.dev`) so
+a single certificate covers the apex, www, and all subdomains.
 
 ```bash
 docker compose build

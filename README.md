@@ -125,9 +125,9 @@ docker compose up -d --remove-orphans
   wildcard router runs at a deliberately low priority so `portfolio.pranta.dev`
   still resolves to the CMS.
 
-> A `*.pranta.dev` certificate requires a **DNS-01** ACME challenge. If the
-> Traefik `letsencrypt` resolver is configured for HTTP-01, drop the wildcard
-> router and list subdomains explicitly.
+> TLS is issued by a dedicated `cloudflare` DNS-01 resolver in Traefik — a
+> wildcard certificate cannot be issued over the HTTP-01 challenge used by the
+> other services on the host.
 
 ## 🏗 **Architecture**
 
