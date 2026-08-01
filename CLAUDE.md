@@ -52,7 +52,8 @@ This is a Next.js 16 portfolio website with server-side rendering, featuring:
 
 - **Active Section Context**: Tracks which portfolio section is currently in view for navigation highlighting
 - **Theme Context**: Manages dark/light theme switching with localStorage persistence
-- **Intersection Observer**: Custom hooks for section visibility detection and scroll animations
+- **Intersection Observer**: `useIntersectionObserver` backs section tracking for
+  nav highlighting only. Scroll reveals are pure CSS — see below
 
 ### Data Layer
 
@@ -156,36 +157,59 @@ docker compose up -d --remove-orphans
 
 - Uses **Bun** as package manager (`bun.lock`); scripts shell out to `bunx`
 - Husky + lint-staged for pre-commit hooks
-- React 19; `babel-plugin-react-compiler` is a dependency but the React Compiler
-  is **not** currently enabled (`experimental.reactCompiler` is commented out in
-  `next.config.ts`)
-- Vercel Analytics and Speed Insights integrated
+- React 19. The React Compiler is not enabled
+- No analytics. Vercel Analytics/Speed Insights were removed when the site left
+  Vercel — they 404'd on every page load against the VPS
+- ESLint uses the **flat config** (`eslint.config.mjs`); there is no `.eslintrc`
 - Prettier + ESLint for code formatting and linting
 - Node.js >=24 required (`engines`)
 
 ### Component Patterns
 
 - Functional components with TypeScript interfaces
-- Custom hooks for reusable logic (intersection observers, section tracking)
-- Server components for data fetching, client components for interactivity
+- Server components by default; `'use client'` only where there is real state,
+  an event handler, or a browser API. Navigation uses `next/link`, never
+  `useRouter().push` inside an `onClick` — that needlessly makes a component
+  client-side and produces markup no keyboard or crawler can use
 - Context providers wrapped at layout level for global state
+- `useSectionInView` / `SectionMarker` are deliberate: tiny client sentinels
+  that keep the active-section context in sync without making whole sections
+  client components
 
 ### Performance Optimizations
 
 - **Modern Image Formats**: Automatic WebP/AVIF serving via Next.js Image optimization
-- **Lazy Loading**: Advanced intersection observer-based component lazy loading
 - **Font Optimization**: Local font loading with `font-display: swap` for zero layout shift
 - **CSS Optimization**: Tailwind purging and GPU-accelerated animations (transform/opacity only)
-- **Bundle Optimization**: Turbopack defaults (the custom webpack `splitChunks`
-  config in `next.config.ts` is commented out and not in effect)
+- **Bundle Optimization**: Turbopack defaults
 - **ISR**: Incremental Static Regeneration with 1-hour revalidation
 - **Resource Hints**: Preconnect/DNS-prefetch for external resources
 - **SEO**: Comprehensive metadata, OpenGraph, structured data, and Twitter cards
 
-### Lighthouse Score Optimizations
+### Scroll reveal animations
 
-- All animations use `will-change`, `transform`, and `opacity` for GPU acceleration
-- CSS containment (`contain: layout style paint`) for performance isolation
-- Optimized image loading with blur placeholders and proper `sizes` attributes
-- Advanced lazy loading with configurable intersection thresholds
-- Static generation where possible with ISR for dynamic content
+The `reveal` utility in `globals.css` is the only reveal mechanism. It is pure
+CSS, driven by `animation-timeline: view()` behind `@supports` and
+`prefers-reduced-motion`.
+
+Content is **visible by default** and the animation is layered on top. Do not
+reintroduce JS-gated reveals: the previous `useAnimationOnScroll` /
+`useStaggeredAnimation` hooks shipped elements as `opacity-0` and revealed them
+from an IntersectionObserver callback, so anything that stopped the observer
+firing left content invisible forever. That is exactly what happened — an
+`IntersectionObserver` ratio is measured against the _target's_ area, so a
+container taller than 10x the viewport could never cross the `0.1` threshold and
+long project pages rendered blank.
+
+For the same reason `animation-range` is length-based (`entry 0% entry 300px`),
+not a percentage: a percentage of a very tall element is thousands of pixels of
+scrolling.
+
+### `ssr: false` is a last resort
+
+`dynamic(..., { ssr: false })` keeps a component out of the prerendered HTML
+entirely. It once wrapped a project page's whole body, so pages prerendered to
+an empty shell. Only reach for it when a component genuinely cannot render on
+the server (`theme-switch-lazy` is the legitimate case — it avoids a theme
+hydration mismatch). Client components server-render fine; needing `useState`
+is not a reason to disable SSR.

@@ -1,39 +1,16 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // Scroll-triggered reveals are not here: they are pure CSS (the `reveal`
 // utility in globals.css, driven by `animation-timeline: view()`). Gating
 // visibility on JS meant a failed observer left content invisible forever.
 
-// Animation utilities for performance
-export const animationUtils = {
-  fadeInUp: 'animate-fade-in-up',
-  fadeIn: 'animate-fade-in',
-  slideInLeft: 'animate-slide-in-left',
-  slideInRight: 'animate-slide-in-right',
-  scaleIn: 'animate-scale-in',
-  bounceIn: 'animate-bounce-in',
-  prefersReducedMotion: () => {
-    if (typeof window !== 'undefined') {
-      return window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    }
-    return false
-  },
-  setAnimationDelay: (element: HTMLElement, delay: number) => {
-    element.style.setProperty('--animation-delay', `${delay}ms`)
-  },
-}
-
-export const useHoverAnimation = <T extends HTMLElement = HTMLElement>(
-  animationClass: string = 'transform transition-transform duration-300 hover:scale-105'
-) => {
-  const elementRef = useRef<T>(null)
-
-  return {
-    ref: elementRef,
-    className: animationUtils.prefersReducedMotion() ? '' : animationClass,
+const prefersReducedMotion = () => {
+  if (typeof window !== 'undefined') {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches
   }
+  return false
 }
 
 export const useModalAnimation = (isOpen: boolean) => {
@@ -62,7 +39,7 @@ export const useModalAnimation = (isOpen: boolean) => {
   }, [isOpen])
 
   const getOverlayClassName = () => {
-    if (animationUtils.prefersReducedMotion()) {
+    if (prefersReducedMotion()) {
       return 'fixed inset-0 bg-black/50 z-50'
     }
 
@@ -79,7 +56,7 @@ export const useModalAnimation = (isOpen: boolean) => {
   }
 
   const getModalClassName = (baseClasses: string = '') => {
-    if (animationUtils.prefersReducedMotion()) {
+    if (prefersReducedMotion()) {
       return `${baseClasses} transform transition-none`
     }
 
@@ -100,22 +77,5 @@ export const useModalAnimation = (isOpen: boolean) => {
     getOverlayClassName,
     getModalClassName,
     animationPhase,
-  }
-}
-
-export const usePageTransition = () => {
-  const [isTransitioning, setIsTransitioning] = useState(false)
-
-  const startTransition = useCallback(() => {
-    setIsTransitioning(true)
-    window.setTimeout(() => setIsTransitioning(false), 300)
-  }, [])
-
-  return {
-    isTransitioning,
-    startTransition,
-    className: isTransitioning
-      ? 'opacity-0 translate-y-4'
-      : 'opacity-100 translate-y-0',
   }
 }

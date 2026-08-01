@@ -15,18 +15,12 @@
     "lint-staged": "lint-staged"
   },
   "dependencies": {
-    "@next/bundle-analyzer": "16.2.12",
     "@react-email/components": "^0.0.36",
     "@react-email/tailwind": "^1.0.2",
     "@strapi/blocks-react-renderer": "^1.0.2",
     "@tailwindcss/typography": "^0.5.16",
-    "@vercel/analytics": "^1.5.0",
-    "@vercel/speed-insights": "^1.0.12",
-    "babel-plugin-react-compiler": "^19.0.0-beta-40c6c23-20250301",
-    "bcryptjs": "^3.0.3",
     "caniuse-lite": "^1.0.30001759",
     "clsx": "^2.1.1",
-    "dotenv": "^17.2.3",
     "next": "^16.2.12",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
@@ -35,6 +29,7 @@
     "resend": "^4.0.0"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.6",
     "@eslint/js": "^9.27.0",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/node": "^22.9.0",
@@ -50,7 +45,6 @@
     "prettier-plugin-tailwindcss": "^0.7.2",
     "rimraf": "^6.0.0",
     "tailwindcss": "^4.1.18",
-    "tsx": "^4.20.6",
     "typescript": "^5.5.3"
   },
   "lint-staged": {

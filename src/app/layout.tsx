@@ -2,15 +2,11 @@ import './globals.css'
 
 import React, { ReactNode } from 'react'
 import { Inter, Playfair_Display, JetBrains_Mono } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/react'
 
 import { ActiveSectionContextProvider } from '@/context/active-section-context'
 import { ThemeContextProvider } from '@/context/theme-context'
-import { SpeedInsights } from '@vercel/speed-insights/next'
 import { StructuredData } from '@/components/structured-data'
 import { LayoutWrapper } from '@/components/layout-wrapper'
-
-const isProduction = process.env.NODE_ENV === 'production'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -172,8 +168,6 @@ const RootLayout: React.FC<IRootLayoutProps> = ({ children }) => {
             <LayoutWrapper>{children}</LayoutWrapper>
           </ActiveSectionContextProvider>
         </ThemeContextProvider>
-        {isProduction && <Analytics />}
-        {isProduction && <SpeedInsights />}
         <StructuredData />
       </body>
     </html>

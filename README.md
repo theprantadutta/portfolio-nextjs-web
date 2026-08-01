@@ -6,7 +6,7 @@ A **high-performance**, **visually stunning** portfolio website built with Next.
 
 This portfolio achieves **perfect scores across all Lighthouse metrics**:
 
-- **Performance: 100** - Optimized images, lazy loading, GPU-accelerated animations
+- **Performance: 100** - Optimized images, GPU-accelerated animations
 - **Accessibility: 100** - Semantic HTML, proper ARIA labels, keyboard navigation
 - **Best Practices: 100** - Modern image formats (WebP/AVIF), secure HTTPS
 - **SEO: 100** - Structured data, meta tags, OpenGraph optimization
@@ -24,7 +24,8 @@ This portfolio achieves **perfect scores across all Lighthouse metrics**:
 ### ⚡ **Performance Optimizations**
 
 - **Modern Image Formats**: Automatic WebP/AVIF serving with fallbacks
-- **Advanced Lazy Loading**: Intersection Observer-based component loading
+- **CSS Scroll Reveals**: Native `animation-timeline: view()` — no JavaScript,
+  and content stays visible where it is unsupported
 - **Font Optimization**: Local font loading with `font-display: swap`
 - **CSS Purging**: Unused Tailwind classes automatically removed
 - **Bundle Splitting**: Turbopack's automatic chunking and tree-shaking
@@ -37,7 +38,6 @@ This portfolio achieves **perfect scores across all Lighthouse metrics**:
 - **TypeScript**: Fully typed codebase with strict configuration
 - **Content**: Strapi CMS integration for dynamic portfolio content
 - **Email**: React Email templates with Resend API integration
-- **Analytics**: Vercel Analytics and Speed Insights
 - **Hosting**: Self-hosted on a VPS via Docker + Traefik
 
 ### 📱 **Dynamic Content**
