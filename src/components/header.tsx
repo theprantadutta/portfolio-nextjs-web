@@ -7,7 +7,6 @@ import clsx from 'clsx'
 
 import { links } from '@/lib/data'
 import { useActiveSectionContext } from '@/context/active-section-context'
-import { useStaggeredAnimation } from '@/lib/animation-hooks'
 import {
   FiMenu,
   FiX,
@@ -42,13 +41,6 @@ export const Header: React.FC<IHeaderProps> = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
-
-  const { containerRef, getItemClassName } = useStaggeredAnimation({
-    itemCount: links.length,
-    delay: 0,
-    staggerDelay: 20,
-    animationClass: 'animate-fade-in',
-  })
 
   // Set active section based on pathname for route-based pages
   useEffect(() => {
@@ -85,7 +77,6 @@ export const Header: React.FC<IHeaderProps> = () => {
     <header className='relative z-10'>
       {/* Desktop Navigation */}
       <nav
-        ref={containerRef}
         className={`fixed top-6 left-1/2 z-1000 hidden -translate-x-1/2 transform rounded-tl-3xl rounded-tr-lg rounded-br-3xl rounded-bl-3xl transition-all duration-500 ease-out lg:block ${
           isScrolled
             ? 'border border-white/30 bg-white/20 shadow-lg backdrop-blur-xl dark:border-white/20 dark:bg-gray-900/40'
@@ -101,13 +92,12 @@ export const Header: React.FC<IHeaderProps> = () => {
         />
 
         <ul className='relative z-10 flex items-center gap-1 px-4 py-2'>
-          {links.map((link, index) => {
+          {links.map((link) => {
             const IconComponent =
               navigationIcons[link.name as keyof typeof navigationIcons]
-            const itemClassName = getItemClassName(index)
 
             return (
-              <li className={`relative ${itemClassName}`} key={link.hash}>
+              <li className='relative' key={link.hash}>
                 <Link
                   className={clsx(
                     'group relative flex items-center gap-2 rounded-tl-3xl rounded-tr-lg rounded-br-3xl rounded-bl-3xl px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-all duration-300',

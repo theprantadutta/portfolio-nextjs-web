@@ -2,7 +2,6 @@
 
 import { SectionHeading } from '@/components/section-heading'
 import { SectionSubheading } from '@/components/section-subheading'
-import { useAnimationOnScroll } from '@/lib/animation-hooks'
 import { useSectionInView } from '@/lib/hooks'
 import { IStrapiApiResponse, SkillDataAttributes } from '@/types/types'
 import React, { useState } from 'react'
@@ -71,11 +70,6 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
   const { ref } = useSectionInView('Skills', 0.1)
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null)
   const [viewMode, setViewMode] = useState<'hexagon' | 'cards'>('hexagon')
-
-  const sectionAnimation = useAnimationOnScroll<HTMLDivElement>({
-    delay: 100,
-    animationClass: 'animate-fade-in-up',
-  })
 
   const skillCategories = [
     {
@@ -172,12 +166,7 @@ export const Skills: React.FC<ISkillProps> = ({ skills }) => {
 
       <div className='content-container'>
         {/* Header */}
-        {/* eslint-disable react-hooks/refs -- Animation hook pattern: ref and className are designed to be used during render */}
-        <div
-          className={`mb-16 text-center ${sectionAnimation.className}`}
-          ref={sectionAnimation.ref}
-        >
-          {/* eslint-enable react-hooks/refs */}
+        <div className='reveal mb-16 text-center'>
           <SectionHeading>Skills & Technologies</SectionHeading>
           <SectionSubheading>
             Crafting beautiful experiences with modern technologies

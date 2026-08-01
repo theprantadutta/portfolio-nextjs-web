@@ -1,8 +1,10 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { observeElement, unobserveElement } from '@/lib/observer-manager'
+// Scroll-triggered reveals are not here: they are pure CSS (the `reveal`
+// utility in globals.css, driven by `animation-timeline: view()`). Gating
+// visibility on JS meant a failed observer left content invisible forever.
 
 // Animation utilities for performance
 export const animationUtils = {
@@ -21,158 +23,6 @@ export const animationUtils = {
   setAnimationDelay: (element: HTMLElement, delay: number) => {
     element.style.setProperty('--animation-delay', `${delay}ms`)
   },
-}
-
-interface UseAnimationOnScrollOptions {
-  threshold?: number
-  delay?: number
-  animationClass?: string
-  triggerOnce?: boolean
-  rootMargin?: string
-}
-
-export const useAnimationOnScroll = <T extends HTMLElement = HTMLElement>({
-  threshold = 0.1,
-  delay = 0,
-  animationClass = 'animate-fade-in-up',
-  triggerOnce = true,
-  rootMargin = '0px',
-}: UseAnimationOnScrollOptions = {}) => {
-  const elementRef = useRef<T>(null)
-  const [isVisible, setIsVisible] = useState(false)
-  const hasAnimatedRef = useRef(false)
-  const shouldReduceMotion = animationUtils.prefersReducedMotion()
-
-  useEffect(() => {
-    if (shouldReduceMotion || typeof window === 'undefined') {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- Immediate visibility for reduced motion preference
-      setIsVisible(true)
-      hasAnimatedRef.current = true
-      return
-    }
-
-    const element = elementRef.current
-    if (!element) return
-
-    let timeoutId: number | undefined
-
-    const handler = (entry: IntersectionObserverEntry) => {
-      if (entry.isIntersecting && (!triggerOnce || !hasAnimatedRef.current)) {
-        timeoutId = window.setTimeout(() => {
-          setIsVisible(true)
-          hasAnimatedRef.current = true
-        }, delay)
-      } else if (!triggerOnce && !entry.isIntersecting) {
-        setIsVisible(false)
-      }
-    }
-
-    observeElement(element, handler, { threshold, rootMargin })
-
-    return () => {
-      if (timeoutId) {
-        window.clearTimeout(timeoutId)
-      }
-      unobserveElement(element, { threshold, rootMargin })
-    }
-  }, [threshold, delay, triggerOnce, rootMargin, shouldReduceMotion])
-
-  const className = shouldReduceMotion
-    ? ''
-    : isVisible
-      ? animationClass
-      : 'opacity-0 translate-y-8'
-
-  return {
-    ref: elementRef,
-    isVisible,
-    className,
-  }
-}
-
-interface UseStaggeredAnimationOptions {
-  itemCount: number
-  delay?: number
-  staggerDelay?: number
-  animationClass?: string
-  threshold?: number
-  rootMargin?: string
-}
-
-export const useStaggeredAnimation = <T extends HTMLElement = HTMLElement>({
-  itemCount,
-  delay = 0,
-  staggerDelay = 100,
-  animationClass = 'animate-fade-in-up',
-  threshold = 0.1,
-  rootMargin = '0px',
-}: UseStaggeredAnimationOptions) => {
-  const containerRef = useRef<T>(null)
-  const [visibleItems, setVisibleItems] = useState<Set<number>>(new Set())
-  const [hasTriggered, setHasTriggered] = useState(false)
-  const hasTriggeredRef = useRef(false)
-  const shouldReduceMotion = animationUtils.prefersReducedMotion()
-
-  useEffect(() => {
-    if (shouldReduceMotion || typeof window === 'undefined') {
-      setVisibleItems(new Set(Array.from({ length: itemCount }, (_, i) => i)))
-      setHasTriggered(true)
-      hasTriggeredRef.current = true
-      return
-    }
-
-    const element = containerRef.current
-    if (!element) return
-
-    const handler = (entry: IntersectionObserverEntry) => {
-      if (entry.isIntersecting && !hasTriggeredRef.current) {
-        hasTriggeredRef.current = true
-        setHasTriggered(true)
-
-        for (let i = 0; i < itemCount; i++) {
-          window.setTimeout(
-            () => {
-              setVisibleItems((prev) => {
-                const next = new Set(prev)
-                next.add(i)
-                return next
-              })
-            },
-            delay + i * staggerDelay
-          )
-        }
-      }
-    }
-
-    observeElement(element, handler, { threshold, rootMargin })
-
-    return () => {
-      unobserveElement(element, { threshold, rootMargin })
-    }
-  }, [
-    itemCount,
-    delay,
-    staggerDelay,
-    threshold,
-    rootMargin,
-    shouldReduceMotion,
-  ])
-
-  const getItemClassName = useCallback(
-    (index: number) => {
-      if (shouldReduceMotion) return ''
-      return visibleItems.has(index)
-        ? animationClass
-        : 'opacity-0 translate-y-8'
-    },
-    [visibleItems, animationClass, shouldReduceMotion]
-  )
-
-  return {
-    containerRef,
-    getItemClassName,
-    hasTriggered,
-  }
 }
 
 export const useHoverAnimation = <T extends HTMLElement = HTMLElement>(

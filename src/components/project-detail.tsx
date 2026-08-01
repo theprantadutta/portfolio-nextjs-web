@@ -17,10 +17,6 @@ import {
 } from 'react-icons/fa'
 
 import { IStrapiImageData, ProjectDataAttributes } from '@/types/types'
-import {
-  useAnimationOnScroll,
-  useStaggeredAnimation,
-} from '@/lib/animation-hooks'
 import { StrapiImage } from '@/shared/StrapiImage'
 import {
   analyzeProject,
@@ -69,25 +65,6 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
   const platformBadge = getPlatformBadgeInfo(project.platformType)
   const statusBadge = getStatusBadgeInfo(project.projectStatus)
   const developerRole = getDeveloperRoleInfo(project.developerRole)
-  const { ref: heroRef, className: heroAnimation } = useAnimationOnScroll({
-    animationClass: 'animate-fade-in-up',
-    delay: 100,
-  })
-
-  const { containerRef: overviewRef, getItemClassName: getOverviewItemClass } =
-    useStaggeredAnimation<HTMLDivElement>({
-      itemCount: 3, // overview cards
-      delay: 200,
-      staggerDelay: 100,
-    })
-
-  const { containerRef: contentRef, getItemClassName: getContentItemClass } =
-    useStaggeredAnimation<HTMLDivElement>({
-      itemCount: 4, // content sections
-      delay: 300,
-      staggerDelay: 150,
-    })
-
   // Enhanced tech stack with Flutter highlighting per user preference
   const getEnhancedTechStack = () => {
     if (!project.Tags || project.Tags.length === 0) return []
@@ -128,10 +105,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
       </div>
 
       {/* Enhanced Hero Section */}
-      <section
-        ref={heroRef}
-        className={`relative px-4 pt-10 pb-8 sm:px-6 sm:pt-16 lg:px-8 ${heroAnimation}`}
-      >
+      <section className='reveal relative px-4 pt-10 pb-8 sm:px-6 sm:pt-16 lg:px-8'>
         <div className='mx-auto max-w-7xl'>
           <div className='mb-8 text-center'>
             {/* Enhanced Project Category/Type Badge */}
@@ -257,13 +231,11 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
       )}
 
       {/* Enhanced Content Sections */}
-      <section ref={contentRef} className='px-4 py-16 sm:px-6 lg:px-8'>
+      <section className='px-4 py-16 sm:px-6 lg:px-8'>
         <div className='mx-auto max-w-5xl space-y-8'>
           {/* Technology Stack - Full Width */}
           {enhancedTags.length > 0 && (
-            <div
-              className={`special-border glass-card p-6 ${getContentItemClass(0)}`}
-            >
+            <div className='reveal special-border glass-card p-6'>
               <div className='mb-5 flex items-center gap-3'>
                 <div className='special-border glass-card bg-linear-to-r from-green-500/20 to-teal-500/20 p-2'>
                   <FaMobile className='h-5 w-5 text-green-600 dark:text-green-400' />
@@ -300,9 +272,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
           )}
 
           {/* About This Project - Full Width */}
-          <div
-            className={`special-border glass-card p-6 ${getContentItemClass(1)}`}
-          >
+          <div className='reveal special-border glass-card p-6'>
             <div className='mb-5 flex items-center gap-3'>
               <div className='special-border glass-card from-primary-500/20 to-secondary-500/20 bg-linear-to-r p-2'>
                 <FaCode className='text-primary-600 dark:text-primary-400 h-5 w-5' />
@@ -348,9 +318,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
             {(project.githubLink ||
               project.googlePlayLink ||
               project.appStoreLink) && (
-              <div
-                className={`special-border glass-card bg-linear-to-br from-gray-500/5 to-slate-500/5 p-6 ${getContentItemClass(2)}`}
-              >
+              <div className='reveal special-border glass-card bg-linear-to-br from-gray-500/5 to-slate-500/5 p-6'>
                 <h3 className='mb-4 text-lg font-bold text-gray-900 dark:text-white'>
                   Project Access
                 </h3>
@@ -429,9 +397,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
             )}
 
             {/* Project Analytics */}
-            <div
-              className={`special-border glass-card from-primary-500/5 to-secondary-500/5 bg-linear-to-br p-6 ${getContentItemClass(3)}`}
-            >
+            <div className='reveal special-border glass-card from-primary-500/5 to-secondary-500/5 bg-linear-to-br p-6'>
               <h3 className='mb-4 text-lg font-bold text-gray-900 dark:text-white'>
                 Project Analytics
               </h3>
@@ -489,7 +455,7 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
       {/* Project Overview Cards - before Key Features */}
       <section className='px-4 py-8 sm:px-6 lg:px-8'>
         <div className='mx-auto max-w-7xl'>
-          <div ref={overviewRef} className={getOverviewItemClass(0)}>
+          <div className='reveal'>
             <ProjectOverviewCards project={project} analysis={analysis} />
           </div>
         </div>

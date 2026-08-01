@@ -1,25 +1,14 @@
 'use client'
 
 import React, { ReactNode } from 'react'
-import { useAnimationOnScroll } from '@/lib/animation-hooks'
 
 interface ISectionDividerProps {
   children?: ReactNode
 }
 
 export const SectionDivider: React.FC<ISectionDividerProps> = () => {
-  const animation = useAnimationOnScroll<HTMLDivElement>({
-    delay: 125,
-    animationClass: 'animate-fade-in-up',
-  })
-
   return (
-    /* eslint-disable react-hooks/refs -- Animation hook pattern: ref and className are designed to be used during render */
-    <div
-      ref={animation.ref}
-      className={`my-[clamp(1.5rem,4vh,3rem)] hidden sm:block ${animation.className}`}
-    >
-      {/* eslint-enable react-hooks/refs */}
+    <div className='reveal my-[clamp(1.5rem,4vh,3rem)] hidden sm:block'>
       <div className='flex justify-center'>
         <div className='from-primary-500 via-secondary-500 to-accent-500 h-16 w-1 rounded-full bg-linear-to-b opacity-60 shadow-lg' />
       </div>

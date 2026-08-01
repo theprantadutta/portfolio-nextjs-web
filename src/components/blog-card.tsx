@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation'
 import { FiClock, FiHeart, FiMessageCircle, FiCalendar } from 'react-icons/fi'
 
 import { DevToArticle } from '@/types/blog-types'
-import { useAnimationOnScroll } from '@/lib/animation-hooks'
 
 interface BlogCardProps {
   article: DevToArticle
@@ -14,18 +13,9 @@ interface BlogCardProps {
 
 export const BlogCard: React.FC<BlogCardProps> = ({ article }) => {
   const router = useRouter()
-  const animation = useAnimationOnScroll({
-    delay: 200,
-    animationClass: 'animate-fade-in-up',
-  })
 
   return (
-    /* eslint-disable react-hooks/refs -- Animation hook pattern: ref and className are designed to be used during render */
-    <div
-      ref={animation.ref as React.RefObject<HTMLDivElement>}
-      className={`h-full ${animation.className}`}
-    >
-      {/* eslint-enable react-hooks/refs */}
+    <div className='reveal h-full'>
       <div
         onClick={() => router.push(`/blogs/${article.slug}`)}
         className='special-border glass-card group relative flex h-full cursor-pointer flex-col overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xs transition-all duration-500 hover:-translate-y-3 hover:bg-white/10 hover:shadow-2xl dark:border-gray-700/30 dark:bg-gray-900/20 dark:hover:bg-gray-900/30'

@@ -1,7 +1,6 @@
 'use client'
 
 import React, { ReactNode } from 'react'
-import { useStaggeredAnimation } from '@/lib/animation-hooks'
 
 interface TimelineItemProps {
   date: string
@@ -10,8 +9,7 @@ interface TimelineItemProps {
   description: string
   icon?: ReactNode
   isLast?: boolean
-  index?: number
-  getItemClassName?: (index: number) => string
+  animate?: boolean
 }
 
 interface VerticalTimelineProps {
@@ -29,13 +27,12 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({
   description,
   icon,
   isLast = false,
-  index = 0,
-  getItemClassName,
+  animate = true,
 }) => {
-  const itemClassName = getItemClassName ? getItemClassName(index) : ''
-
   return (
-    <div className={`group relative flex items-start ${itemClassName}`}>
+    <div
+      className={`group relative flex items-start ${animate ? 'reveal' : ''}`}
+    >
       {/* Timeline line */}
       {!isLast && (
         <div className='group-hover:from-primary-400 group-hover:to-secondary-400 absolute top-12 left-4 h-full w-0.5 bg-linear-to-b from-gray-300 to-gray-200 transition-all duration-500 dark:from-gray-600 dark:to-gray-700' />
@@ -90,25 +87,16 @@ export const VerticalTimeline: React.FC<VerticalTimelineProps> = ({
   animate = true,
   items = [],
 }) => {
-  const { containerRef, getItemClassName } =
-    useStaggeredAnimation<HTMLDivElement>({
-      itemCount: items.length,
-      delay: 200,
-      staggerDelay: 150,
-      animationClass: 'animate-fade-in-up',
-    })
-
   if (items.length > 0) {
     return (
-      <div ref={containerRef} className='mx-auto max-w-3xl py-8'>
+      <div className='mx-auto max-w-3xl py-8'>
         <div className='space-y-10 sm:space-y-12'>
           {items.map((item, index) => (
             <TimelineItem
               key={index}
               {...item}
-              index={index}
               isLast={index === items.length - 1}
-              getItemClassName={animate ? getItemClassName : undefined}
+              animate={animate}
             />
           ))}
         </div>
@@ -117,7 +105,7 @@ export const VerticalTimeline: React.FC<VerticalTimelineProps> = ({
   }
 
   return (
-    <div ref={containerRef} className='mx-auto max-w-4xl py-8'>
+    <div className='mx-auto max-w-4xl py-8'>
       <div className='space-y-10 sm:space-y-12'>{children}</div>
     </div>
   )
@@ -128,16 +116,8 @@ export const HorizontalTimeline: React.FC<{
   items: TimelineItemProps[]
   animate?: boolean
 }> = ({ items, animate = true }) => {
-  const { containerRef, getItemClassName } =
-    useStaggeredAnimation<HTMLDivElement>({
-      itemCount: items.length,
-      delay: 200,
-      staggerDelay: 100,
-      animationClass: 'animate-fade-in-up',
-    })
-
   return (
-    <div ref={containerRef} className='w-full py-8'>
+    <div className='w-full py-8'>
       <div className='relative'>
         {/* Horizontal line */}
         <div className='from-primary-200 via-secondary-200 to-primary-200 dark:from-primary-800 dark:via-secondary-800 dark:to-primary-800 absolute top-4 right-0 left-0 h-0.5 bg-linear-to-r' />
@@ -145,12 +125,10 @@ export const HorizontalTimeline: React.FC<{
         {/* Timeline items */}
         <div className='relative flex items-start justify-between'>
           {items.map((item, index) => {
-            const itemClassName = animate ? getItemClassName(index) : ''
-
             return (
               <div
                 key={index}
-                className={`flex max-w-xs flex-col items-center ${itemClassName}`}
+                className={`flex max-w-xs flex-col items-center ${animate ? 'reveal' : ''}`}
               >
                 {/* Icon */}
                 <div className='from-primary-500 to-secondary-600 relative z-10 mb-4 flex h-8 w-8 items-center justify-center rounded-full bg-linear-to-br shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl'>
@@ -192,23 +170,13 @@ export const CompactTimeline: React.FC<{
   items: Pick<TimelineItemProps, 'date' | 'title' | 'description'>[]
   animate?: boolean
 }> = ({ items, animate = true }) => {
-  const { containerRef, getItemClassName } =
-    useStaggeredAnimation<HTMLDivElement>({
-      itemCount: items.length,
-      delay: 100,
-      staggerDelay: 50,
-      animationClass: 'animate-fade-in-up',
-    })
-
   return (
-    <div ref={containerRef} className='space-y-4'>
+    <div className='space-y-4'>
       {items.map((item, index) => {
-        const itemClassName = animate ? getItemClassName(index) : ''
-
         return (
           <div
             key={index}
-            className={`flex items-start space-x-4 ${itemClassName}`}
+            className={`flex items-start space-x-4 ${animate ? 'reveal' : ''}`}
           >
             <div className='from-primary-500 to-secondary-600 mt-2 h-2 w-2 shrink-0 rounded-full bg-linear-to-br' />
             <div className='min-w-0 flex-1'>

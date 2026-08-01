@@ -280,6 +280,29 @@
   }
 }
 
+@utility reveal {
+  /* Scroll-driven reveal. The element is visible by default — the fade-up is
+     layered on top by the browser's own view() timeline, so visibility is never
+     gated on JavaScript. Browsers without scroll-driven animations, and users
+     who prefer reduced motion, simply get the content.
+
+     The range is length-based, not percentage-based, on purpose: `entry 40%` of
+     a very tall element resolves to thousands of pixels of scrolling, and that
+     class of proportional-to-element-height math is what left long project
+     pages blank under the old IntersectionObserver. 300px is 300px whatever the
+     element's height. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      animation-name: fadeInUp;
+      animation-duration: auto;
+      animation-timing-function: ease-out;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 300px;
+    }
+  }
+}
+
 @utility animate-gradient {
   background-size: 200% 200%;
   animation: gradientShift 3s ease infinite;

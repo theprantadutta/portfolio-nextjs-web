@@ -1,7 +1,6 @@
 'use client'
 
 import React, { ReactNode } from 'react'
-import { useAnimationOnScroll } from '@/lib/animation-hooks'
 import { ProjectDataAttributes } from '@/types/types'
 import { ProjectModal } from './project-modal'
 import {
@@ -36,11 +35,6 @@ export const Project: React.FC<IProjectProps> = ({
   const platformBadge = getPlatformBadgeInfo(platformType)
   const statusBadge = getStatusBadgeInfo(projectStatus)
 
-  const animation = useAnimationOnScroll({
-    delay: 200,
-    animationClass: 'animate-fade-in-up',
-  })
-
   // Get platform icon based on platformType from Strapi
   const getProjectIcon = () => {
     switch (platformType) {
@@ -58,12 +52,7 @@ export const Project: React.FC<IProjectProps> = ({
   }
 
   return (
-    /* eslint-disable react-hooks/refs -- Animation hook pattern: ref and className are designed to be used during render */
-    <div
-      ref={animation.ref as React.RefObject<HTMLDivElement>}
-      className={`group mb-10 ${animation.className}`}
-    >
-      {/* eslint-enable react-hooks/refs */}
+    <div className='reveal group mb-10'>
       <div className='special-border glass-card relative mx-auto max-w-4xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xs transition-all duration-500 hover:-translate-y-3 hover:bg-white/10 hover:shadow-2xl dark:border-gray-700/30 dark:bg-gray-900/20 dark:hover:bg-gray-900/30'>
         {/* Enhanced gradient overlay */}
         <div className='from-primary-500/10 via-secondary-500/10 to-accent-500/10 absolute inset-0 bg-linear-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
