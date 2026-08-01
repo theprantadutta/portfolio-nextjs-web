@@ -1,21 +1,12 @@
-'use client'
-
-import { useRouter } from 'next/navigation'
-import { ReactNode } from 'react'
+import Link from 'next/link'
 import { BsArrowRight } from 'react-icons/bs'
 
-interface IAllProjectButton {
-  children?: ReactNode
-}
-
 export const AllProjectButton = () => {
-  const router = useRouter()
   return (
     <div className='flex justify-center'>
-      <button
-        onClick={() => router.push('/projects')}
-        type='button'
-        className='btn-primary special-border group relative mt-5 overflow-hidden px-5 py-2.5'
+      <Link
+        href='/projects'
+        className='btn-primary special-border group relative mt-5 inline-block overflow-hidden px-5 py-2.5'
       >
         <span className='relative z-10 flex items-center gap-2'>
           All Projects
@@ -24,7 +15,7 @@ export const AllProjectButton = () => {
 
         {/* Animated background */}
         <div className='animate-gradient from-primary-600 via-secondary-600 to-primary-600 absolute inset-0 bg-linear-to-r bg-size-[200%_100%] opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
-      </button>
+      </Link>
     </div>
   )
 }

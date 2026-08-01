@@ -1,8 +1,6 @@
-'use client'
-
 import React from 'react'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { FiClock, FiHeart, FiMessageCircle, FiCalendar } from 'react-icons/fi'
 
 import { DevToArticle } from '@/types/blog-types'
@@ -12,13 +10,13 @@ interface BlogCardProps {
 }
 
 export const BlogCard: React.FC<BlogCardProps> = ({ article }) => {
-  const router = useRouter()
-
   return (
     <div className='reveal h-full'>
-      <div
-        onClick={() => router.push(`/blogs/${article.slug}`)}
-        className='special-border glass-card group relative flex h-full cursor-pointer flex-col overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xs transition-all duration-500 hover:-translate-y-3 hover:bg-white/10 hover:shadow-2xl dark:border-gray-700/30 dark:bg-gray-900/20 dark:hover:bg-gray-900/30'
+      {/* The whole card is one anchor: it was a div with an onClick, which no
+          keyboard user could reach and no crawler could follow. */}
+      <Link
+        href={`/blogs/${article.slug}`}
+        className='special-border glass-card group relative flex h-full flex-col overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xs transition-all duration-500 hover:-translate-y-3 hover:bg-white/10 hover:shadow-2xl dark:border-gray-700/30 dark:bg-gray-900/20 dark:hover:bg-gray-900/30'
       >
         {/* Gradient overlay on hover */}
         <div className='from-primary-500/10 via-secondary-500/10 to-accent-500/10 absolute inset-0 bg-linear-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
@@ -98,7 +96,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({ article }) => {
             </span>
           </div>
         </div>
-      </div>
+      </Link>
     </div>
   )
 }

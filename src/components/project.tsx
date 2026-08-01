@@ -1,6 +1,5 @@
-'use client'
-
 import React, { ReactNode } from 'react'
+import Link from 'next/link'
 import { ProjectDataAttributes } from '@/types/types'
 import { ProjectModal } from './project-modal'
 import {
@@ -11,7 +10,6 @@ import {
   FaCloud,
   FaStar,
 } from 'react-icons/fa'
-import { useRouter } from 'next/navigation'
 import { StrapiImage } from '@/shared/StrapiImage'
 import { getPlatformBadgeInfo, getStatusBadgeInfo } from '@/lib/project-utils'
 
@@ -31,7 +29,6 @@ export const Project: React.FC<IProjectProps> = ({
   complexity,
   isFeatured,
 }) => {
-  const router = useRouter()
   const platformBadge = getPlatformBadgeInfo(platformType)
   const statusBadge = getStatusBadgeInfo(projectStatus)
 
@@ -131,9 +128,9 @@ export const Project: React.FC<IProjectProps> = ({
           </div>
 
           {/* Right Column - Project Image */}
-          <div
-            className='group/image relative cursor-pointer'
-            onClick={() => router.push(`/projects/${slug}`)}
+          <Link
+            href={`/projects/${slug}`}
+            className='group/image relative block'
           >
             <div className='special-border relative aspect-4/3 overflow-hidden bg-linear-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900'>
               {/* Background Pattern */}
@@ -181,7 +178,7 @@ export const Project: React.FC<IProjectProps> = ({
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         </div>
 
         {/* Bottom Stats Bar */}

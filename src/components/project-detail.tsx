@@ -16,8 +16,12 @@ import {
   FaHeart,
 } from 'react-icons/fa'
 
+import { BlocksRenderer } from '@strapi/blocks-react-renderer'
+
 import { IStrapiImageData, ProjectDataAttributes } from '@/types/types'
 import { StrapiImage } from '@/shared/StrapiImage'
+import { ProjectOverviewCards } from '@/components/project-overview-cards'
+import { FeaturesShowcase } from '@/components/features-showcase'
 import {
   analyzeProject,
   getPlatformBadgeInfo,
@@ -25,32 +29,13 @@ import {
   getDeveloperRoleInfo,
 } from '@/lib/project-utils'
 
-const BlocksRenderer = dynamic(
-  () =>
-    import('@strapi/blocks-react-renderer').then((mod) => mod.BlocksRenderer),
-  { ssr: false }
-)
-
-const ProjectOverviewCards = dynamic(
-  () =>
-    import('@/components/project-overview-cards').then(
-      (mod) => mod.ProjectOverviewCards
-    ),
-  { ssr: false }
-)
-
-const EnhancedGallery = dynamic(
-  () =>
-    import('@/components/enhanced-gallery').then((mod) => mod.EnhancedGallery),
-  { ssr: false }
-)
-
-const FeaturesShowcase = dynamic(
-  () =>
-    import('@/components/features-showcase').then(
-      (mod) => mod.FeaturesShowcase
-    ),
-  { ssr: false }
+// These were all `dynamic(..., { ssr: false })`, which kept a project page's
+// entire body -- long description, overview, features -- out of the
+// prerendered HTML for no benefit. None of them need to be client-only.
+// The gallery stays code-split because it is large and interactive, but it
+// server-renders now like everything else.
+const EnhancedGallery = dynamic(() =>
+  import('@/components/enhanced-gallery').then((mod) => mod.EnhancedGallery)
 )
 
 interface ProjectDetailProps {

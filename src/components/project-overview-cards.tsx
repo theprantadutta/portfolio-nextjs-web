@@ -1,5 +1,3 @@
-'use client'
-
 import { ProjectDataAttributes } from '@/types/types'
 import {
   ProjectAnalysis,

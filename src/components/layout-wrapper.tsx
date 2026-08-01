@@ -1,21 +1,15 @@
-'use client'
-
-import { usePathname } from 'next/navigation'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { ThemeSwitchLazy } from '@/components/theme-switch-lazy'
 
+/**
+ * Server component. It previously read usePathname() to strip the chrome on
+ * /checkout and /admin, which made every page's shell a client boundary — for
+ * routes that do not exist in src/app. If those routes are ever added, give
+ * them their own layout via a route group rather than restoring the client
+ * boundary here.
+ */
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname()
-  const isCheckoutPage = pathname?.startsWith('/checkout')
-  const isAdminPage = pathname?.startsWith('/admin')
-
-  if (isCheckoutPage || isAdminPage) {
-    // Checkout & Admin pages: clean layout, no header, no footer, no padding
-    return <>{children}</>
-  }
-
-  // Regular portfolio pages: with header, footer, padding, background effects
   return (
     <div className='relative pt-20 sm:pt-24'>
       {/* Background gradient effects for portfolio pages */}
